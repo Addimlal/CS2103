@@ -13,8 +13,8 @@
 #include "table.h"
 #include "prog.h"
 
-int interpretAusdruck(Knoten *baum, Tabelle *tabelle){
-	switch(baum->typ){
+int interpretAusdruck(Knoten *baum, Tabelle *tabelle) {
+	switch(baum->typ) {
 		case KNOTEN_LITERAL:
 			return(baum->u.literal.wert);
 			break;
@@ -39,18 +39,18 @@ int interpretAusdruck(Knoten *baum, Tabelle *tabelle){
 				*
 				interpretAusdruck(baum->u.produkt.ausdruck2, tabelle);
 			break;
-		case KNOTEN_QUOTIENT:
-			if(baum->u.quotient.ausdruck1 == 0) {
+		case KNOTEN_QUOTIENT: {
+			int divident = interpretAusdruck(baum->u.quotient.ausdruck1, tabelle);
+			int quotient = interpretAusdruck(baum->u.quotient.ausdruck2, tabelle);
+			if(divident == 0) {
 				error("Dividend ist %i", baum->u.quotient.ausdruck1);
 				break;
 			}
 			else {
-				return
-					interpretAusdruck(baum->u.quotient.ausdruck1, tabelle)
-					/
-					interpretAusdruck(baum->u.quotient.ausdruck2, tabelle);
+				return (divident/quotient);
 			}
 			break;
+		}
 	}
 	return 0;
 }
@@ -60,13 +60,11 @@ Tabelle *interpretAnweisung(Knoten *baum, Tabelle *tabelle) {
 		case KNOTEN_FOLGE:
 			tabelle = interpretAnweisung(baum->u.folge.anweisung1, tabelle);
 			return interpretAnweisung(baum->u.folge.anweisung2, tabelle);
-			break;
 		case KNOTEN_ZUWEISUNG:
 			return aendereTabelle(tabelle, baum->u.variable.name, interpretAusdruck(baum->u.zuweisung.ausdruck, tabelle));
-			break;
 		case KNOTEN_AUSGABE:
-			printf("%i", interpretAusdruck(baum->u.ausgabe.ausdruck, tabelle));
-			break;
+			printf("%i ", interpretAusdruck(baum->u.ausgabe.ausdruck, tabelle));
+			return tabelle;
 	}
 	return NULL;
 }
@@ -134,30 +132,15 @@ void interpretiere(Knoten *baum) {
 	switch(baum->typ){
 
 		case KNOTEN_FOLGE:
-			interpretAnweisung(baum->u.folge.anweisung1, temp);
-			interpretAnweisung(baum->u.folge.anweisung2, temp);
-			break;
 		case KNOTEN_ZUWEISUNG:
-			interpretAnweisung(baum->u.zuweisung.ausdruck, temp);
-			break;
 		case KNOTEN_AUSGABE:
-			interpretAnweisung(baum->u.ausgabe.ausdruck, temp);
+			interpretAnweisung(baum, temp);
 			break;
 		case KNOTEN_LITERAL:
-			interpretAusdruck(baum, temp);
-			break;
 		case KNOTEN_VARIABLE:
-			interpretAusdruck(baum, temp);
-			break;
 		case KNOTEN_SUMME:
-			interpretAusdruck(baum, temp);
-			break;
 		case KNOTEN_DIFFERENZ:
-			interpretAusdruck(baum, temp);
-			break;
 		case KNOTEN_PRODUKT:
-			interpretAusdruck(baum, temp);
-			break;
 		case KNOTEN_QUOTIENT:
 			interpretAusdruck(baum, temp);
 			break;

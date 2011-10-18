@@ -28,7 +28,6 @@ int sucheWert(Tabelle *tabelle, char *name) {
 		return tabelle->wert;
 	}
 	else{
-		sucheWert(tabelle->next, name);
-		return 0;
+		return sucheWert(tabelle->next, name);
 	}
 }
