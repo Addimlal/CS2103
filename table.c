@@ -13,16 +13,22 @@
 
 
 Tabelle *aendereTabelle(Tabelle *tabelle, char *name, int wert) {
-  /******************************/
-  /* Das muessen Sie schreiben! */
-  /******************************/
-  return NULL;
+	Tabelle *temp = allocate(sizeof(Tabelle));
+	temp->name = name;
+	temp->wert = wert;
+	temp->next = tabelle;
+	return temp;
 }
 
-
 int sucheWert(Tabelle *tabelle, char *name) {
-  /******************************/
-  /* Das muessen Sie schreiben! */
-  /******************************/
-  return 0;
+	if(tabelle == NULL){
+		error("Eintrag %s nicht vorhanden", name);
+	}
+	if(strcmp(tabelle->name, name) == 0){
+		return tabelle->wert;
+	}
+	else{
+		sucheWert(tabelle->next, name);
+		return 0;
+	}
 }
