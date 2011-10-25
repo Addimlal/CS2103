@@ -11,6 +11,25 @@ Uebungen
    }
 
    Geben Sie die Token an, die ein Scanner fuer C liefern wuerde.
+   Folgende Elemente sind Token: int, max, (, ), i, j, { ,} , return, >, ?, : ; , /*, */
+	In höheren Programmiersprachen muss die Lexikalische Analyse
+	typischerweise folgende Tokens erkennen:
+	- Bezeichner (Identifier)
+	- Operator
+	- Literal
+	- Kommentar
+	- SchlüEselwort
+
+	Liste von Tokens:
+		SchlüEselwort(int), Bezeichner(max), Operator('('),
+		SchlüEselwort(int), Bezeichner(i), Operator(','),
+		SchlüEselwort(int), Bezeichner(j), Operator(')'),
+		Kommentar(/* liefert das Maximum der Zahlen i und j */),
+		Operator('{'),
+		SchlüEselwort(return),
+		Bezeichner(i), Operator('>'), Bezeichner(j), Operator('?'),
+		Bezeichner(i), Operator(':'), Bezeichner(j), Operator(';'),
+		Operator('}').
 
 2. Benutzen Sie Thompson's Konstruktion, um fuer die folgenden
    regulaeren Ausdruecke NEAs zu erstellen:
