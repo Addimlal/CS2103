@@ -18,7 +18,7 @@ Uebungen
 	- Operator
 	- Literal
 	- Kommentar
-	- SchlüEselwort
+	- Schlüsselwort
 
 	Liste von Tokens:
 		SchlüEselwort(int), Bezeichner(max), Operator('('),
@@ -105,3 +105,55 @@ Aufgaben
 4. Schreiben Sie eine Eingabedatei zum systematischen Test ihres
    Scanners, vor allem in Hinblick auf die verschiedenen Formen
    von Ganzzahl-Literalen.
+------------------------------------------------------------------------------
+
+* 1. Studie der SPL-Sprachdefinition.
+
+int 				Primitiver Typ für ganze Zahlen
+int[] 				Typkonstruktor für Felder
+proc 				Für Prozeduren
+proc wert(i: int)		Prozedur mit Wertparametern
+proc ref(ref j: int)		Prozedur mit Referenzparametern
+if( ) 				Einarmige Anweisung
+if ( )  else 			Zweiarmige Anweisung
+while (i < 15)			Abweisende Schleife
+type a = array [5] of int;	Typvereinbarung. type <name> = <typ> ;
+array [3] of array [5] of int	Zuweisung eines mehrdimensionalen Zahlenfeldes
+wert();				Einfache Prozeduraufrufe
+proc(i: int){ return proc(5); }	Nicht Erlaubt -- Keine Rekursionen
+proc() Proc()			Gross- und Kleinschreibung wird unterschieden
+LEER,TAB,\n			Zur Token-trennung
+// 				Das ist ein Kommentar
+das_ist_ein_Bezeichner		Bezeichner fangen mit [a-Z_] an.
+1234  0x1a2f3F4e 'a' '\n'	Werte = Dezimale, Hexadezimale und ASCII-Codes
+array else if of proc		Reservierte Schlüsselwörter
+ref type var while		Reservierte Schlüsselwörter
+(  )  [  ]  {  }  =  #		Sprachelemente von Bedeutung
+<  <=  >  >=  :=  :  ,		Sprachelemente von Bedeutung
+;  +  -  *  /			Sprachelemente von Bedeutung
+main()				Jedes Programm enthält mind. eine main()
+
+------------------------------------------------------------------------------
+
+# Token-Bezeichner:
+
+Beispiel fuer gleiche Typen:
+	type typ1 = array [5] of int;
+	type typ2 = typ1;
+(diese können vor einer Prozedur deklariert werden)
+
+Prozedurvereinbarungen:
+proc <name> ( <parameterliste> ) { <deklarationen> <anweisungsliste> }
+proc <name> ( <name> : <typ>, ref <name> : <typ> )
+{
+	<deklarationen> <anweisungsliste>
+}
+
+Die Zuweisung hat die Form:
+	<lhs> := <rhs> ;
+	x[3] := x[2] * 2;
+Wobei lhs und rhs den gleichen typ haben müssen.
+
+Die bedingte Anweisung kann in einer von zwei Formen vorliegen:
+  if ( <ausdruck> ) <anweisung1>
+  if ( <ausdruck> ) <anweisung1> else <anweisung2>
