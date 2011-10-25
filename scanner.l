@@ -63,8 +63,8 @@ while  				{ yylval.noVal.line = lineNumber; return WHILE; }
 
 {IDENT}  			{
 				yylval.noVal.line = lineNumber;
-				yylval.intVal.val = allocate(strlen(yytext)+1);
-				strcpy(yylval.intVal.val, yytext);
+				yylval.stringVal.val = allocate(strlen(yytext) + 1);
+				strcpy(yylval.stringVal.val, yytext);
 				return IDENT;
 				}
 
@@ -111,98 +111,97 @@ void showToken(int token) {
 		error("TOKEN = - - EOF --");
 		break;
 	case ARRAY:
-		printf("TOKEN = %s in line %i", "ARRAY", lineNumber);
+		printf("TOKEN = %s in line %i\n", "ARRAY", lineNumber);
 		break;
 	case ELSE:
-		printf("TOKEN = %s in line %i", "ELSE", lineNumber);
+		printf("TOKEN = %s in line %i\n", "ELSE", lineNumber);
 		break;
 	case IF:
-		printf("TOKEN = %s in line %i", "IF", lineNumber);
-		break;
+		printf("TOKEN = %s in line %i\n", "IF", lineNumber);
 		break;
 	case OF:
-		printf("TOKEN = %s in line %i", "OF", lineNumber);
+		printf("TOKEN = %s in line %i\n", "OF", lineNumber);
 		break;
 	case PROC:
-		printf("TOKEN = %s in line %i", "PROC", lineNumber);
+		printf("TOKEN = %s in line %i\n", "PROC", lineNumber);
 		break;
 	case REF:
-		printf("TOKEN = %s in line %i", "REF", lineNumber);
+		printf("TOKEN = %s in line %i\n", "REF", lineNumber);
 		break;
 	case TYPE:
-		printf("TOKEN = %s in line %i", "TYPE", lineNumber);
+		printf("TOKEN = %s in line %i\n", "TYPE", lineNumber);
 		break;
 	case VAR:
-		printf("TOKEN = %s in line %i", "VAR", lineNumber);
+		printf("TOKEN = %s in line %i\n", "VAR", lineNumber);
 		break;
 	case WHILE:
-		printf("TOKEN = %s in line %i", "WHILE", lineNumber);
+		printf("TOKEN = %s in line %i\n", "WHILE", lineNumber);
 		break;
 	case LPAREN:
-		printf("TOKEN = %s in line %i", "LPAREN", lineNumber);
+		printf("TOKEN = %s in line %i\n", "LPAREN", lineNumber);
 		break;
 	case RPAREN:
-		printf("TOKEN = %s in line %i", "RPAREN", lineNumber);
+		printf("TOKEN = %s in line %i\n", "RPAREN", lineNumber);
 		break;
 	case LBRACK:
-		printf("TOKEN = %s in line %i", "LBRACK", lineNumber);
+		printf("TOKEN = %s in line %i\n", "LBRACK", lineNumber);
 		break;
 	case RBRACK:
-		printf("TOKEN = %s in line %i", "RBRACK", lineNumber);
+		printf("TOKEN = %s in line %i\n", "RBRACK", lineNumber);
 		break;
 	case LCURL:
-		printf("TOKEN = %s in line %i", "LCURL", lineNumber);
+		printf("TOKEN = %s in line %i\n", "LCURL", lineNumber);
 		break;
 	case RCURL:
-		printf("TOKEN = %s in line %i", "RCURL", lineNumber);
+		printf("TOKEN = %s in line %i\n", "RCURL", lineNumber);
 		break;
 	case EQ:
-		printf("TOKEN = %s in line %i", "EQ", lineNumber);
+		printf("TOKEN = %s in line %i\n", "EQ", lineNumber);
 		break;
 	case NE:
-		printf("TOKEN = %s in line %i", "NE", lineNumber);
+		printf("TOKEN = %s in line %i\n", "NE", lineNumber);
 		break;
 	case LT:
-		printf("TOKEN = %s in line %i", "LT", lineNumber);
+		printf("TOKEN = %s in line %i\n", "LT", lineNumber);
 		break;
 	case LE:
-		printf("TOKEN = %s in line %i", "LE", lineNumber);
+		printf("TOKEN = %s in line %i\n", "LE", lineNumber);
 		break;
 	case GT:
-		printf("TOKEN = %s in line %i", "GT", lineNumber);
+		printf("TOKEN = %s in line %i\n", "GT", lineNumber);
 		break;
 	case GE:
-		printf("TOKEN = %s in line %i", "GE", lineNumber);
+		printf("TOKEN = %s in line %i\n", "GE", lineNumber);
 		break;
 	case ASGN:
-		printf("TOKEN = %s in line %i", "ASGN", lineNumber);
+		printf("TOKEN = %s in line %i\n", "ASGN", lineNumber);
 		break;
 	case COLON:
-		printf("TOKEN = %s in line %i", "COLON", lineNumber);
+		printf("TOKEN = %s in line %i\n", "COLON", lineNumber);
 		break;
 	case COMMA:
-		printf("TOKEN = %s in line %i", "COMMA", lineNumber);
+		printf("TOKEN = %s in line %i\n", "COMMA", lineNumber);
 		break;
 	case SEMIC:
-		printf("TOKEN = %s in line %i", "SEMIC", lineNumber);
+		printf("TOKEN = %s in line %i\n", "SEMIC", lineNumber);
 		break;
 	case PLUS:
-		printf("TOKEN = %s in line %i", "PLUS", lineNumber);
+		printf("TOKEN = %s in line %i\n", "PLUS", lineNumber);
 		break;
 	case MINUS:
-		printf("TOKEN = %s in line %i", "MINUS", lineNumber);
+		printf("TOKEN = %s in line %i\n", "MINUS", lineNumber);
 		break;
 	case STAR:
-		printf("TOKEN = %s in line %i", "STAR", lineNumber);
+		printf("TOKEN = %s in line %i\n", "STAR", lineNumber);
 		break;
 	case SLASH:
-		printf("TOKEN = %s in line %i", "SLASH", lineNumber);
+		printf("TOKEN = %s in line %i\n", "SLASH", lineNumber);
 		break;
 	case IDENT:
-		printf("TOKEN = %s in line %i, value=\"%s\"", "IDENT", yylval.stringVal.line, yylval.stringVal.val);
+		printf("TOKEN = %s in line %i, value=\"%s\"\n", "IDENT", yylval.stringVal.line, yylval.stringVal.val);
 		break;
 	case INTLIT:
-		printf("TOKEN = %s in line %i, value=\"%s\"", "INTLIT", yylval.intVal.line, yylval.intVal.val);
+		printf("TOKEN = %s in line %i, value=\"%i\n\"", "INTLIT", yylval.intVal.line, yylval.intVal.val);
 		break;
 	default:
 		error("No match found - undefined Token.");
