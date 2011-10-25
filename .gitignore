@@ -3,3 +3,9 @@
 *.swp
 slpl
 core
+*~
+Tests/*~
+spl
+lex.yy.c
+depend.mak
+

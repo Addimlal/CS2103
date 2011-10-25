@@ -106,5 +106,38 @@ int yywrap(void) {
 
 
 void showToken(int token) {
-
+	switch(token) {
+	case ARRAY :
+	case ELSE :
+	case IF :
+	case OF :
+	case PROC :
+	case REF :
+	case TYPE :
+	case VAR :
+	case WHILE :
+	case LPAREN :
+	case RPAREN :
+	case LBRACK :
+	case RBRACK :
+	case LCURL :
+	case RCURL :
+	case EQ :
+	case NE :
+	case LT :
+	case LE :
+	case GT :
+	case GE :
+	case ASGN :
+	case COLON :
+	case COMMA :
+	case SEMIC :
+	case PLUS :
+	case MINUS :
+	case STAR :
+	case SLASH :
+	case IDENT :
+	case INTLIT :
+	default:
+	}
 }
