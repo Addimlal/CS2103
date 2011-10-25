@@ -9,3 +9,4 @@ spl
 lex.yy.c
 depend.mak
 
+geany_run_script.sh

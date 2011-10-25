@@ -107,37 +107,105 @@ int yywrap(void) {
 
 void showToken(int token) {
 	switch(token) {
-	case ARRAY :
-	case ELSE :
-	case IF :
-	case OF :
-	case PROC :
-	case REF :
-	case TYPE :
-	case VAR :
-	case WHILE :
-	case LPAREN :
-	case RPAREN :
-	case LBRACK :
-	case RBRACK :
-	case LCURL :
-	case RCURL :
-	case EQ :
-	case NE :
-	case LT :
-	case LE :
-	case GT :
-	case GE :
-	case ASGN :
-	case COLON :
-	case COMMA :
-	case SEMIC :
-	case PLUS :
-	case MINUS :
-	case STAR :
-	case SLASH :
-	case IDENT :
-	case INTLIT :
+	case 0:
+		error("TOKEN = - - EOF --");
+		break;
+	case ARRAY:
+		printf("TOKEN = %s in line %i", "ARRAY", lineNumber);
+		break;
+	case ELSE:
+		printf("TOKEN = %s in line %i", "ELSE", lineNumber);
+		break;
+	case IF:
+		printf("TOKEN = %s in line %i", "IF", lineNumber);
+		break;
+		break;
+	case OF:
+		printf("TOKEN = %s in line %i", "OF", lineNumber);
+		break;
+	case PROC:
+		printf("TOKEN = %s in line %i", "PROC", lineNumber);
+		break;
+	case REF:
+		printf("TOKEN = %s in line %i", "REF", lineNumber);
+		break;
+	case TYPE:
+		printf("TOKEN = %s in line %i", "TYPE", lineNumber);
+		break;
+	case VAR:
+		printf("TOKEN = %s in line %i", "VAR", lineNumber);
+		break;
+	case WHILE:
+		printf("TOKEN = %s in line %i", "WHILE", lineNumber);
+		break;
+	case LPAREN:
+		printf("TOKEN = %s in line %i", "LPAREN", lineNumber);
+		break;
+	case RPAREN:
+		printf("TOKEN = %s in line %i", "RPAREN", lineNumber);
+		break;
+	case LBRACK:
+		printf("TOKEN = %s in line %i", "LBRACK", lineNumber);
+		break;
+	case RBRACK:
+		printf("TOKEN = %s in line %i", "RBRACK", lineNumber);
+		break;
+	case LCURL:
+		printf("TOKEN = %s in line %i", "LCURL", lineNumber);
+		break;
+	case RCURL:
+		printf("TOKEN = %s in line %i", "RCURL", lineNumber);
+		break;
+	case EQ:
+		printf("TOKEN = %s in line %i", "EQ", lineNumber);
+		break;
+	case NE:
+		printf("TOKEN = %s in line %i", "NE", lineNumber);
+		break;
+	case LT:
+		printf("TOKEN = %s in line %i", "LT", lineNumber);
+		break;
+	case LE:
+		printf("TOKEN = %s in line %i", "LE", lineNumber);
+		break;
+	case GT:
+		printf("TOKEN = %s in line %i", "GT", lineNumber);
+		break;
+	case GE:
+		printf("TOKEN = %s in line %i", "GE", lineNumber);
+		break;
+	case ASGN:
+		printf("TOKEN = %s in line %i", "ASGN", lineNumber);
+		break;
+	case COLON:
+		printf("TOKEN = %s in line %i", "COLON", lineNumber);
+		break;
+	case COMMA:
+		printf("TOKEN = %s in line %i", "COMMA", lineNumber);
+		break;
+	case SEMIC:
+		printf("TOKEN = %s in line %i", "SEMIC", lineNumber);
+		break;
+	case PLUS:
+		printf("TOKEN = %s in line %i", "PLUS", lineNumber);
+		break;
+	case MINUS:
+		printf("TOKEN = %s in line %i", "MINUS", lineNumber);
+		break;
+	case STAR:
+		printf("TOKEN = %s in line %i", "STAR", lineNumber);
+		break;
+	case SLASH:
+		printf("TOKEN = %s in line %i", "SLASH", lineNumber);
+		break;
+	case IDENT:
+		printf("TOKEN = %s in line %i, value=\"%s\"", "IDENT", yylval.stringVal.line, yylval.stringVal.val);
+		break;
+	case INTLIT:
+		printf("TOKEN = %s in line %i, value=\"%s\"", "INTLIT", yylval.intVal.line, yylval.intVal.val);
+		break;
 	default:
+		error("No match found - undefined Token.");
+		break;
 	}
 }
