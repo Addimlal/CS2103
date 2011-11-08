@@ -3,3 +3,5 @@
 *.swp
 slpl
 core
+/spl
+/*.yy.c
