@@ -1,0 +1,17 @@
+proc summe(a: int, b: int, ref c: int) {
+	c := a + b;
+}
+
+proc main() {
+	var a: int;
+	var b: int;
+	var c: int;
+
+	readi(a);
+	readi(b);
+
+	summe(a,b,c);
+
+	printi(c);
+	printc('\n');
+}
