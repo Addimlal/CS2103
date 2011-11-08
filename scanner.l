@@ -108,7 +108,7 @@ int yywrap(void) {
 void showToken(int token) {
 	switch(token) {
 	case 0:
-		error("TOKEN = - - EOF --");
+		printf("TOKEN = - - EOF --\n");
 		break;
 	case ARRAY:
 		printf("TOKEN = %s in line %i\n", "ARRAY", lineNumber);
