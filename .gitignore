@@ -5,3 +5,5 @@ slpl
 core
 /spl
 /*.yy.c
+/*.output
+/*.grammar

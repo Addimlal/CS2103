@@ -22,7 +22,7 @@ $(BIN):		$(OBJS)
 		$(CC) $(CFLAGS) -o $@ -c $<
 
 parser.tab.c:	parser.y
-		bison -d parser.y
+		bison -v -d -t --warnings=all parser.y
 
 lex.yy.c:	scanner.l
 		flex scanner.l
