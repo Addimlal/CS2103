@@ -33,32 +33,40 @@
 
 %%
 
-/*__________________________________________________________________________*/
+/*______________________________Hauptprogramm_______________________________*/
 program		:	declarations
 ;
+//////////////////////////////////////////////////////////////////////////////
 
-/*__________________________________________________________________________*/
+
+/*______________________________Deklarationen_______________________________*/
 declarations	: 	/*empty*/
 		| 	type_list declarations
 		| 	procedure declarations
 ;
-/*__________________________________________________________________________*/
+//////////////////////////////////////////////////////////////////////////////
+
+/*______________________________Typen_______________________________________*/
 
 type_list	:	TYPE IDENT EQ typ SEMIC
 ;
 
 typ		:	IDENT
-		|	ARRAY LCURL INTLIT RCURL OF typ
+		|	ARRAY LBRACK INTLIT RBRACK OF typ
 ;
+//////////////////////////////////////////////////////////////////////////////
 
-/*__________________________________________________________________________*/
+
+/*_____________________________Prozeduren___________________________________*/
 procedure	:	PROC IDENT LPAREN opt_parameters RPAREN
 			LCURL
 				opt_variables opt_statements
 			RCURL
 ;
+//////////////////////////////////////////////////////////////////////////////
 
-/*__________________________________________________________________________*/
+
+/*____________________________Parameter_____________________________________*/
 parameter	:	IDENT COLON typ
 		|	REF IDENT COLON typ
 ;
@@ -70,41 +78,73 @@ add_parameter	:	parameter
 opt_parameters	:	/*empty*/
 		|	add_parameter
 ;
+//////////////////////////////////////////////////////////////////////////////
 
-/*__________________________________________________________________________*/
-expression	:
+
+/*_____________________________Variablen____________________________________*/
+variable	:	IDENT
+		|	variable LBRACK expression RBRACK
+;
+
+variable_decl	:	VAR IDENT COLON typ SEMIC
+;
+
+opt_variables	:	/*empty*/
+		|	variable_decl opt_variables
+;
+//////////////////////////////////////////////////////////////////////////////
+
+
+/*_____________________________Ausdrücke____________________________________*/
+expression	:	expression PLUS term
+		|	expression MINUS term
+		|	term
+;
+
+term		:	term STAR factor_expr
+		|	term SLASH factor_expr
+		|	factor_expr
+;
+
+factor_expr	:	MINUS factor_expr
+		|	INTLIT
+		|	variable
+		|	LPAREN expression RPAREN
+;
+
+bool_expr	:	expression EQ expression		// =
+		|	expression NE expression		// !=
+		|	expression LT expression		// <
+		|	expression LE expression		// <=
+		|	expression GT expression		// >
+		|	expression GE expression		// >=
 ;
 
 add_expression	:	expression
 		|	expression COMMA add_expression
 ;
 
-opt_expressions	:	/*empty*/
+opt_expressions	:	/* empty */
 		|	add_expression
 ;
+//////////////////////////////////////////////////////////////////////////////
 
-/*__________________________________________________________________________*/
-variable	:	VAR IDENT COLON typ SEMIC
-;
 
-add_variables	:	/*empty*/
-		|	variable add_variables
-;
-
-/*__________________________________________________________________________*/
+/*_____________________________Statements___________________________________*/
 statement	:	SEMIC
 		|	variable ASGN expression
-		|	IF LPAREN expression RPAREN statement
-		|	IF LPAREN expression RPAREN statement ELSE statement
-		|	WHILE LPAREN expression RPAREN statement
-		|	LCURL add_statement RCURL
+		|	IF LPAREN bool_expr RPAREN statement
+		|	IF LPAREN bool_expr RPAREN statement ELSE statement
+		|	WHILE LPAREN bool_expr RPAREN statement
+		|	LCURL opt_statements RCURL
 		|	IDENT LPAREN opt_expressions RPAREN
 ;
 
-add_statement	:	/*empty*/
-		|	statement add_statement
+opt_statements	:	/*empty*/
+		|	statement opt_statements
 ;
-/*__________________________________________________________________________*/
+//////////////////////////////////////////////////////////////////////////////
+
 
 %%
 

@@ -25,7 +25,7 @@ parser.tab.c:	parser.y
 		bison -v -d -t --warnings=all parser.y
 
 lex.yy.c:	scanner.l
-		flex scanner.l
+		flex -d -v scanner.l
 
 tests:		all
 		@for i in Tests/test??.spl ; do \
