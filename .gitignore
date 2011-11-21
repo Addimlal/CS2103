@@ -7,3 +7,5 @@ core
 /*.yy.c
 /*.output
 /*.grammar
+/*.tab.c
+/*.tab.h
