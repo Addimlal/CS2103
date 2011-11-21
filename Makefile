@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wno-unused -g
 LDFLAGS = -g
 LDLIBS = -lm
 
-SRCS = main.c utils.c parser.tab.c lex.yy.c
+SRCS = main.c utils.c parser.tab.c lex.yy.c absyn.c sym.c
 OBJS = $(patsubst %.c,%.o,$(SRCS))
 BIN = spl
 
@@ -25,7 +25,7 @@ parser.tab.c:	parser.y
 		bison -v -d -t --warnings=all parser.y
 
 lex.yy.c:	scanner.l
-		flex -d -v scanner.l
+		flex scanner.l
 
 tests:		all
 		@for i in Tests/test??.spl ; do \

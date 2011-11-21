@@ -12,6 +12,8 @@
 #include "common.h"
 #include "utils.h"
 #include "scanner.h"
+#include "sym.h"
+#include "absyn.h"
 #include "parser.tab.h"
 
 static int lineNumber = 1;
@@ -61,14 +63,14 @@ while  				{ yylval.noVal.line = lineNumber; return WHILE; }
 \/  				{ yylval.noVal.line = lineNumber; return SLASH; }
 
 {IDENT}  			{
-				yylval.noVal.line = lineNumber;
+				yylval.stringVal.line = lineNumber;
 				yylval.stringVal.val = allocate(strlen(yytext) + 1);
 				strcpy(yylval.stringVal.val, yytext);
 				return IDENT;
 				}
 
 {NUM}				{
-				yylval.noVal.line = lineNumber;
+				yylval.intVal.line = lineNumber;
 				yylval.intVal.val = atoi(yytext);
 				return INTLIT;
 				}
@@ -98,7 +100,7 @@ while  				{ yylval.noVal.line = lineNumber; return WHILE; }
 %%
 
 
-/* Hilfsfunktionen die für gematchte */
+/* Hilfsfunktionen die für gematchte token gilt */
 int yywrap(void) {
   return 1;
 }

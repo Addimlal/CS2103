@@ -11,9 +11,13 @@
 #include "common.h"
 #include "utils.h"
 #include "scanner.h"
+#include "sym.h"
+#include "absyn.h"
 #include "parser.h"
 
 #define YYDEBUG 1
+
+Absyn *progTree;
 
 %}
 
@@ -21,14 +25,34 @@
 	NoVal noVal;
 	IntVal intVal;
 	StringVal stringVal;
+	Absyn *node;
 }
 
-%token				ARRAY ELSE IF OF PROC REF TYPE VAR WHILE
+/*______________________________Tokendefinitionen___________________________*/
+%token	<noVal>			ARRAY ELSE IF OF PROC REF TYPE VAR WHILE
 				LPAREN RPAREN LBRACK RBRACK LCURL  RCURL
 				EQ NE LT LE GT GE ASGN COLON COMMA SEMIC
-				PLUS  MINUS  STAR  SLASH   IDENT  INTLIT
+				PLUS  MINUS  STAR  SLASH
 
+%token <stringVal>		IDENT
+
+%token <intVal>			INTLIT
+//////////////////////////////////////////////////////////////////////////////
+
+
+/*______________________________Rückgabetypen der Non-Terminale_____________*/
+%type <node>			program declarations type_list typ procedure
+				parameter add_parameter opt_parameters
+				variable variable_decl opt_variables
+				expression term factor_expr bool_expr
+				add_expression opt_expressions statement
+				opt_statements
+//////////////////////////////////////////////////////////////////////////////
+
+
+/*______________________________Startsymbol festlegen_______________________*/
 %start				program
+//////////////////////////////////////////////////////////////////////////////
 
 
 %%
