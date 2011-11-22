@@ -129,25 +129,37 @@ typedef struct absyn {
   } u;
 } Absyn;
 
-
+/* Type constructors */
 Absyn *newNameTy(int line, Sym *name);
 Absyn *newArrayTy(int line, int size, Absyn *ty);
+
+/* Type declaration constructors */
 Absyn *newTypeDec(int line, Sym *name, Absyn *ty);
 Absyn *newProcDec(int line, Sym *name,
                   Absyn *params, Absyn *decls, Absyn *body);
+
+/* Variable declaration constructors */
 Absyn *newParDec(int line, Sym *name, Absyn *ty, boolean isRef);
 Absyn *newVarDec(int line, Sym *name, Absyn *ty);
+
+/* Statement constructors */
 Absyn *newEmptyStm(int line);
 Absyn *newCompStm(int line, Absyn *stms);
 Absyn *newAssignStm(int line, Absyn *var, Absyn *exp);
 Absyn *newIfStm(int line, Absyn *test, Absyn *thenPart, Absyn *elsePart);
 Absyn *newWhileStm(int line, Absyn *test, Absyn *body);
 Absyn *newCallStm(int line, Sym *name, Absyn *args);
+
+/* Expression constructors */
 Absyn *newOpExp(int line, int op, Absyn *left, Absyn *right);
 Absyn *newVarExp(int line, Absyn *var);
 Absyn *newIntExp(int line, int val);
+
+/* Variable constructors */
 Absyn *newSimpleVar(int line, Sym *name);
 Absyn *newArrayVar(int line, Absyn *var, Absyn *index);
+
+/* List constructors */
 Absyn *emptyDecList(void);
 Absyn *newDecList(Absyn *head, Absyn *tail);
 Absyn *emptyStmList(void);
