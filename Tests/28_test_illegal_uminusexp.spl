@@ -1,0 +1,5 @@
+
+proc main () {
+	var c : int;
+	c := --1; // nonassoc -> error?
+}

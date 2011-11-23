@@ -1,0 +1,11 @@
+proc main() {
+//nothing -> o.k.
+}
+
+proc b () {
+var b : int; //shadowing -> o.k.
+var c : int; //parameter -> semantical illegal
+readi(x); 
+//1. dec, 2. stm -> o.k.
+}
+

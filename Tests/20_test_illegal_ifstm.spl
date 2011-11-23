@@ -1,0 +1,16 @@
+
+proc main() {
+	var i : int;
+	if (1 # 10)
+	{
+		if (1 = 2)
+		{
+			;
+		}
+		if (2=2);
+		else
+			printi('b');
+		else		//not allowed here
+			;
+	}
+}

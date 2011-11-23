@@ -1,0 +1,5 @@
+//erstellt von Andreas Schnell
+//Schlüsselworttest else
+proc main(){
+	var else : int;
+}

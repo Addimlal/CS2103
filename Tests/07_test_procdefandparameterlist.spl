@@ -1,0 +1,18 @@
+// some simple procdefs
+
+proc main() { // main needs to be there by def -> symantic analysis
+	//empty proc -> legal
+}
+
+	proc second( a : int ) { }
+
+ proc third (x: int, y:int , z : int,zz:int) {}
+
+       proc fourth(	ref a : int ) {}
+
+typedef c = array [3] of array [4] of int;
+
+proc fifth( ref arr : c, a : int) {}
+
+proc sixth ( ref d : array [10] ) {} //legal, but useless as dicussed in lecture
+

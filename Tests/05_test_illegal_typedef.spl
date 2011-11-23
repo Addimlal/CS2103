@@ -1,0 +1,7 @@
+// some simple typedefs
+
+type _ = int; // legal
+
+proc main() {
+	type sdf = array [33] of array [22] of int; //illegal
+}

@@ -1,0 +1,5 @@
+proc main(){
+	var i:int;
+	var k:array [8] of int;
+	var h:array [10] of array[6] of int;
+}

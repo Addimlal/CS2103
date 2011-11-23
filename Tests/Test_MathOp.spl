@@ -1,0 +1,47 @@
+proc main(){
+	var i:int;
+	//Zahlen
+	i := 4 + 4;
+	i := 4 - 4;
+	i := 5 * 5;
+	i := 5 / 5;
+	//Variablen mit Zahlen
+	i := i + 4;
+	i := i - 4;
+	i := i * 4;
+	i := i / 4;
+	//negative Varaiblen mit Zahlen
+	i := -i + 4;
+	i := -i - 4;
+	i := -i * 4;
+	i := -i / 4;
+	//var mit neg zahlen
+	i := i + -4;
+	i := i - -4;
+	i := i * -4;
+	i := i / -4;
+	//neg var mit neg Zahlen
+	i := -i + -4;
+	i := -i - -4;
+	i := -i * -4;
+	i := -i / -4;
+	//negative Var mit negative Var
+	i := -i + -i;
+	i := -i - -i;
+	i := -i * -i;
+	i := -i / -i;
+	//Komplizierte Ausrücke
+	i := i*2 + i*3 +i*3+ i*5- i*6;
+	i := -i*-i - -i*-i;
+	i := -i/-i - -i/-i;
+	i := -(-i*-i*-i/i)+-(i-i)*-i;
+	//sehr komplizierte Ausdrücke
+	i := -(-(-(i--1)*-(i/-10))*-(-i+7-8/6*6*7*90)/89)*-i*-i;
+	i := -i*-i*-i*-i*-i*-i*-i/-i--i+-i*9/6+9090-89*-i/89;
+	i := (i+i) * (i-i);
+	i := ((-8+-7)*(4*-6))*((56-i)-(9-7*-(90+5)));
+	i := (-i--i)*-i;
+	i := (-i+-i)--(8/-i);
+	i := i--8--i--7--7--6+-6+-8/-5*-6/78*(-5*-7-(-(7*-7/-i)*-(56)));
+	i := ((i-i)*(i+56)-(-(-(8)-9)*89/-78)*-((((((7))))))*-((((8))))-(78*-7))+-(-(-(-(i--1)*-(i/-10))*-(-i+7-8/6*6*7*90)/89)*-i*-i)*-(-i*-i*-i*-i*-i*-i*-i/-i--i+-i*9/6+9090-89*-i/89);
+}

@@ -1,0 +1,3 @@
+//erstellt von Andreas Schnell
+//Testen ob der Beizeichner int kein fesgelgter typ ist
+type int = int;

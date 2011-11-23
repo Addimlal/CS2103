@@ -1,0 +1,5 @@
+//erstellt von Andreas Schnell
+//Schlüsselworttest ref
+proc main(){
+	var ref : int;
+}

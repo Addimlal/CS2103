@@ -1,0 +1,7 @@
+//erstellt con Andreas Schnell
+
+proc main(){
+}
+proc test(i:int,ref t:int,ref i:array[30]of array[80]of int,k:array[30]of array[80]of array[39] of int){
+}
+type o = int;

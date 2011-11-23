@@ -1,0 +1,13 @@
+type typ1 = array [5] of int;
+type typ2 = typ1;
+type typ3 = array [3] of array [100000000000000000000000000009] of typ2;
+type typ4 = int;
+type typ5 = array [78] of typ4;
+
+proc main(){
+	var var1 : typ1;
+	var var2 : typ2;
+	var var3 : typ3;
+	var var4 : typ4;
+	var var5 : typ5;
+} 

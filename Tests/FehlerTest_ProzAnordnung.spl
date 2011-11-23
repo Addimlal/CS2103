@@ -1,0 +1,16 @@
+//erstellt von Andreas Schnell
+//Auf Fehler prüfen: Prüfen ob der Parser die Falsche Reihnfolge innerhlb des Programms erkennt
+type t = int;
+proc main(){
+	test();
+}
+
+proc test(){
+	test1();
+	var h:t;
+	var j:int;
+}
+
+proc test1(){
+}
+	

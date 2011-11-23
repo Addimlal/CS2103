@@ -1,0 +1,5 @@
+type t = array [20] of int;
+type v = t;
+type g = array [20] of array [20] of t;
+type h = array [20] of array [10] of v;
+type l = array [20] of array [15] of array [10] of h;

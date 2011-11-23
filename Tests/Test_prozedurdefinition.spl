@@ -1,0 +1,25 @@
+
+proc main(){
+	var wert1 : int;
+	var wert2 : array[10] of int;
+	var wert3 : array[30] of array [20] of int;
+
+	test(wert1);
+	test1();
+	test2(wert1,wert2);
+	test3(wert1,wert1,wert1,wert1,wert2);	
+}
+
+
+proc test(wert1 :int) {
+
+}
+
+proc test1(){
+}
+
+proc test2(wert1: int, ref wert2: int){
+}
+
+proc test3(wert1:int,wert1:int,wert1:int,wert1:int,ref wert2:int){
+}

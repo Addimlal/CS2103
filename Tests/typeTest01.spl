@@ -1,0 +1,4 @@
+//erstellt von Andreas Schnell
+type t = int;
+type t1 = t;
+type t2 = array[20] of array[2] of t;

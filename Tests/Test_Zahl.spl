@@ -1,0 +1,7 @@
+//erstellt von Andreas Schnell
+//Prüfen ob bestimmte Zahlen erlaubt werden
+proc main(){
+	printi('\n');
+	printc(0x0a);
+	printi(0x0abcDEF7663a);
+}

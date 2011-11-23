@@ -1,0 +1,18 @@
+//erstellt von Andreas Schnell
+//Das prog soll Testen ob hinter jdem Zusammenhang wo ein Semikolone verlangt wird auch stheht
+type test = int;
+proc main(){
+	var versuch:int;
+	if(1);
+	if(-1){}else;
+	if(23*-4);else;
+	if(efs*sdf*sdf);else{}
+	while(3423*435);
+	while(kjshfdjskbfsffkjb){}
+	;;;;;;
+	Proc();
+	{
+	}
+	{
+	}
+}

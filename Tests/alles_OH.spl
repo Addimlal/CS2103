@@ -1,0 +1,33 @@
+type typ1 = array [5] of int;
+type typ2 = typ1;
+type typ3 = array [3] of array [100000000000000000000000000009] of typ2;
+type typ4 = int;
+type typ5 = array [6] of array [6] of array [6] of array [6] of array [6] of array [6] of array [6] of array [6] of array [6] of array [6] of array [6] of array [6] of array [6] of array [6] of typ4;
+
+proc main(ref ref1 : typ1, var2 : typ2){
+	while (typ3 = typ4){
+		proc1(ref1);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	}
+} 
+
+proc proc1(){
+	var var3 : typ5;
+	var var4 : typ5;
+	while(var3 < var1 / (10 *(- (2* (2) /6) ) ) ){
+		var4[2][98][78] := var3[5][7][2];
+		if(var4[2][98][78] = var3[5][7][2]) {
+			main();
+			dsfdsfjsdfh := -3+sdfd-rer-4/6*442555248924986924544565+54455*-88965478+-6321587/7852455+dsfdsfsdf[2]/dsfdfdfdsfdfdsfsdfsdfsdfsdfsdfsdfsdfsdf[-4][dfdfdf];
+		}
+	}
+}
+
+proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}proc proc3(){}
+
+proc proc3(){
+	if(34*-45)if(fg<89);else if(90--45*-7/-hastenetgeshen);
+	printc('d');
+	prints('\n');
+}
+
+

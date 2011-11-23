@@ -1,0 +1,8 @@
+// some simple typedefs
+
+type _ = int; // legal
+type _a = a; // legal
+type _0 = array [0] of int; //legal
+type 1a = array [33] of array [22] of int; //illegal
+type c_2 = array [1] of array [2] of array [3] of array [4] of array [5] of int; //legal
+

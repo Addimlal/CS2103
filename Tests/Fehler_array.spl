@@ -1,0 +1,5 @@
+//erstellt von Andreas Schnell
+//Schlüsselworttest array
+proc main(){
+	var array : int;
+}

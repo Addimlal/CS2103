@@ -1,0 +1,10 @@
+// some procdefs
+
+proc main() { // main needs to be there by def -> symantic analysis
+	//empty proc -> legal
+}
+
+proc fifth( a : int, ref a : array [1] of int) {} //same ident -> error in semantic analysis
+
+proc sixth() {}
+

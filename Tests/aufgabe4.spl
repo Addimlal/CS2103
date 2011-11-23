@@ -1,0 +1,39 @@
+//Zusammenarbeit O und A
+//Prog 4 Fakultät in Prozedur
+
+proc main(){
+	var n: int;
+	var summe: int;
+	var erg: int;
+	readi(n);
+	fak(n, erg);
+	printi(erg);
+	printc(0x0a);
+	summe := 1;
+	fakReg(n, summe, erg);
+	printi(erg);
+	printc(0x0a);
+}
+
+proc fak(ref n: int, ref erg:int){
+	var i: int;
+	i := 0;	
+	erg := 1;
+	if(n#0){
+		while(i<n){
+			erg := erg*(n-i);
+			i := i+1;
+		}
+	}
+	n := erg;
+}
+
+proc fakReg(n: int, summe: int, ref erg: int){
+	if(n#1){
+		summe := summe * n;
+		fakReg(n-1, summe, erg);	
+	}else{
+		erg:=summe;
+	}
+}
+

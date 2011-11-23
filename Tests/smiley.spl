@@ -1,0 +1,42 @@
+proc main() {
+	drawCircle(320, 240, 60, 0);
+
+	setPixel(290, 210, 0);
+	setPixel(291, 210, 0);
+	setPixel(292, 210, 0);
+	setPixel(293, 210, 0);
+	setPixel(290, 211, 0);
+	setPixel(291, 211, 0);
+	setPixel(292, 211, 0);
+	setPixel(293, 211, 0);
+	setPixel(290, 212, 0);
+	setPixel(291, 212, 0);
+	setPixel(292, 212, 0);
+	setPixel(293, 212, 0);
+	setPixel(290, 213, 0);
+	setPixel(291, 213, 0);
+	setPixel(292, 213, 0);
+	setPixel(293, 213, 0);
+	setPixel(350, 210, 0);
+	setPixel(349, 210, 0);
+	setPixel(348, 210, 0);
+	setPixel(347, 210, 0);
+	setPixel(350, 211, 0);
+	setPixel(349, 211, 0);
+	setPixel(348, 211, 0);
+	setPixel(347, 211, 0);
+	setPixel(350, 212, 0);
+	setPixel(349, 212, 0);
+	setPixel(348, 212, 0);
+	setPixel(347, 212, 0);
+	setPixel(350, 213, 0);
+	setPixel(349, 213, 0);
+	setPixel(348, 213, 0);
+	setPixel(347, 213, 0);
+
+	drawLine(300, 280, 340, 280, 0);
+	drawLine(297, 279, 299, 279, 0);
+	drawLine(295, 278, 296, 278, 0);
+	drawLine(341, 279, 343, 279, 0);
+	drawLine(344, 278, 345, 278, 0);
+}

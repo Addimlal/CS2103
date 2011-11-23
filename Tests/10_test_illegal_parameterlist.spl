@@ -1,0 +1,10 @@
+// some procdefs
+
+proc main() { // main needs to be there by def -> symantic analysis
+	//empty proc -> legal
+}
+
+proc fifth( arr : array [1] of int, a : int) {} //complex type by value -> illegal
+
+proc sixth() {}
+

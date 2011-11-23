@@ -1,0 +1,6 @@
+//erstellt von Andreas Schnell
+//Dieses Programm Prüft ob ihr falsche angeben in einm while zulasst
+proc main(){
+	while(4+5){
+	}
+}

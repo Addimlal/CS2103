@@ -1,0 +1,7 @@
+proc main() {
+	var array1: array[5] of array[5] of int;
+	var i: int;
+
+	array1[1][1] := 10;
+	i := array1[1][1];
+}

@@ -11,7 +11,7 @@ SRCS = main.c utils.c parser.tab.c lex.yy.c absyn.c sym.c
 OBJS = $(patsubst %.c,%.o,$(SRCS))
 BIN = spl
 
-.PHONY:		all tests depend clean dist-clean
+.PHONY:		all tests verify depend clean dist-clean
 
 all:		$(BIN)
 
@@ -30,8 +30,18 @@ lex.yy.c:	scanner.l
 tests:		all
 		@for i in Tests/test??.spl ; do \
 		  echo ; \
-		  ./$(BIN) $$i ; \
+		  ./$(BIN) $$i; \
 		done
+		@echo
+
+-include depend.mak
+
+verify:	all
+		@for i in Tests/test??.spl ; do \
+		  echo ; \
+		  ./$(BIN) $$i; \
+		done
+		./testIt
 		@echo
 
 -include depend.mak
@@ -42,6 +52,8 @@ depend:		parser.tab.c lex.yy.c
 clean:
 		rm -f *~ *.o
 		rm -f Tests/*~
+		rm -f SomethingIsWrong.txt referenz.txt test.txt
+		rm -f *.swp
 
 dist-clean:	clean
-		rm -f $(BIN) parser.tab.c parser.tab.h lex.yy.c depend.mak
+		rm -f $(BIN) parser.tab.c parser.tab.h parser.output lex.yy.c depend.mak

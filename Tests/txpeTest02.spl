@@ -1,0 +1,5 @@
+//erstellt von Andreas Schnell
+type myInt = int;
+type vector = array[5] of int;
+type matrix = array[3] of vector;
+type mat3 = array[10] of [20] of vector;

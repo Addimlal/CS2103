@@ -1,0 +1,3 @@
+//erstellt von Andreas Schnell
+//Test ob bestimmte Bezichner ein Syntaxfheler hervorrufen
+type 9flascheerBezichner = int;
