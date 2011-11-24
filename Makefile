@@ -6,15 +6,15 @@ NO_COLOR="\033[0m"
 OK_COLOR="\033[30;1m"
 FILE_COLOR="\033[32;1m"
 
-CC = tcc
-CFLAGS = -Wall -Wimplicit-function-declaration -c -g
-LDLIBS = -L/usr/lib/x86_64-linux-gnu/
+#CC = tcc
+#CFLAGS = -Wall -Wimplicit-function-declaration -c -g
+#LDLIBS = -L/usr/lib/x86_64-linux-gnu/
 
-#CC = gcc
-#CFLAGS = -Wall -Wno-unused -g
+CC = gcc
+CFLAGS = -Wall -Wno-unused -g
+LDLIBS = -lm
+
 LDFLAGS = -g
-#LDLIBS = -lm
-
 SRCS = main.c utils.c parser.tab.c lex.yy.c absyn.c sym.c
 OBJS = $(patsubst %.c,%.o,$(SRCS))
 BIN = spl
