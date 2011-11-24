@@ -1,0 +1,23 @@
+proc factorial(n: int, ref fac: int) {
+	var j: int;
+
+	if(n = 0) {
+		fac := 1;
+	} else {
+		factorial(n - 1, j);
+		fac := n * j;
+	}
+}
+
+proc main() {
+	
+	var i: int;
+	var fac: int;
+
+	readi(i);
+
+	factorial(i, fac);
+
+	printi(fac);
+	printc('\n');
+}

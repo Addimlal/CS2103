@@ -1,0 +1,6 @@
+
+type a = int;
+type _a = a;
+type b_ = array [1+1] of int; //only intlit in typedef
+
+

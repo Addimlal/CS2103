@@ -1,0 +1,5 @@
+proc main() {	
+	var testvar: array[10] of array[10] of array[10] of int;
+
+	testvar[9][7] := 0;
+}

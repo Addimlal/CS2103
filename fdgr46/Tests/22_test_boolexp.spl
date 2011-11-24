@@ -1,0 +1,22 @@
+
+proc main () {
+	while (1<2);
+	while (1<=2);
+	while (1>2);
+	while (1>=2);
+	while (1=2);
+	while (1#2);
+	
+	//priority?
+	while (1+2*-3<1-2/3);
+	while (1+2*-3<=1-2/3);
+	while (1+2*-3>1-2/3);
+	while (1+2*-3>=1-2/3);
+	while (1+2*-3=1-2/3);
+	while (1+2*-3#1-2/3);
+
+	//parens
+	while (((1<2)));
+	while ((1)>(2));
+	while ((((1))>(2)));
+}

@@ -1,0 +1,11 @@
+
+proc main() {
+	var i: int;
+	var j: int;
+	
+	readi(i);
+	readi(j);
+
+	printi(i + j);
+	printc('\n');
+}

@@ -1,0 +1,7 @@
+//nichtassoziativitaet. nur stichprobenartig
+
+proc main () {
+	while (1<2);
+	while (1<=2<=3); //illegal: nonassociative
+	while (1>2);
+}

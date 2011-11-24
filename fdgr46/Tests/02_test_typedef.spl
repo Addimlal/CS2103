@@ -1,0 +1,8 @@
+// some simple typedefs
+
+type a = int;
+type _a = a;
+type b_ = array [0] of int;
+type c1 = array[1234369]of array [ 22 ] of int;
+type c_2 = array [1 ] of array [ 2] of array[ 3] of array [4 ]of array[ 99999 ]of int;
+

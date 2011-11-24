@@ -1,0 +1,7 @@
+proc main() {
+	var mysumme : int;
+	readi(mysumme);
+	var b : int; //illegal: no mixed Dec and Stm
+	readi(b);
+}
+

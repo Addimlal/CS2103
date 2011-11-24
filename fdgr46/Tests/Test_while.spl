@@ -1,0 +1,18 @@
+proc main(){
+	while(3<3);
+	while(3<3){}
+	while(2<2)while(3<3);
+	while(7<3){
+		while(8<4){
+			while(9<90){
+				while(34=34){
+					while(9#4){
+						while(8<=9)
+							while(8<8){
+							}
+					}
+				}
+			}
+		}
+	}
+}

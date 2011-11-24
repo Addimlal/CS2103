@@ -1,0 +1,14 @@
+proc main() {
+//nothing -> o.k.
+}
+
+proc a () {
+printi(1); //1.no dec, 2.Stm -> o.k.
+}
+
+proc b () {
+var x : int;
+readi(x); 
+//1. dec, 2. stm -> o.k.
+}
+

@@ -1,0 +1,24 @@
+#!/bin/bash
+REF="referenz.txt"
+TEST="test.txt"
+OUTPUT="SomethingIsWrong.txt"
+
+rm -f referenz.txt test.txt
+for file in Tests/*.spl
+    do
+    echo "-- Compiling $file --" >> $REF
+    ./splRef --absyn $file t >> $REF
+    echo "-- Compiling $file --" >> $TEST
+    ./spl --absyn $file >> $TEST
+done
+diff -s --suppress-common-lines $REF $TEST > $OUTPUT
+
+STRING=$( sed -n '1p' $OUTPUT )
+
+if [ "$STRING" = "Dateien $REF und $TEST sind identisch." ] ||
+   [ "$STRING" = "Files $REF and $TEST are identical" ]; then
+    echo "Glueckwunsch:-) Die abstrakten Syntaxbaeume sind identisch!!!"
+else
+    echo "Referenz und eigene Implementierung liefern unterschiedliche Ausgaben... Genaues steht in $OUTPUT"
+fi
+

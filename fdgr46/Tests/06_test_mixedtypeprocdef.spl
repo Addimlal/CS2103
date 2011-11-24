@@ -1,0 +1,12 @@
+// mixed typedefs and procdefs
+
+type _ = int; // legal
+type sdf = array [33] of array [22] of int; //illegal
+
+proc main() {
+	//empty proc -> legal	
+}
+
+type f = int; //typedef after procdef -> legal
+
+proc second() { }

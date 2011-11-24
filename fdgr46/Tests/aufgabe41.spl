@@ -1,0 +1,57 @@
+
+
+proc main(){
+	//Varaiblen fuer Iterative Version
+	var n: int;
+	var erg: int;
+	//********************************
+	//Varaiblen fuer Rekursive Version
+	var n1: int;
+	//********************************
+	erg := 0;
+	n := 0;
+	n1 := 0;
+	//Eingabe anfordern
+	readi(n);
+	//Fakrultaet Iterativ
+	fakIterativ(n,erg);
+	printc(0x0a);
+	printi(erg);
+	printc(0x0a);
+	//********************************
+	//Eingabe anfordern
+	readi(n1);
+	//Fakrultaet Rekursiv
+	fakRekursiv(n1);
+	printc(0x0a);
+	printi(n1);
+	printc(0x0a);
+}
+
+proc fakIterativ(n: int,ref erg: int){
+	var i: int;
+	var faki: int;
+	i := 1;
+	faki := 1;
+	while(i <= n){
+		faki := faki * i;
+		i := i + 1;
+		//Ausgabe in jeder Schleife
+		printc(0x0a); printc(0x49); printc(0x74); printc(0x65); printc(0x72); printc(0x61); printc(0x74); printc(0x69); printc(0x76); printc(0x2d); printi(faki); printc(0x0a); 
+	}
+	erg := faki;
+}
+
+proc fakRekursiv(ref n1: int){
+	var n2: int;
+	n2 := n1;
+	if(n2 = 0){
+		n1 := 1;
+	}else{
+		n2 := n2 - 1;
+		fakRekursiv(n2);
+		n1 := n1 * n2;
+		//Ausgabe in jeder Rekursionsebene
+		printc(0x0a); printc(0x52); printc(0x65); printc(0x6b); printc(0x75); printc(0x72); printc(0x73); printc(0x69); printc(0x76); printc(0x2d); printi(n1); printc(0x0a); 
+	}
+}

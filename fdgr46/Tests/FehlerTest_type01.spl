@@ -1,0 +1,6 @@
+//erstellt von Andreas Schnell
+//Prüfen ob Fehler erkannt wird: Falls var in der typedefinition erluabt ist
+
+var h:int;
+proc main(){
+}

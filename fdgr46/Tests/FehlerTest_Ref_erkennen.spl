@@ -1,0 +1,3 @@
+proc main(){
+	ref i:int;
+}

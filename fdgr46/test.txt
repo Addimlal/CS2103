@@ -1,0 +1,231 @@
+-- Compiling Tests/00_test_emptyfile.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/01_test_onlycomment.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/02_test_typedef.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/03_test_illegal_ident.spl --
+Error: syntax error in line 6
+-- Compiling Tests/04_test_illegal_ident.spl --
+Error: syntax error in line 6
+-- Compiling Tests/05_test_illegal_typedef.spl --
+Error: syntax error in line 6
+-- Compiling Tests/06_test_mixedtypeprocdef.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/07_test_procdefandparameterlist.spl --
+Error: syntax error in line 13
+-- Compiling Tests/08_test_illegal_procdef.spl --
+Error: syntax error in line 9
+-- Compiling Tests/09_test_illegal_parameterlist.spl --
+Error: syntax error in line 7
+-- Compiling Tests/10_test_illegal_parameterlist.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/11_test_illegal_parameterlist.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/12_test_illegal_parameterlist.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/13_test_illegal_procdef.spl --
+Error: syntax error in line 7
+-- Compiling Tests/14_test_illegal_typedef.spl --
+Error: syntax error in line 4
+-- Compiling Tests/15_test_illegal_procbody.spl --
+Error: syntax error in line 4
+-- Compiling Tests/16_test_procbody.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/17_test_illegal_procdef.spl --
+Error: syntax error in line 5
+-- Compiling Tests/18_test_illegal_vardef.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/18_test_vardef.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/19_test_statement.spl --
+Error: syntax error in line 51
+-- Compiling Tests/20_test_illegal_ifstm.spl --
+Error: Illegal Symbol at # 	 in line 4.
+
+-- Compiling Tests/21_test_arrayasgstm.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/22_test_boolexp.spl --
+Error: Illegal Symbol at # 	 in line 8.
+
+-- Compiling Tests/23_test_illegal_boolexp.spl --
+Error: syntax error in line 4
+-- Compiling Tests/24_test_illegal_boolexp.spl --
+Error: syntax error in line 5
+-- Compiling Tests/25_test_illegal_boolexp.spl --
+Error: syntax error in line 5
+-- Compiling Tests/26_test_numberexp.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/27_test_uminusexp.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/28_test_illegal_uminusexp.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/alles_OH.spl --
+Error: syntax error in line 28
+-- Compiling Tests/Analyse.spl --
+Error: syntax error in line 39
+-- Compiling Tests/arrayFalsch.spl --
+Error: syntax error in line 3
+-- Compiling Tests/array.spl --
+Error: syntax error in line 1
+-- Compiling Tests/arraytest00.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/arraytest01.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/arraytest02.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/arraytest03.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/arraytest04.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/arraytest05.spl --
+Error: syntax error in line 2
+-- Compiling Tests/arraytest06.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/aufgabe1.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/aufgabe2.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/aufgabe3.spl --
+Error: Illegal Symbol at # 	 in line 33.
+
+-- Compiling Tests/aufgabe41.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/aufgabe4.spl --
+Error: Illegal Symbol at # 	 in line 22.
+
+-- Compiling Tests/aufgabe5.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/factorialiter.spl --
+Error: Illegal Symbol at ' 	 in line 22.
+
+-- Compiling Tests/factorialrek.spl --
+Error: Illegal Symbol at ' 	 in line 22.
+
+-- Compiling Tests/Fehler_array.spl --
+Error: syntax error in line 4
+-- Compiling Tests/Fehler_array_type_ausdruck_in_Bracks.spl --
+Error: syntax error in line 3
+-- Compiling Tests/Fehler_Bez.spl --
+Error: syntax error in line 3
+-- Compiling Tests/Fehler_else.spl --
+Error: syntax error in line 4
+-- Compiling Tests/Fehler_if.spl --
+Error: syntax error in line 4
+-- Compiling Tests/Fehler_intBez.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Fehler_of.spl --
+Error: syntax error in line 4
+-- Compiling Tests/Fehler_proc.spl --
+Error: syntax error in line 4
+-- Compiling Tests/Fehler_ref.spl --
+Error: syntax error in line 4
+-- Compiling Tests/FehlerTest_if.spl --
+Error: syntax error in line 4
+-- Compiling Tests/FehlerTest_Nur_Semic.spl --
+Error: syntax error in line 3
+-- Compiling Tests/FehlerTest_procDef.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/FehlerTest_ProzAnordnung.spl --
+Error: syntax error in line 10
+-- Compiling Tests/FehlerTest_Ref_erkennen.spl --
+Error: syntax error in line 2
+-- Compiling Tests/FehlerTest_type01.spl --
+Error: syntax error in line 4
+-- Compiling Tests/FehlerTest_type02.spl --
+Error: syntax error in line 3
+-- Compiling Tests/FehlerTest_while.spl --
+Error: syntax error in line 4
+-- Compiling Tests/Fehler_type.spl --
+Error: syntax error in line 4
+-- Compiling Tests/Fehler_var.spl --
+Error: syntax error in line 4
+-- Compiling Tests/Fehler_while.spl --
+Error: syntax error in line 4
+-- Compiling Tests/Fehler_Zahl.spl --
+Error: syntax error in line 59
+-- Compiling Tests/Lineanalyse.spl --
+Error: syntax error in line 20
+-- Compiling Tests/proctest00.spl --
+Error: syntax error in line 1
+-- Compiling Tests/proctest01.spl --
+Error: syntax error in line 1
+-- Compiling Tests/proctest02.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/ProgAnordnung.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/programm1.spl --
+Error: syntax error in line 1
+-- Compiling Tests/queens.spl --
+Error: Illegal Symbol at ' 	 in line 70.
+
+-- Compiling Tests/smiley.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/sort.spl --
+Error: syntax error in line 23
+-- Compiling Tests/sumproc.spl --
+Error: Illegal Symbol at ' 	 in line 3.
+
+-- Compiling Tests/sum.spl --
+Error: Illegal Symbol at ' 	 in line 10.
+
+-- Compiling Tests/Test_anweisungsliste.spl --
+Error: syntax error in line 91
+-- Compiling Tests/testarithmetic.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Test_Bez.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/testcompstm2.spl --
+Error: syntax error in line 6
+-- Compiling Tests/Test_deklaration.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/testif.spl --
+Error: syntax error in line 7
+-- Compiling Tests/Test_if.spl --
+Error: syntax error in line 9
+-- Compiling Tests/Test_leereProzedur.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Test_leeresProg.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Test_MathOp.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/testProg.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Test_prozedurdefinition.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Test_Reihenfolge_in_prog_egal.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Test_Semic.spl --
+Error: syntax error in line 6
+-- Compiling Tests/test.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Test_type.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/testunary2.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/testunary3.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/testunary.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Test_variablendeklaration.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/testVersuch.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Test_while.spl --
+Error: Illegal Symbol at # 	 in line 9.
+
+-- Compiling Tests/Test_Zahl.spl --
+Error: Illegal Symbol at ' 	 in line 4.
+
+-- Compiling Tests/txpeTest02.spl --
+Error: syntax error in line 5
+-- Compiling Tests/typeTest01.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/typeTest_OH.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/Verbundanweisung.spl --
+Error: showNode got NULL node pointer
+-- Compiling Tests/vergleich.spl --
+Error: syntax error in line 2
+-- Compiling Tests/versuch.spl --
+Error: showNode got NULL node pointer

@@ -1,0 +1,9 @@
+//erstellt von Andreas Schnell
+//Programm prüft ob zugelassen wird das die Reihenfolge der von typ- und procdefinition egal ist
+type h = int;
+proc main(){
+
+}
+type v = array[20] of int;
+proc test(){
+}

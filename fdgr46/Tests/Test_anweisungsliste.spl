@@ -1,0 +1,164 @@
+type type1 = array[10] of int;
+type type2 = array[20] of array [10] of type1;
+type type3 = int;
+type type4 = array[40] of array [40] of array [20] of type2;
+//
+//test
+proc main(){
+	var wert1 : int;
+	var wert2 : array[10] of int;
+	var wert3 : array[30] of array [20] of int;
+	var wertType1 : type1;
+	var wertType2 : type2;
+	var wertType3 : type3;
+	var wertType4 : array [20] of array [30] of type1;
+	var wertType5 : array [20] of array [80] of type4;
+	test(wert1);
+	test1();
+	test2(wert1,wert2);
+	test3(wert1,wert1,wert1,wert1,wert2);
+	//Arrays
+	wert1 := 3 + 3;
+	wert1 := 4*-wert1+18-6/-5;
+	wert3[5][5] := wert2[4] + wert3[10][10];
+	wertType4[5][10][10][10] := wertType1[10] + wert1 - -wert2[10] * -wert2[9];
+	wertType4[10][4][2][2] := -wertType4[5][10][10][10]*-wertType4[5][10][10][10]+-wertType4[5][10][10][10]/-wertType4[5][10][10][10]*-i;
+	wertType5[10][4][2][2][10][4][2][2] := wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]* -wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2] --wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]/-(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]+-wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][wertType5[10][4][2][2][10][(-wertType5[10][4][2][2][10][4][2][2]*-wertType5[(-wertType5[10][4][2][2][10][4][2][2]+-wertType5[10][4][2][2][10][4][2][2])*(-wertType5[10][4][2][2][10][4][2][2]--wertType5[10][4][2][2][10][4][2][2])][4][2][2][10][4][2][2])][2][2]]);
+}
+
+
+proc test(wert1 :int) {
+
+}
+
+proc test1(){
+	var wert1 : int;
+	var wert2 : array[10] of int;
+	var wert3 : array[30] of array [20] of int;
+	var wertType1 : type1;
+	var wertType2 : type2;
+	var wertType3 : type3;
+	var wertType4 : array [20] of array [30] of type1;
+	var wertType5 : array [20] of array [80] of type4;
+	test(wert1);
+	test1();
+	test2(wert1,wert2);
+	test3(wert1,wert1,wert1,wert1,wert2);
+	//Arrays
+	wert1 := 3 + 3;
+	wert1 := 4*-wert1+18-6/-5;
+	wert3[5][5] := wert2[4] + wert3[10][10];
+	wertType4[5][10][10][10] := wertType1[10] + wert1 - -wert2[10] * -wert2[9];
+	wertType4[10][4][2][2] := -wertType4[5][10][10][10]*-wertType4[5][10][10][10]+-wertType4[5][10][10][10]/-wertType4[5][10][10][10]*-i;
+	wertType5[10][4][2][2][10][4][2][2] := wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]* -wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2] --wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]/-(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]+-wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][wertType5[10][4][2][2][10][(-wertType5[10][4][2][2][10][4][2][2]*-wertType5[(-wertType5[10][4][2][2][10][4][2][2]+-wertType5[10][4][2][2][10][4][2][2])*(-wertType5[10][4][2][2][10][4][2][2]--wertType5[10][4][2][2][10][4][2][2])][4][2][2][10][4][2][2])][2][2]]);
+}
+
+proc test2(wert1: int, ref wert2: int){
+}
+
+proc test3(wert1:int,wert1:int,wert1:int,wert1:int,ref wert2:int){
+	//if einfach
+	var i:int;
+	var wert1 : int;
+	var wert2 : array[10] of int;
+	var wert3 : array[30] of array [20] of int;
+	var wertType1 : type1;
+	var wertType2 : type2;
+	var wertType3 : type3;
+	var wertType4 : array [20] of array [30] of type1;
+	var wertType5 : array [20] of array [80] of type4;
+	if(3<4){
+	}
+	if(4<4){
+	}else{
+	}
+	{
+		i:=-i*-i;
+		test1();
+	}
+	if(i*-i+788<89){
+		wert1 := 3 + 3;
+		wert1 := 4*-wert1+18-6/-5;
+		wert3[5][5] := wert2[4] + wert3[10][10];
+		wertType4[5][10][10][10] := wertType1[10] + wert1 - -wert2[10] * -wert2[9];
+		wertType4[10][4][2][2] := -wertType4[5][10][10][10]*-wertType4[5][10][10][10]+-wertType4[5][10][10][10]/-wertType4[5][10][10][10]*-i;
+		wertType5[10][4][2][2][10][4][2][2] := wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]* -wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2] --wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]/-(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]+-wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][wertType5[10][4][2][2][10][(-wertType5[10][4][2][2][10][4][2][2]*-wertType5[(-wertType5[10][4][2][2][10][4][2][2]+-wertType5[10][4][2][2][10][4][2][2])*(-wertType5[10][4][2][2][10][4][2][2]--wertType5[10][4][2][2][10][4][2][2])][4][2][2][10][4][2][2])][2][2]]);
+	}else{
+	}
+	if(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]* -wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2] --wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]/-(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]+-wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][wertType5[10][4][2][2][10][(-wertType5[10][4][2][2][10][4][2][2]*-wertType5[(-wertType5[10][4][2][2][10][4][2][2]+-wertType5[10][4][2][2][10][4][2][2])*(-wertType5[10][4][2][2][10][4][2][2]--wertType5[10][4][2][2][10][4][2][2])][4][2][2][10][4][2][2])][2][2]])<8);
+	if(5<5);
+	if(4<5);else;
+	if(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]* -wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2] --wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]/-(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]+-wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][wertType5[10][4][2][2][10][(-wertType5[10][4][2][2][10][4][2][2]*-wertType5[(-wertType5[10][4][2][2][10][4][2][2]+-wertType5[10][4][2][2][10][4][2][2])*(-wertType5[10][4][2][2][10][4][2][2]--wertType5[10][4][2][2][10][4][2][2])][4][2][2][10][4][2][2])][2][2]])<8)if(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]* -wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2] --wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]/-(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]+-wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][wertType5[10][4][2][2][10][(-wertType5[10][4][2][2][10][4][2][2]*-wertType5[(-wertType5[10][4][2][2][10][4][2][2]+-wertType5[10][4][2][2][10][4][2][2])*(-wertType5[10][4][2][2][10][4][2][2]--wertType5[10][4][2][2][10][4][2][2])][4][2][2][10][4][2][2])][2][2]])<8)i := 9;else;else i:= wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]* -wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2] --wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]/-(wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][2]+-wertType5[-wertType5[10][4][2][2][10][4][2][2]*-wertType5[10][4][2][2][10][4][2][2]][4][-6*-wert1][2][10][4][2][wertType5[10][4][2][2][10][(-wertType5[10][4][2][2][10][4][2][2]*-wertType5[(-wertType5[10][4][2][2][10][4][2][2]+-wertType5[10][4][2][2][10][4][2][2])*(-wertType5[10][4][2][2][10][4][2][2]--wertType5[10][4][2][2][10][4][2][2])][4][2][2][10][4][2][2])][2][2]]);
+if(-8<-8);
+if(-7*-8<-9){}else;
+if(-6<-90);else{}
+if(-7<-7);else i:=90;
+if(-45 # 45)i:=45;else;
+if(-45 < 45)i:=45;else;
+if(-45 > 45)i:=45;else;
+if(-45 <= 45)i:=45;else;
+if(-45 >= 45)i:=45;else;
+if(-45 = 45)i:=45;else;
+
+if(-45 # 45)i:=45;else{}
+if(-45 < 45)i:=45;else{}
+if(-45 > 45)i:=45;else{}
+if(-45 <= 45)i:=45;else{}
+if(-45 >= 45)i:=45;else{}
+if(-45 = 45)i:=45;else{
+	if(-45 # 45)i:=45;else{}
+	if(-45 < 45)i:=45;else{}
+	if(-45 > 45)i:=45;else{}
+	if(-45 <= 45)i:=45;else{}
+	if(-45 >= 45)i:=45;else{}
+	if(-45 = 45)i:=45;else{}
+}
+if(-45 # 45)i:=45;else{
+	if(-45 # 45)i:=45;else{}
+	if(-45 < 45)i:=45;else{}
+	if(-45 > 45)i:=45;else{}
+	if(-45 <= 45)i:=45;else{}
+	if(-45 >= 45)i:=45;else{}
+	if(-45 = 45)i:=45;else{}
+}
+if(-45 < 45)i:=45;else{
+	if(-45 # 45)i:=45;else{}
+	if(-45 < 45)i:=45;else{}
+	if(-45 > 45)i:=45;else{}
+	if(-45 <= 45)i:=45;else{}
+	if(-45 >= 45)i:=45;else{}
+	if(-45 = 45)i:=45;else{}
+}
+if(-45 > 45)i:=45;else{
+	if(-45 # 45)i:=45;else{}
+	if(-45 < 45)i:=45;else{}
+	if(-45 > 45)i:=45;else{}
+	if(-45 <= 45)i:=45;else{}
+	if(-45 >= 45)i:=45;else{}
+	if(-45 = 45)i:=45;else{}
+}
+if(-45 <= 45)i:=45;else{
+	if(-45 # 45)i:=45;else{}
+	if(-45 < 45)i:=45;else{}
+	if(-45 > 45)i:=45;else{}
+	if(-45 <= 45)i:=45;else{}
+	if(-45 >= 45)i:=45;else{}
+	if(-45 = 45)i:=45;else{}
+}
+if(-45 >= 45)i:=45;else{
+	if(-45 # 45)i:=45;else{}
+	if(-45 < 45)i:=45;else{}
+	if(-45 > 45)i:=45;else{}
+	if(-45 <= 45)i:=45;else{}
+	if(-45 >= 45)i:=45;else{}
+	if(-45 = 45)i:=45;else{}
+}
+if(-45 = 45)i:=45;else{
+	if(-45 # 45)i:=45;else{}
+	if(-45 < 45)i:=45;else{}
+	if(-45 > 45)i:=45;else{}
+	if(-45 <= 45)i:=45;else{}
+	if(-45 >= 45)i:=45;else{}
+	if(-45 = 45)i:=45;else{}
+}
+}

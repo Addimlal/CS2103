@@ -1,0 +1,15 @@
+proc sum(i: int, j: int) {
+	printi(i + j);
+	printc('\n');
+}
+
+proc main() {
+	
+	var i: int;
+	var j: int;
+
+	readi(i);
+	readi(j);
+
+	sum(i, j);
+}

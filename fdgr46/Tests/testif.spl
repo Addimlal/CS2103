@@ -1,0 +1,9 @@
+proc main() {
+	var i: int;
+
+	if(1 < 2)
+		if(1 < 2)
+			i := 1;
+		else
+			i := 2;
+}

@@ -1,0 +1,74 @@
+type a = array [10] of int;
+
+proc swap(i: int, j: int, ref toSort: a) {
+	var temp: int;
+
+	temp := toSort[i];
+	toSort[i] := toSort[j];
+	toSort[j] := temp;
+}
+
+proc heapify(root: int, size: int, ref toSort: a) {
+	var done: int;
+	var maxChild: int;
+
+	done := 0;
+	while(root * 2 + 1 < size) {
+		if(done < 1) {
+			if(root * 2 + 2 = size) {
+				maxChild := root * 2 + 1;
+			} else {
+				if(toSort[root * 2 + 1] > toSort[root * 2 + 2]) 
+					maxChild := root * 2 + 1;
+				else 
+					maxChild := root * 2 + 2;
+				
+			}
+			if (toSort[root] < toSort[maxChild]) {
+				swap(root, maxChild, toSort);
+				root := maxChild;
+			} else {
+				done := 1;
+			}
+		} else {
+			root := size;
+		}
+	}
+}
+
+proc sort(ref toSort: a) {
+	var i: int;
+
+	i := 4;
+	while(i >= 0) {
+		heapify(i, 10, toSort);
+		i := i - 1;
+	}
+
+	i := 9;
+	while(i >= 1) {
+		swap(0, i, toSort);
+		heapify(0, i - 1, toSort);
+		i := i - 1;
+	}
+}
+
+proc main() {
+	var arguments: a;
+	var i: int;
+
+	i := 0;
+	while(i < 10) {
+		readi(arguments[i]);
+		i := i + 1;
+	}
+
+	sort(arguments);
+
+	i := 0;
+	while(i < 10) {
+		printi(arguments[i]);
+		printc('\n');
+		i := i + 1;
+	}
+}

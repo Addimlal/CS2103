@@ -1,0 +1,9 @@
+// some simple procdefs
+
+proc main() { // main needs to be there by def -> symantic analysis
+	//empty proc -> legal
+}
+
+	proc second( a : int ) { //missing proc end
+
+

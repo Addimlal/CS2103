@@ -1,0 +1,7 @@
+
+proc main () {
+	while (1<2);
+	while (1=<2); //unknown op
+	while (1>2);
+	while (1=>2); //unknown op
+}

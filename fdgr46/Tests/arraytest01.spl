@@ -1,0 +1,11 @@
+//Yo dawg, so we heard yo like arrays, so we put an array 
+//in yo array so yo can index while yo index
+
+type vector = array[5] of int;
+type matrix = array[5] of vector;
+
+proc main() {
+	var mat1: matrix;
+
+	mat1[1][1] := 5;
+}

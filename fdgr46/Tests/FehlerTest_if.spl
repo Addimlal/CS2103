@@ -1,0 +1,6 @@
+//erstellt von Andreas Schnell
+//Dieses Programm Prüft ob ihr falsche angeben in einm if zulasst
+proc main(){ 
+	if(5+5){
+	}
+}

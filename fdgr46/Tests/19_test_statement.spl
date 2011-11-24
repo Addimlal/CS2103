@@ -1,0 +1,132 @@
+proc main() {
+	//nothing -> o.k.
+}
+
+proc a() {
+	;//emptystm -> o.k.
+}
+
+proc aa() {
+	;; //emptystms -> o.k.
+}
+
+proc aaa() {
+	;;;
+	;;
+	; //emptystms -> o.k.
+}
+
+proc b() {
+	var i : int;
+	i := 1; //assignstm -> o.k.
+}
+
+proc c() {
+	b(); //callstm -> o.k.
+}
+
+proc d() {
+	{ } //compstm -> o.k.
+}
+
+proc dd() {
+	{ {} } //compstms  -> o.k.
+}
+
+
+proc d() {
+	{  ;} //compstm,emptystm -> o.k.
+}
+
+
+proc e() {
+	var i : int;
+	{
+		i := 1;
+		i := 2;
+	} //compstm -> o.k.
+}
+
+proc f() {
+	var i := 1;
+	while (i # 10) //whilestm -> o.k.
+		i := i + 1; //nothing -> o.k.
+}
+
+proc ff() {
+	var i := 1;
+	while (i # 10) //whilestm -> o.k.
+	{
+		i := i + 1; //nothing -> o.k.
+	}
+}
+
+proc fff() {
+	var i := 1;
+	while (i # 10); //whilestm -> o.k.
+}
+
+proc ffff() { //cascading while
+	var i := 1;
+	while (i # 10)
+		while (1 >= i)
+			i = i + 1; 
+}
+
+proc g() {
+	if (1 # 10); //ifstm -> o.k.
+}
+
+proc gg() {
+	if (1 # 10); else; //ifstm -> o.k.
+}
+
+proc ggg() {
+	if (1 # 10)
+		printi(1);
+	else
+		printi('\n');
+}
+
+proc gggg() {
+	if (1 # 10) //ifstm -> o.k.
+	{
+		printi(4);
+	}
+}
+
+proc ggggg() {
+	if (1 # 10)
+		if (2 #2)
+			; //ifstm -> o.k.
+		else
+			printi(1);
+}
+
+proc ggggggg() {
+	var i : int;
+	if (1 # 10) //ifstm -> o.k.
+	{
+		if (1 = 2)
+		{
+			;
+		}
+		if (2=2);
+		else
+			printi('b');
+		if (2=3) {
+			if (3 <= 4)
+			{
+				i := 1 +1;
+			}
+			else
+			{
+				i := 5;
+			}
+		}
+		else
+			i := 20;
+		
+	}
+}
+

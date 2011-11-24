@@ -1,0 +1,12 @@
+proc main() {
+
+	var i: int;
+	var j: int;
+	var a: array[5] of array[5] of int;
+
+	i := 2;
+	a[0][0] := 3;
+	a[0][1] := a[0][0];
+
+	j := (i + i) * --a[0][1];
+}

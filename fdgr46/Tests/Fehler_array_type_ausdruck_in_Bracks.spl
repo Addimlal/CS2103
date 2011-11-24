@@ -1,0 +1,3 @@
+//erstellt von Andreas Schnell
+//Dieses Programm soll einen Fehler erkennn wenn ein Ausruck in einer Typedefinition steht
+type g = array[10] of array[20] of array[34 + 34];
