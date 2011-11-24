@@ -92,7 +92,7 @@ while  				{ yylval.noVal.line = lineNumber; return WHILE; }
 
 {LF}				{ lineNumber++; }
 
-{WHITESPACE}          		/* Tabulatoren und Linefeeds aufessen */
+{WHITESPACE}	  		/* Tabulatoren und Linefeeds aufessen */
 
 .				{
 				error("Illegal Symbol at %s \t in line %i.\n", yytext, lineNumber);

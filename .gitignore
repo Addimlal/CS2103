@@ -9,3 +9,7 @@ core
 /*.grammar
 /*.tab.c
 /*.tab.h
+/.project
+/SomethingIsWrong.txt
+/referenz.txt
+/test.txt

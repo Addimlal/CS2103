@@ -52,7 +52,7 @@ Absyn *newTypeDec(int line, Sym *name, Absyn *ty) {
 
 
 Absyn *newProcDec(int line, Sym *name,
-                  Absyn *params, Absyn *decls, Absyn *body) {
+		  Absyn *params, Absyn *decls, Absyn *body) {
   Absyn *node;
 
   node = (Absyn *) allocate(sizeof(Absyn));

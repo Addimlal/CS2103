@@ -2,10 +2,18 @@
 # Makefile for SPL compiler
 #
 
-CC = gcc
-CFLAGS = -Wall -Wno-unused -g
+NO_COLOR="\033[0m"
+OK_COLOR="\033[30;1m"
+FILE_COLOR="\033[32;1m"
+
+CC = tcc
+CFLAGS = -Wall -Wimplicit-function-declaration -c -g
+LDLIBS = -L/usr/lib/x86_64-linux-gnu/
+
+#CC = gcc
+#CFLAGS = -Wall -Wno-unused -g
 LDFLAGS = -g
-LDLIBS = -lm
+#LDLIBS = -lm
 
 SRCS = main.c utils.c parser.tab.c lex.yy.c absyn.c sym.c
 OBJS = $(patsubst %.c,%.o,$(SRCS))
@@ -27,24 +35,26 @@ parser.tab.c:	parser.y
 lex.yy.c:	scanner.l
 		flex scanner.l
 
-tests:		all
-		@for i in Tests/test??.spl ; do \
-		  echo ; \
-		  ./$(BIN) $$i; \
-		done
+run:		all
+		@for i in Tests/??_test_*.spl ; \
+		do echo $(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./$(BIN) $$i; \
+		done | column -c 80
+		@echo
+
+ast:		all
+		@for i in Tests/??_test_*.spl ; \
+		do echo $(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./$(BIN) --absyn $$i; \
+		done | column -c 80
 		@echo
 
 -include depend.mak
 
-verify:	all
-		@for i in Tests/test??.spl ; do \
-		  echo ; \
-		  ./$(BIN) $$i; \
-		done
-		./testIt
+verify:		all
+		./verify
 		@echo
 
 -include depend.mak
+
 
 depend:		parser.tab.c lex.yy.c
 		$(CC) $(CFLAGS) -MM $(SRCS) > depend.mak

@@ -128,8 +128,8 @@ Sym *newSym(char *string) {
   while (p != NULL) {
     if (p->hashValue == hashValue) {
       if (strcmp(p->string, string) == 0) {
-        /* found: return symbol */
-        return p;
+	/* found: return symbol */
+	return p;
       }
     }
     p = p->next;
