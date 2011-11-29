@@ -1,24 +1,39 @@
 #!/bin/bash
-REF="referenz.txt"
-TEST="test.txt"
-OUTPUT="SomethingIsWrong.txt"
+REF="parser_referenz.txt"
+TEST="parser_test.txt"
+OUTPUT="parser_unterschiede.txt"
 
-rm -f referenz.txt test.txt
+rm -f $REF $TEST $OUTPUT
+shopt -s nullglob; f=(Tests/*.absyn);
+if ((! ${#f[@]})); then
+echo -e '\n\E[34mErstelle einmalig Referenz Syntaxbäume in Tests/*.absyn für schnelleren vergleich zwischen Referenz und Test.\E[0m\n'
+	for f in Tests/*.spl ;
+		do ./splRef --absyn "$f" /dev/null > "${f%.spl}.absyn" ;
+	done;
+fi
+
+echo -e "\n\033[1;31mVermutlich Fehler in:\033[0m"
 for file in Tests/*.spl
     do
     echo "-- Compiling $file --" >> $REF
     ./splRef --absyn $file t >> $REF
     echo "-- Compiling $file --" >> $TEST
     ./spl --absyn $file >> $TEST
+    ./spl --absyn $file | cmp -s /dev/stdin "${file%.spl}.absyn" || echo -e "\033[1;31mE:\033[0m \033[1;34m$file\033[0m"
 done
+
 diff -s --suppress-common-lines $REF $TEST > $OUTPUT
 
 STRING=$( sed -n '1p' $OUTPUT )
 
 if [ "$STRING" = "Dateien $REF und $TEST sind identisch." ] ||
    [ "$STRING" = "Files $REF and $TEST are identical" ]; then
-    echo "Glueckwunsch:-) Die abstrakten Syntaxbaeume sind identisch!!!"
+    echo -e "\n\n\n\033[42m\033[1;37mGlückwunsch :-) Die abstrakten Syntaxbäume sind identisch!!!\033[0m"
 else
-    echo "Referenz und eigene Implementierung liefern unterschiedliche Ausgaben... Genaues steht in $OUTPUT"
+    echo -e "\n\033[1;37mReferenz und eigene Implementierung liefern unterschiedliche Ausgaben ..."
+    echo -e "Genaues steht in $OUTPUT. Tipp: parser.output analysieren.\033[0m\n"
+
+    echo -e "\033[33m$TEST\033[0m\033[1;30m enthält die ASTs generiert durch Ihren SPL-Compiler.\033[0m"
+    echo -e "\033[33m$REF\033[0m\033[1;30m enthält die ASTs generiert durch Referenz-Compiler.\033[0m"
 fi
 

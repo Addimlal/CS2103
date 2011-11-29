@@ -44,7 +44,7 @@ Absyn *progTree;
 %type <node>			program declarations type_def typ procedure
 				parameter add_parameter opt_parameters
 				variable variable_decl opt_variables
-				expression term factor_expr bool_expr
+				expression term factor_expr arith_expr
 				add_expression opt_expressions statement
 				opt_statements
 //////////////////////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@ Absyn *progTree;
 
 /*______________________________Hauptprogramm_______________________________*/
 program		:	declarations
-			{ progTree = $1; }
+			{ progTree = $1; $$ = $1; }
 ;
 //////////////////////////////////////////////////////////////////////////////
 
@@ -139,9 +139,25 @@ opt_variables	:	/*empty*/
 
 
 /*_____________________________Ausdrücke____________________________________*/
-expression	:	expression PLUS term
+expression	:	arith_expr EQ arith_expr		// =
+			{ $$ = newOpExp($2.line, ABSYN_OP_EQU, $1, $3); }
+		|	arith_expr NE arith_expr		// !=
+			{ $$ = newOpExp($2.line, ABSYN_OP_NEQ, $1, $3); }
+		|	arith_expr LT arith_expr		// <
+			{ $$ = newOpExp($2.line, ABSYN_OP_LST, $1, $3); }
+		|	arith_expr LE arith_expr		// <=
+			{ $$ = newOpExp($2.line, ABSYN_OP_LSE, $1, $3); }
+		|	arith_expr GT arith_expr		// >
+			{ $$ = newOpExp($2.line, ABSYN_OP_GRT, $1, $3); }
+		|	arith_expr GE arith_expr		// >=
+			{ $$ = newOpExp($2.line, ABSYN_OP_GRE, $1, $3); }
+		|	arith_expr
+			{ $$ = $1; }
+;
+
+arith_expr	:	arith_expr PLUS term
 			{ $$ = newOpExp($2.line, ABSYN_OP_ADD, $1, $3); }
-		|	expression MINUS term
+		|	arith_expr MINUS term
 			{ $$ = newOpExp($2.line, ABSYN_OP_SUB, $1, $3); }
 		|	term
 			{ $$ = $1; }
@@ -157,26 +173,14 @@ term		:	term STAR factor_expr
 
 factor_expr	:	MINUS factor_expr
 			{ $$ = newOpExp($1.line, ABSYN_OP_SUB, newIntExp($1.line, 0), $2); }
+		|	PLUS factor_expr
+			{ $$ = newOpExp($1.line, ABSYN_OP_SUB, newIntExp($1.line, 0), $2); }
 		|	INTLIT
 			{ $$ = newIntExp($1.line, $1.val); }
 		|	variable
 			{ $$ = newVarExp($1->line, $1); }
 		|	LPAREN expression RPAREN
 			{ $$ = $2 }
-;
-
-bool_expr	:	expression EQ expression		// =
-			{ $$ = newOpExp($2.line, ABSYN_OP_EQU, $1, $3); }
-		|	expression NE expression		// !=
-			{ $$ = newOpExp($2.line, ABSYN_OP_NEQ, $1, $3); }
-		|	expression LT expression		// <
-			{ $$ = newOpExp($2.line, ABSYN_OP_LST, $1, $3); }
-		|	expression LE expression		// <=
-			{ $$ = newOpExp($2.line, ABSYN_OP_LSE, $1, $3); }
-		|	expression GT expression		// >
-			{ $$ = newOpExp($2.line, ABSYN_OP_GRT, $1, $3); }
-		|	expression GE expression		// >=
-			{ $$ = newOpExp($2.line, ABSYN_OP_GRE, $1, $3); }
 ;
 
 add_expression	:	expression
@@ -196,17 +200,17 @@ opt_expressions	:	/* empty */
 /*_____________________________Statements___________________________________*/
 statement	:	SEMIC
 			{ $$ = newEmptyStm($1.line); }
-		|	variable ASGN expression
+		|	variable ASGN expression SEMIC
 			{ $$ = newAssignStm($1->line, $1, $3); }
-		|	IF LPAREN bool_expr RPAREN statement
+		|	IF LPAREN expression RPAREN statement
 			{ $$ = newIfStm($1.line, $3, $5, newEmptyStm($1.line)); }
-		|	IF LPAREN bool_expr RPAREN statement ELSE statement
+		|	IF LPAREN expression RPAREN statement ELSE statement
 			{ $$ = newIfStm($1.line, $3, $5, $7); }
-		|	WHILE LPAREN bool_expr RPAREN statement
+		|	WHILE LPAREN expression RPAREN statement
 			{ $$ = newWhileStm($1.line, $3, $5); }
 		|	LCURL opt_statements RCURL
 			{ $$ = newCompStm($1.line, $2); }
-		|	IDENT LPAREN opt_expressions RPAREN
+		|	IDENT LPAREN opt_expressions RPAREN SEMIC
 			{ $$ = newCallStm($1.line, newSym($1.val), $3); }
 ;
 
