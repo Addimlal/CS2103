@@ -10,9 +10,8 @@ lex.yy.c
 parser.output
 parser.tab.c
 parser.tab.h
-
 parser_referenz.txt
 parser_test.txt
 parser_unterschiede.txt
 ChangeLog
-
+/fdgr46.tar.gz
