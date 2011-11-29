@@ -4,6 +4,7 @@
 .project
 core
 spl
+*.absyn
 
 lex.yy.c
 parser.output

@@ -1,6 +1,0 @@
-DecList(
-  ProcDec(
-    main,
-    DecList(),
-    DecList(),
-    StmList()))

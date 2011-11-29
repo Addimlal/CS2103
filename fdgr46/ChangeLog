@@ -1,6 +1,14 @@
+2011-11-29 15:39:58 +0100 Fernandos 
+
+	* fertig (HEAD, fdgr46)
+
+2011-11-29 14:50:22 +0100 Fernandos 
+
+	* verify script enhanced almost finished. one bug with uminusexp detected and if()
+
 2011-11-24 16:22:27 +0100 Fernandos 
 
-	* updated gitignore to reflect branch changes (HEAD, origin/fdgr46, fdgr46)
+	* updated gitignore to reflect branch changes (origin/fdgr46)
 
 2011-11-24 16:19:49 +0100 Fernandos 
 

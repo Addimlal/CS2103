@@ -1,4 +1,0 @@
-DecList(
-  TypeDec(
-    int,
-    NameTy(int)))

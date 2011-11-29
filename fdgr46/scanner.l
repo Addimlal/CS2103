@@ -25,7 +25,8 @@ static int lineNumber = 1;
 IDENT		([a-zA-Z_][a-zA-Z0-9_]*)
 NUM		([0-9]+)
 HEXLIT		(0x[0-9a-fA-F]+)
-ASCII		(\'.\'|\'\\n\')
+ASCII_NO		(\'.\')
+ASCII_LF	(\'\\n\')
 COMMENT		(\/\/.*)
 LF		(\n)
 WHITESPACE	([ \t]+)
@@ -82,13 +83,13 @@ while  				{ yylval.noVal.line = lineNumber; return WHILE; }
 				return INTLIT;
 				}
 
-(\'.\') 	 		{
+{ASCII_NO} 	 		{
 				yylval.intVal.line = lineNumber;
 				yylval.intVal.val = yytext[1];
 				return INTLIT;
 				}
 
-(\'\\n\')		 	{
+{ASCII_LF}		 	{
 				yylval.intVal.line = lineNumber;
 				yylval.intVal.val = '\n';
 				return INTLIT;
@@ -102,7 +103,7 @@ while  				{ yylval.noVal.line = lineNumber; return WHILE; }
 {WHITESPACE}	  		/* Tabulatoren und Linefeeds aufessen */
 
 .				{
-				error("Illegal character at %c \t in line %i.\n", yytext[0], lineNumber);
+				error("Illegal character at '%c' \t in line %i.\n", yytext[0], lineNumber);
 				}
 %%
 

@@ -173,6 +173,8 @@ term		:	term STAR factor_expr
 
 factor_expr	:	MINUS factor_expr
 			{ $$ = newOpExp($1.line, ABSYN_OP_SUB, newIntExp($1.line, 0), $2); }
+		|	PLUS factor_expr
+			{ $$ = newOpExp($1.line, ABSYN_OP_SUB, newIntExp($1.line, 0), $2); }
 		|	INTLIT
 			{ $$ = newIntExp($1.line, $1.val); }
 		|	variable
