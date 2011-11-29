@@ -11,8 +11,8 @@ parser.output
 parser.tab.c
 parser.tab.h
 
-SomethingIsWrong.txt
-referenz.txt
-test.txt
+parser_referenz.txt
+parser_test.txt
+parser_unterschiede.txt
 ChangeLog
 
