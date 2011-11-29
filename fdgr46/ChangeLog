@@ -1,6 +1,18 @@
+2011-11-29 23:16:41 +0100 Fernandos 
+
+	* ignore fdgr46.tar.gz (HEAD, fdgr46)
+
+2011-11-29 23:15:50 +0100 Fernandos 
+
+	* replacing ignores for make verify output files * adding .absyn files to ignores
+
+2011-11-29 23:12:57 +0100 Fernandos 
+
+	* start ignoring
+
 2011-11-29 15:39:58 +0100 Fernandos 
 
-	* fertig (HEAD, fdgr46)
+	* fertig
 
 2011-11-29 14:50:22 +0100 Fernandos 
 
