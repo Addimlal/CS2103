@@ -1,0 +1,26 @@
+DecList(
+  ProcDec(
+    main,
+    DecList(),
+    DecList(),
+    StmList()),
+  ProcDec(
+    fifth,
+    DecList(
+      ParDec(
+        arr,
+        ArrayTy(
+          1,
+          NameTy(int)),
+        false),
+      ParDec(
+        a,
+        NameTy(int),
+        false)),
+    DecList(),
+    StmList()),
+  ProcDec(
+    sixth,
+    DecList(),
+    DecList(),
+    StmList()))

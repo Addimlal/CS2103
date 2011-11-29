@@ -36,7 +36,7 @@ lex.yy.c:	scanner.l
 		flex scanner.l
 
 run:		all
-		@for i in Tests/??_test_*.spl ; \
+		@for i in Tests/*.spl ; \
 		do echo $(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./$(BIN) $$i; \
 		done | column -c 80
 		@echo

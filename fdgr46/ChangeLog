@@ -1,34 +1,22 @@
-2011-11-23 17:53:59 +0100 Fernandos 
+2011-11-24 16:22:27 +0100 Fernandos 
 
-	* adding Tests folder including several SPL programs to verify the parser's reliability (HEAD, origin/Aufgabe-4-C, Aufgabe-4-C)
+	* updated gitignore to reflect branch changes (HEAD, origin/fdgr46, fdgr46)
 
-2011-11-22 17:23:38 +0100 Fernandos 
+2011-11-24 16:19:49 +0100 Fernandos 
 
-	* fixed error with progrtree
+	* Merge commit 'd2135f60d97d51fb59caa09e076d8e1cce6bf110' into fdgr46
 
-2011-11-22 16:17:35 +0100 Fernandos 
+2011-11-24 16:05:02 +0100 Fernandos 
 
-	* adding comments into absyn.h to differentiate prototype interfaces * finalized Aufgabe-4-C which requires parser.y to be completed with actions (unverified) (v4.0)
+	* almost our release version, missing team.txt
 
-2011-11-21 18:53:46 +0100 Fernandos 
+2011-10-13 23:08:04 +0200 Fernandos 
 
-	* added neccessary header includes and types into union * added additional files that need to be compiled * fixed incorrect lineNumber in scanner.l (origin/dom, dom)
+	* added ChangeLog to gitignore
 
-2011-11-21 17:42:15 +0100 Fernandos 
+2011-10-13 23:08:04 +0200 Fernandos 
 
-	* added gitignore rules for *-tab.c and *.tab.h files
-
-2011-11-18 16:45:17 +0100 Fernandos 
-
-	* merging Aufgabe-3-C with Aufgabe-4-C
-
-2011-11-18 16:29:33 +0100 Fernandos 
-
-	* updated gitignore
-
-2011-10-13 23:05:12 +0200 Fernandos 
-
-	* initial version of task-4
+	* initial version of homework-1
 
 2011-10-12 18:49:11 +0200 Fernandos 
 

@@ -1,0 +1,22 @@
+DecList(
+  ProcDec(
+    main,
+    DecList(),
+    DecList(
+      VarDec(
+        testvar,
+        ArrayTy(
+          10,
+          ArrayTy(
+            10,
+            ArrayTy(
+              10,
+              NameTy(int)))))),
+    StmList(
+      AssignStm(
+        ArrayVar(
+          ArrayVar(
+            SimpleVar(testvar),
+            IntExp(9)),
+          IntExp(7)),
+        IntExp(0)))))

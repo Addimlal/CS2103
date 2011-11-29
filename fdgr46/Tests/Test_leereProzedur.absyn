@@ -1,0 +1,14 @@
+DecList(
+  ProcDec(
+    main,
+    DecList(),
+    DecList(),
+    StmList(
+      CallStm(
+        test,
+        ExpList()))),
+  ProcDec(
+    test,
+    DecList(),
+    DecList(),
+    StmList()))

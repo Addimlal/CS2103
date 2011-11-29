@@ -1,0 +1,11 @@
+DecList(
+  ProcDec(
+    main,
+    DecList(),
+    DecList(),
+    StmList()),
+  TypeDec(
+    t,
+    ArrayTy(
+      20,
+      NameTy(int))))

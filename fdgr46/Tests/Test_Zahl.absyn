@@ -1,0 +1,18 @@
+DecList(
+  ProcDec(
+    main,
+    DecList(),
+    DecList(),
+    StmList(
+      CallStm(
+        printi,
+        ExpList(
+          IntExp(10))),
+      CallStm(
+        printc,
+        ExpList(
+          IntExp(10))),
+      CallStm(
+        printi,
+        ExpList(
+          IntExp(2147483647))))))

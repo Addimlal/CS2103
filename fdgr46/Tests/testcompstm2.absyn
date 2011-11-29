@@ -1,0 +1,20 @@
+DecList(
+  ProcDec(
+    main,
+    DecList(),
+    DecList(
+      VarDec(
+        i,
+        NameTy(int))),
+    StmList(
+      IfStm(
+        OpExp(
+          LST,
+          IntExp(0),
+          IntExp(1)),
+        AssignStm(
+          SimpleVar(i),
+          IntExp(0)),
+        AssignStm(
+          SimpleVar(i),
+          IntExp(1))))))

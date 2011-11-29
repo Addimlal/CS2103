@@ -59,7 +59,7 @@ Absyn *progTree;
 
 /*______________________________Hauptprogramm_______________________________*/
 program		:	declarations
-			{ progTree = $1; }
+			{ progTree = $1; $$ = $1; }
 ;
 //////////////////////////////////////////////////////////////////////////////
 
@@ -196,7 +196,7 @@ opt_expressions	:	/* empty */
 /*_____________________________Statements___________________________________*/
 statement	:	SEMIC
 			{ $$ = newEmptyStm($1.line); }
-		|	variable ASGN expression
+		|	variable ASGN expression SEMIC
 			{ $$ = newAssignStm($1->line, $1, $3); }
 		|	IF LPAREN bool_expr RPAREN statement
 			{ $$ = newIfStm($1.line, $3, $5, newEmptyStm($1.line)); }
@@ -206,7 +206,7 @@ statement	:	SEMIC
 			{ $$ = newWhileStm($1.line, $3, $5); }
 		|	LCURL opt_statements RCURL
 			{ $$ = newCompStm($1.line, $2); }
-		|	IDENT LPAREN opt_expressions RPAREN
+		|	IDENT LPAREN opt_expressions RPAREN SEMIC
 			{ $$ = newCallStm($1.line, newSym($1.val), $3); }
 ;
 

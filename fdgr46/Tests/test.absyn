@@ -1,0 +1,9 @@
+DecList(
+  ProcDec(
+    main,
+    DecList(),
+    DecList(
+      VarDec(
+        summand1,
+        NameTy(int))),
+    StmList()))

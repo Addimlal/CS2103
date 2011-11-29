@@ -1,0 +1,24 @@
+DecList(
+  TypeDec(
+    _,
+    NameTy(int)),
+  TypeDec(
+    sdf,
+    ArrayTy(
+      33,
+      ArrayTy(
+        22,
+        NameTy(int)))),
+  ProcDec(
+    main,
+    DecList(),
+    DecList(),
+    StmList()),
+  TypeDec(
+    f,
+    NameTy(int)),
+  ProcDec(
+    second,
+    DecList(),
+    DecList(),
+    StmList()))

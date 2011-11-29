@@ -1,0 +1,13 @@
+DecList(
+  ProcDec(
+    main,
+    DecList(),
+    DecList(),
+    StmList(
+      WhileStm(
+        OpExp(
+          ADD,
+          IntExp(4),
+          IntExp(5)),
+        CompStm(
+          StmList())))))

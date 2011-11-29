@@ -1,0 +1,26 @@
+DecList(
+  TypeDec(
+    vector,
+    ArrayTy(
+      5,
+      NameTy(int))),
+  TypeDec(
+    matrix,
+    ArrayTy(
+      5,
+      NameTy(vector))),
+  ProcDec(
+    main,
+    DecList(),
+    DecList(
+      VarDec(
+        mat1,
+        NameTy(matrix))),
+    StmList(
+      AssignStm(
+        ArrayVar(
+          ArrayVar(
+            SimpleVar(mat1),
+            IntExp(1)),
+          IntExp(1)),
+        IntExp(5)))))

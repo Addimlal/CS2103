@@ -1,4 +1,13 @@
-Zustand 105 Konflikte: 1 Schiebe/Reduziere
+Zustand 66 Konflikte: 2 Schiebe/Reduziere
+Zustand 96 Konflikte: 8 Schiebe/Reduziere
+Zustand 97 Konflikte: 8 Schiebe/Reduziere
+Zustand 98 Konflikte: 8 Schiebe/Reduziere
+Zustand 99 Konflikte: 8 Schiebe/Reduziere
+Zustand 100 Konflikte: 8 Schiebe/Reduziere
+Zustand 101 Konflikte: 8 Schiebe/Reduziere
+Zustand 104 Konflikte: 2 Schiebe/Reduziere, 8 Reduziere/Reduziere
+Zustand 105 Konflikte: 2 Schiebe/Reduziere, 8 Reduziere/Reduziere
+Zustand 108 Konflikte: 1 Schiebe/Reduziere
 
 
 Grammatik
@@ -42,35 +51,36 @@ Grammatik
    23 term: term STAR factor_expr
    24     | term SLASH factor_expr
    25     | factor_expr
+   26     | bool_expr
 
-   26 factor_expr: MINUS factor_expr
-   27            | INTLIT
-   28            | variable
-   29            | LPAREN expression RPAREN
+   27 factor_expr: MINUS factor_expr
+   28            | INTLIT
+   29            | variable
+   30            | LPAREN expression RPAREN
 
-   30 bool_expr: expression EQ expression
-   31          | expression NE expression
-   32          | expression LT expression
-   33          | expression LE expression
-   34          | expression GT expression
-   35          | expression GE expression
+   31 bool_expr: expression EQ expression
+   32          | expression NE expression
+   33          | expression LT expression
+   34          | expression LE expression
+   35          | expression GT expression
+   36          | expression GE expression
 
-   36 add_expression: expression
-   37               | expression COMMA add_expression
+   37 add_expression: expression
+   38               | expression COMMA add_expression
 
-   38 opt_expressions: /* leer */
-   39                | add_expression
+   39 opt_expressions: /* leer */
+   40                | add_expression
 
-   40 statement: SEMIC
-   41          | variable ASGN expression
-   42          | IF LPAREN bool_expr RPAREN statement
-   43          | IF LPAREN bool_expr RPAREN statement ELSE statement
-   44          | WHILE LPAREN bool_expr RPAREN statement
-   45          | LCURL opt_statements RCURL
-   46          | IDENT LPAREN opt_expressions RPAREN
+   41 statement: SEMIC
+   42          | variable ASGN expression SEMIC
+   43          | IF LPAREN opt_expressions RPAREN statement
+   44          | IF LPAREN opt_expressions RPAREN statement ELSE statement
+   45          | WHILE LPAREN opt_expressions RPAREN statement
+   46          | LCURL opt_statements RCURL
+   47          | IDENT LPAREN opt_expressions RPAREN SEMIC
 
-   47 opt_statements: /* leer */
-   48               | statement opt_statements
+   48 opt_statements: /* leer */
+   49               | statement opt_statements
 
 
 Terminale und die Regeln, in denen sie verwendet werden
@@ -78,36 +88,36 @@ Terminale und die Regeln, in denen sie verwendet werden
 $end (0) 0
 error (256)
 ARRAY (258) 7
-ELSE (259) 43
-IF (260) 42 43
+ELSE (259) 44
+IF (260) 43 44
 OF (261) 7
 PROC (262) 8
 REF (263) 10
 TYPE (264) 5
 VAR (265) 17
-WHILE (266) 44
-LPAREN (267) 8 29 42 43 44 46
-RPAREN (268) 8 29 42 43 44 46
+WHILE (266) 45
+LPAREN (267) 8 30 43 44 45 47
+RPAREN (268) 8 30 43 44 45 47
 LBRACK (269) 7 16
 RBRACK (270) 7 16
-LCURL (271) 8 45
-RCURL (272) 8 45
-EQ (273) 5 30
-NE (274) 31
-LT (275) 32
-LE (276) 33
-GT (277) 34
-GE (278) 35
-ASGN (279) 41
+LCURL (271) 8 46
+RCURL (272) 8 46
+EQ (273) 5 31
+NE (274) 32
+LT (275) 33
+LE (276) 34
+GT (277) 35
+GE (278) 36
+ASGN (279) 42
 COLON (280) 9 10 17
-COMMA (281) 12 37
-SEMIC (282) 5 17 40
+COMMA (281) 12 38
+SEMIC (282) 5 17 41 42 47
 PLUS (283) 20
-MINUS (284) 21 26
+MINUS (284) 21 27
 STAR (285) 23
 SLASH (286) 24
-IDENT (287) 5 6 8 9 10 15 17 46
-INTLIT (288) 7 27
+IDENT (287) 5 6 8 9 10 15 17 47
+INTLIT (288) 7 28
 
 
 Nicht-Terminal und die Regeln, in denen sie verwendet werden
@@ -131,32 +141,32 @@ add_parameter (41)
 opt_parameters (42)
     auf der linken Seite: 13 14, auf der rechten Seite: 8
 variable (43)
-    auf der linken Seite: 15 16, auf der rechten Seite: 16 28 41
+    auf der linken Seite: 15 16, auf der rechten Seite: 16 29 42
 variable_decl (44)
     auf der linken Seite: 17, auf der rechten Seite: 19
 opt_variables (45)
     auf der linken Seite: 18 19, auf der rechten Seite: 8 19
 expression (46)
     auf der linken Seite: 20 21 22, auf der rechten Seite: 16 20 21
-    29 30 31 32 33 34 35 36 37 41
+    30 31 32 33 34 35 36 37 38 42
 term (47)
-    auf der linken Seite: 23 24 25, auf der rechten Seite: 20 21 22
-    23 24
+    auf der linken Seite: 23 24 25 26, auf der rechten Seite: 20 21
+    22 23 24
 factor_expr (48)
-    auf der linken Seite: 26 27 28 29, auf der rechten Seite: 23 24
-    25 26
+    auf der linken Seite: 27 28 29 30, auf der rechten Seite: 23 24
+    25 27
 bool_expr (49)
-    auf der linken Seite: 30 31 32 33 34 35, auf der rechten Seite:
-    42 43 44
+    auf der linken Seite: 31 32 33 34 35 36, auf der rechten Seite:
+    26
 add_expression (50)
-    auf der linken Seite: 36 37, auf der rechten Seite: 37 39
+    auf der linken Seite: 37 38, auf der rechten Seite: 38 40
 opt_expressions (51)
-    auf der linken Seite: 38 39, auf der rechten Seite: 46
+    auf der linken Seite: 39 40, auf der rechten Seite: 43 44 45 47
 statement (52)
-    auf der linken Seite: 40 41 42 43 44 45 46, auf der rechten Seite:
-    42 43 44 48
+    auf der linken Seite: 41 42 43 44 45 46 47, auf der rechten Seite:
+    43 44 45 49
 opt_statements (53)
-    auf der linken Seite: 47 48, auf der rechten Seite: 8 45 48
+    auf der linken Seite: 48 49, auf der rechten Seite: 8 46 49
 
 
 Zustand 0
@@ -476,7 +486,7 @@ Zustand 36
     SEMIC  schiebe und gehe zu Zustand 43 über
     IDENT  schiebe und gehe zu Zustand 44 über
 
-    $default  reduziere mit Regel 47 (opt_statements)
+    $default  reduziere mit Regel 48 (opt_statements)
 
     variable        gehe zu Zustand 45 über
     statement       gehe zu Zustand 46 über
@@ -506,22 +516,22 @@ Zustand 39
 
 Zustand 40
 
-   42 statement: IF . LPAREN bool_expr RPAREN statement
-   43          | IF . LPAREN bool_expr RPAREN statement ELSE statement
+   43 statement: IF . LPAREN opt_expressions RPAREN statement
+   44          | IF . LPAREN opt_expressions RPAREN statement ELSE statement
 
     LPAREN  schiebe und gehe zu Zustand 50 über
 
 
 Zustand 41
 
-   44 statement: WHILE . LPAREN bool_expr RPAREN statement
+   45 statement: WHILE . LPAREN opt_expressions RPAREN statement
 
     LPAREN  schiebe und gehe zu Zustand 51 über
 
 
 Zustand 42
 
-   45 statement: LCURL . opt_statements RCURL
+   46 statement: LCURL . opt_statements RCURL
 
     IF     schiebe und gehe zu Zustand 40 über
     WHILE  schiebe und gehe zu Zustand 41 über
@@ -529,7 +539,7 @@ Zustand 42
     SEMIC  schiebe und gehe zu Zustand 43 über
     IDENT  schiebe und gehe zu Zustand 44 über
 
-    $default  reduziere mit Regel 47 (opt_statements)
+    $default  reduziere mit Regel 48 (opt_statements)
 
     variable        gehe zu Zustand 45 über
     statement       gehe zu Zustand 46 über
@@ -538,15 +548,15 @@ Zustand 42
 
 Zustand 43
 
-   40 statement: SEMIC .
+   41 statement: SEMIC .
 
-    $default  reduziere mit Regel 40 (statement)
+    $default  reduziere mit Regel 41 (statement)
 
 
 Zustand 44
 
    15 variable: IDENT .
-   46 statement: IDENT . LPAREN opt_expressions RPAREN
+   47 statement: IDENT . LPAREN opt_expressions RPAREN SEMIC
 
     LPAREN  schiebe und gehe zu Zustand 53 über
 
@@ -556,7 +566,7 @@ Zustand 44
 Zustand 45
 
    16 variable: variable . LBRACK expression RBRACK
-   41 statement: variable . ASGN expression
+   42 statement: variable . ASGN expression SEMIC
 
     LBRACK  schiebe und gehe zu Zustand 54 über
     ASGN    schiebe und gehe zu Zustand 55 über
@@ -564,7 +574,7 @@ Zustand 45
 
 Zustand 46
 
-   48 opt_statements: statement . opt_statements
+   49 opt_statements: statement . opt_statements
 
     IF     schiebe und gehe zu Zustand 40 über
     WHILE  schiebe und gehe zu Zustand 41 über
@@ -572,7 +582,7 @@ Zustand 46
     SEMIC  schiebe und gehe zu Zustand 43 über
     IDENT  schiebe und gehe zu Zustand 44 über
 
-    $default  reduziere mit Regel 47 (opt_statements)
+    $default  reduziere mit Regel 48 (opt_statements)
 
     variable        gehe zu Zustand 45 über
     statement       gehe zu Zustand 46 über
@@ -608,60 +618,69 @@ Zustand 49
 
 Zustand 50
 
-   42 statement: IF LPAREN . bool_expr RPAREN statement
-   43          | IF LPAREN . bool_expr RPAREN statement ELSE statement
+   43 statement: IF LPAREN . opt_expressions RPAREN statement
+   44          | IF LPAREN . opt_expressions RPAREN statement ELSE statement
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
     IDENT   schiebe und gehe zu Zustand 62 über
     INTLIT  schiebe und gehe zu Zustand 63 über
 
-    variable     gehe zu Zustand 64 über
-    expression   gehe zu Zustand 65 über
-    term         gehe zu Zustand 66 über
-    factor_expr  gehe zu Zustand 67 über
-    bool_expr    gehe zu Zustand 68 über
+    $default  reduziere mit Regel 39 (opt_expressions)
+
+    variable         gehe zu Zustand 64 über
+    expression       gehe zu Zustand 65 über
+    term             gehe zu Zustand 66 über
+    factor_expr      gehe zu Zustand 67 über
+    bool_expr        gehe zu Zustand 68 über
+    add_expression   gehe zu Zustand 69 über
+    opt_expressions  gehe zu Zustand 70 über
 
 
 Zustand 51
 
-   44 statement: WHILE LPAREN . bool_expr RPAREN statement
+   45 statement: WHILE LPAREN . opt_expressions RPAREN statement
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
     IDENT   schiebe und gehe zu Zustand 62 über
     INTLIT  schiebe und gehe zu Zustand 63 über
 
-    variable     gehe zu Zustand 64 über
-    expression   gehe zu Zustand 65 über
-    term         gehe zu Zustand 66 über
-    factor_expr  gehe zu Zustand 67 über
-    bool_expr    gehe zu Zustand 69 über
+    $default  reduziere mit Regel 39 (opt_expressions)
+
+    variable         gehe zu Zustand 64 über
+    expression       gehe zu Zustand 65 über
+    term             gehe zu Zustand 66 über
+    factor_expr      gehe zu Zustand 67 über
+    bool_expr        gehe zu Zustand 68 über
+    add_expression   gehe zu Zustand 69 über
+    opt_expressions  gehe zu Zustand 71 über
 
 
 Zustand 52
 
-   45 statement: LCURL opt_statements . RCURL
+   46 statement: LCURL opt_statements . RCURL
 
-    RCURL  schiebe und gehe zu Zustand 70 über
+    RCURL  schiebe und gehe zu Zustand 72 über
 
 
 Zustand 53
 
-   46 statement: IDENT LPAREN . opt_expressions RPAREN
+   47 statement: IDENT LPAREN . opt_expressions RPAREN SEMIC
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
     IDENT   schiebe und gehe zu Zustand 62 über
     INTLIT  schiebe und gehe zu Zustand 63 über
 
-    $default  reduziere mit Regel 38 (opt_expressions)
+    $default  reduziere mit Regel 39 (opt_expressions)
 
     variable         gehe zu Zustand 64 über
-    expression       gehe zu Zustand 71 über
+    expression       gehe zu Zustand 65 über
     term             gehe zu Zustand 66 über
     factor_expr      gehe zu Zustand 67 über
-    add_expression   gehe zu Zustand 72 über
+    bool_expr        gehe zu Zustand 68 über
+    add_expression   gehe zu Zustand 69 über
     opt_expressions  gehe zu Zustand 73 über
 
 
@@ -678,11 +697,12 @@ Zustand 54
     expression   gehe zu Zustand 74 über
     term         gehe zu Zustand 66 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
 Zustand 55
 
-   41 statement: variable ASGN . expression
+   42 statement: variable ASGN . expression SEMIC
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
@@ -693,13 +713,14 @@ Zustand 55
     expression   gehe zu Zustand 75 über
     term         gehe zu Zustand 66 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
 Zustand 56
 
-   48 opt_statements: statement opt_statements .
+   49 opt_statements: statement opt_statements .
 
-    $default  reduziere mit Regel 48 (opt_statements)
+    $default  reduziere mit Regel 49 (opt_statements)
 
 
 Zustand 57
@@ -725,7 +746,7 @@ Zustand 59
 
 Zustand 60
 
-   29 factor_expr: LPAREN . expression RPAREN
+   30 factor_expr: LPAREN . expression RPAREN
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
@@ -736,11 +757,12 @@ Zustand 60
     expression   gehe zu Zustand 77 über
     term         gehe zu Zustand 66 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
 Zustand 61
 
-   26 factor_expr: MINUS . factor_expr
+   27 factor_expr: MINUS . factor_expr
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
@@ -760,31 +782,33 @@ Zustand 62
 
 Zustand 63
 
-   27 factor_expr: INTLIT .
+   28 factor_expr: INTLIT .
 
-    $default  reduziere mit Regel 27 (factor_expr)
+    $default  reduziere mit Regel 28 (factor_expr)
 
 
 Zustand 64
 
    16 variable: variable . LBRACK expression RBRACK
-   28 factor_expr: variable .
+   29 factor_expr: variable .
 
     LBRACK  schiebe und gehe zu Zustand 54 über
 
-    $default  reduziere mit Regel 28 (factor_expr)
+    $default  reduziere mit Regel 29 (factor_expr)
 
 
 Zustand 65
 
    20 expression: expression . PLUS term
    21           | expression . MINUS term
-   30 bool_expr: expression . EQ expression
-   31          | expression . NE expression
-   32          | expression . LT expression
-   33          | expression . LE expression
-   34          | expression . GT expression
-   35          | expression . GE expression
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   33          | expression . LT expression
+   34          | expression . LE expression
+   35          | expression . GT expression
+   36          | expression . GE expression
+   37 add_expression: expression .
+   38               | expression . COMMA add_expression
 
     EQ     schiebe und gehe zu Zustand 79 über
     NE     schiebe und gehe zu Zustand 80 über
@@ -792,8 +816,11 @@ Zustand 65
     LE     schiebe und gehe zu Zustand 82 über
     GT     schiebe und gehe zu Zustand 83 über
     GE     schiebe und gehe zu Zustand 84 über
-    PLUS   schiebe und gehe zu Zustand 85 über
-    MINUS  schiebe und gehe zu Zustand 86 über
+    COMMA  schiebe und gehe zu Zustand 85 über
+    PLUS   schiebe und gehe zu Zustand 86 über
+    MINUS  schiebe und gehe zu Zustand 87 über
+
+    $default  reduziere mit Regel 37 (add_expression)
 
 
 Zustand 66
@@ -802,9 +829,11 @@ Zustand 66
    23 term: term . STAR factor_expr
    24     | term . SLASH factor_expr
 
-    STAR   schiebe und gehe zu Zustand 87 über
-    SLASH  schiebe und gehe zu Zustand 88 über
+    STAR   schiebe und gehe zu Zustand 88 über
+    SLASH  schiebe und gehe zu Zustand 89 über
 
+    STAR      [reduziere mit Regel 22 (expression)]
+    SLASH     [reduziere mit Regel 22 (expression)]
     $default  reduziere mit Regel 22 (expression)
 
 
@@ -817,50 +846,43 @@ Zustand 67
 
 Zustand 68
 
-   42 statement: IF LPAREN bool_expr . RPAREN statement
-   43          | IF LPAREN bool_expr . RPAREN statement ELSE statement
+   26 term: bool_expr .
 
-    RPAREN  schiebe und gehe zu Zustand 89 über
+    $default  reduziere mit Regel 26 (term)
 
 
 Zustand 69
 
-   44 statement: WHILE LPAREN bool_expr . RPAREN statement
+   40 opt_expressions: add_expression .
 
-    RPAREN  schiebe und gehe zu Zustand 90 über
+    $default  reduziere mit Regel 40 (opt_expressions)
 
 
 Zustand 70
 
-   45 statement: LCURL opt_statements RCURL .
+   43 statement: IF LPAREN opt_expressions . RPAREN statement
+   44          | IF LPAREN opt_expressions . RPAREN statement ELSE statement
 
-    $default  reduziere mit Regel 45 (statement)
+    RPAREN  schiebe und gehe zu Zustand 90 über
 
 
 Zustand 71
 
-   20 expression: expression . PLUS term
-   21           | expression . MINUS term
-   36 add_expression: expression .
-   37               | expression . COMMA add_expression
+   45 statement: WHILE LPAREN opt_expressions . RPAREN statement
 
-    COMMA  schiebe und gehe zu Zustand 91 über
-    PLUS   schiebe und gehe zu Zustand 85 über
-    MINUS  schiebe und gehe zu Zustand 86 über
-
-    $default  reduziere mit Regel 36 (add_expression)
+    RPAREN  schiebe und gehe zu Zustand 91 über
 
 
 Zustand 72
 
-   39 opt_expressions: add_expression .
+   46 statement: LCURL opt_statements RCURL .
 
-    $default  reduziere mit Regel 39 (opt_expressions)
+    $default  reduziere mit Regel 46 (statement)
 
 
 Zustand 73
 
-   46 statement: IDENT LPAREN opt_expressions . RPAREN
+   47 statement: IDENT LPAREN opt_expressions . RPAREN SEMIC
 
     RPAREN  schiebe und gehe zu Zustand 92 über
 
@@ -870,22 +892,45 @@ Zustand 74
    16 variable: variable LBRACK expression . RBRACK
    20 expression: expression . PLUS term
    21           | expression . MINUS term
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   33          | expression . LT expression
+   34          | expression . LE expression
+   35          | expression . GT expression
+   36          | expression . GE expression
 
     RBRACK  schiebe und gehe zu Zustand 93 über
-    PLUS    schiebe und gehe zu Zustand 85 über
-    MINUS   schiebe und gehe zu Zustand 86 über
+    EQ      schiebe und gehe zu Zustand 79 über
+    NE      schiebe und gehe zu Zustand 80 über
+    LT      schiebe und gehe zu Zustand 81 über
+    LE      schiebe und gehe zu Zustand 82 über
+    GT      schiebe und gehe zu Zustand 83 über
+    GE      schiebe und gehe zu Zustand 84 über
+    PLUS    schiebe und gehe zu Zustand 86 über
+    MINUS   schiebe und gehe zu Zustand 87 über
 
 
 Zustand 75
 
    20 expression: expression . PLUS term
    21           | expression . MINUS term
-   41 statement: variable ASGN expression .
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   33          | expression . LT expression
+   34          | expression . LE expression
+   35          | expression . GT expression
+   36          | expression . GE expression
+   42 statement: variable ASGN expression . SEMIC
 
-    PLUS   schiebe und gehe zu Zustand 85 über
-    MINUS  schiebe und gehe zu Zustand 86 über
-
-    $default  reduziere mit Regel 41 (statement)
+    EQ     schiebe und gehe zu Zustand 79 über
+    NE     schiebe und gehe zu Zustand 80 über
+    LT     schiebe und gehe zu Zustand 81 über
+    LE     schiebe und gehe zu Zustand 82 über
+    GT     schiebe und gehe zu Zustand 83 über
+    GE     schiebe und gehe zu Zustand 84 über
+    SEMIC  schiebe und gehe zu Zustand 94 über
+    PLUS   schiebe und gehe zu Zustand 86 über
+    MINUS  schiebe und gehe zu Zustand 87 über
 
 
 Zustand 76
@@ -899,38 +944,35 @@ Zustand 77
 
    20 expression: expression . PLUS term
    21           | expression . MINUS term
-   29 factor_expr: LPAREN expression . RPAREN
+   30 factor_expr: LPAREN expression . RPAREN
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   33          | expression . LT expression
+   34          | expression . LE expression
+   35          | expression . GT expression
+   36          | expression . GE expression
 
-    RPAREN  schiebe und gehe zu Zustand 94 über
-    PLUS    schiebe und gehe zu Zustand 85 über
-    MINUS   schiebe und gehe zu Zustand 86 über
+    RPAREN  schiebe und gehe zu Zustand 95 über
+    EQ      schiebe und gehe zu Zustand 79 über
+    NE      schiebe und gehe zu Zustand 80 über
+    LT      schiebe und gehe zu Zustand 81 über
+    LE      schiebe und gehe zu Zustand 82 über
+    GT      schiebe und gehe zu Zustand 83 über
+    GE      schiebe und gehe zu Zustand 84 über
+    PLUS    schiebe und gehe zu Zustand 86 über
+    MINUS   schiebe und gehe zu Zustand 87 über
 
 
 Zustand 78
 
-   26 factor_expr: MINUS factor_expr .
+   27 factor_expr: MINUS factor_expr .
 
-    $default  reduziere mit Regel 26 (factor_expr)
+    $default  reduziere mit Regel 27 (factor_expr)
 
 
 Zustand 79
 
-   30 bool_expr: expression EQ . expression
-
-    LPAREN  schiebe und gehe zu Zustand 60 über
-    MINUS   schiebe und gehe zu Zustand 61 über
-    IDENT   schiebe und gehe zu Zustand 62 über
-    INTLIT  schiebe und gehe zu Zustand 63 über
-
-    variable     gehe zu Zustand 64 über
-    expression   gehe zu Zustand 95 über
-    term         gehe zu Zustand 66 über
-    factor_expr  gehe zu Zustand 67 über
-
-
-Zustand 80
-
-   31 bool_expr: expression NE . expression
+   31 bool_expr: expression EQ . expression
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
@@ -941,11 +983,12 @@ Zustand 80
     expression   gehe zu Zustand 96 über
     term         gehe zu Zustand 66 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
-Zustand 81
+Zustand 80
 
-   32 bool_expr: expression LT . expression
+   32 bool_expr: expression NE . expression
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
@@ -956,11 +999,12 @@ Zustand 81
     expression   gehe zu Zustand 97 über
     term         gehe zu Zustand 66 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
-Zustand 82
+Zustand 81
 
-   33 bool_expr: expression LE . expression
+   33 bool_expr: expression LT . expression
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
@@ -971,11 +1015,12 @@ Zustand 82
     expression   gehe zu Zustand 98 über
     term         gehe zu Zustand 66 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
-Zustand 83
+Zustand 82
 
-   34 bool_expr: expression GT . expression
+   34 bool_expr: expression LE . expression
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
@@ -986,11 +1031,12 @@ Zustand 83
     expression   gehe zu Zustand 99 über
     term         gehe zu Zustand 66 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
-Zustand 84
+Zustand 83
 
-   35 bool_expr: expression GE . expression
+   35 bool_expr: expression GT . expression
 
     LPAREN  schiebe und gehe zu Zustand 60 über
     MINUS   schiebe und gehe zu Zustand 61 über
@@ -1001,9 +1047,43 @@ Zustand 84
     expression   gehe zu Zustand 100 über
     term         gehe zu Zustand 66 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
+
+
+Zustand 84
+
+   36 bool_expr: expression GE . expression
+
+    LPAREN  schiebe und gehe zu Zustand 60 über
+    MINUS   schiebe und gehe zu Zustand 61 über
+    IDENT   schiebe und gehe zu Zustand 62 über
+    INTLIT  schiebe und gehe zu Zustand 63 über
+
+    variable     gehe zu Zustand 64 über
+    expression   gehe zu Zustand 101 über
+    term         gehe zu Zustand 66 über
+    factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
 Zustand 85
+
+   38 add_expression: expression COMMA . add_expression
+
+    LPAREN  schiebe und gehe zu Zustand 60 über
+    MINUS   schiebe und gehe zu Zustand 61 über
+    IDENT   schiebe und gehe zu Zustand 62 über
+    INTLIT  schiebe und gehe zu Zustand 63 über
+
+    variable        gehe zu Zustand 64 über
+    expression      gehe zu Zustand 65 über
+    term            gehe zu Zustand 66 über
+    factor_expr     gehe zu Zustand 67 über
+    bool_expr       gehe zu Zustand 68 über
+    add_expression  gehe zu Zustand 102 über
+
+
+Zustand 86
 
    20 expression: expression PLUS . term
 
@@ -1013,11 +1093,13 @@ Zustand 85
     INTLIT  schiebe und gehe zu Zustand 63 über
 
     variable     gehe zu Zustand 64 über
-    term         gehe zu Zustand 101 über
+    expression   gehe zu Zustand 103 über
+    term         gehe zu Zustand 104 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
-Zustand 86
+Zustand 87
 
    21 expression: expression MINUS . term
 
@@ -1027,11 +1109,13 @@ Zustand 86
     INTLIT  schiebe und gehe zu Zustand 63 über
 
     variable     gehe zu Zustand 64 über
-    term         gehe zu Zustand 102 über
+    expression   gehe zu Zustand 103 über
+    term         gehe zu Zustand 105 über
     factor_expr  gehe zu Zustand 67 über
+    bool_expr    gehe zu Zustand 68 über
 
 
-Zustand 87
+Zustand 88
 
    23 term: term STAR . factor_expr
 
@@ -1041,10 +1125,10 @@ Zustand 87
     INTLIT  schiebe und gehe zu Zustand 63 über
 
     variable     gehe zu Zustand 64 über
-    factor_expr  gehe zu Zustand 103 über
+    factor_expr  gehe zu Zustand 106 über
 
 
-Zustand 88
+Zustand 89
 
    24 term: term SLASH . factor_expr
 
@@ -1054,27 +1138,13 @@ Zustand 88
     INTLIT  schiebe und gehe zu Zustand 63 über
 
     variable     gehe zu Zustand 64 über
-    factor_expr  gehe zu Zustand 104 über
-
-
-Zustand 89
-
-   42 statement: IF LPAREN bool_expr RPAREN . statement
-   43          | IF LPAREN bool_expr RPAREN . statement ELSE statement
-
-    IF     schiebe und gehe zu Zustand 40 über
-    WHILE  schiebe und gehe zu Zustand 41 über
-    LCURL  schiebe und gehe zu Zustand 42 über
-    SEMIC  schiebe und gehe zu Zustand 43 über
-    IDENT  schiebe und gehe zu Zustand 44 über
-
-    variable   gehe zu Zustand 45 über
-    statement  gehe zu Zustand 105 über
+    factor_expr  gehe zu Zustand 107 über
 
 
 Zustand 90
 
-   44 statement: WHILE LPAREN bool_expr RPAREN . statement
+   43 statement: IF LPAREN opt_expressions RPAREN . statement
+   44          | IF LPAREN opt_expressions RPAREN . statement ELSE statement
 
     IF     schiebe und gehe zu Zustand 40 über
     WHILE  schiebe und gehe zu Zustand 41 über
@@ -1083,184 +1153,12 @@ Zustand 90
     IDENT  schiebe und gehe zu Zustand 44 über
 
     variable   gehe zu Zustand 45 über
-    statement  gehe zu Zustand 106 über
+    statement  gehe zu Zustand 108 über
 
 
 Zustand 91
 
-   37 add_expression: expression COMMA . add_expression
-
-    LPAREN  schiebe und gehe zu Zustand 60 über
-    MINUS   schiebe und gehe zu Zustand 61 über
-    IDENT   schiebe und gehe zu Zustand 62 über
-    INTLIT  schiebe und gehe zu Zustand 63 über
-
-    variable        gehe zu Zustand 64 über
-    expression      gehe zu Zustand 71 über
-    term            gehe zu Zustand 66 über
-    factor_expr     gehe zu Zustand 67 über
-    add_expression  gehe zu Zustand 107 über
-
-
-Zustand 92
-
-   46 statement: IDENT LPAREN opt_expressions RPAREN .
-
-    $default  reduziere mit Regel 46 (statement)
-
-
-Zustand 93
-
-   16 variable: variable LBRACK expression RBRACK .
-
-    $default  reduziere mit Regel 16 (variable)
-
-
-Zustand 94
-
-   29 factor_expr: LPAREN expression RPAREN .
-
-    $default  reduziere mit Regel 29 (factor_expr)
-
-
-Zustand 95
-
-   20 expression: expression . PLUS term
-   21           | expression . MINUS term
-   30 bool_expr: expression EQ expression .
-
-    PLUS   schiebe und gehe zu Zustand 85 über
-    MINUS  schiebe und gehe zu Zustand 86 über
-
-    $default  reduziere mit Regel 30 (bool_expr)
-
-
-Zustand 96
-
-   20 expression: expression . PLUS term
-   21           | expression . MINUS term
-   31 bool_expr: expression NE expression .
-
-    PLUS   schiebe und gehe zu Zustand 85 über
-    MINUS  schiebe und gehe zu Zustand 86 über
-
-    $default  reduziere mit Regel 31 (bool_expr)
-
-
-Zustand 97
-
-   20 expression: expression . PLUS term
-   21           | expression . MINUS term
-   32 bool_expr: expression LT expression .
-
-    PLUS   schiebe und gehe zu Zustand 85 über
-    MINUS  schiebe und gehe zu Zustand 86 über
-
-    $default  reduziere mit Regel 32 (bool_expr)
-
-
-Zustand 98
-
-   20 expression: expression . PLUS term
-   21           | expression . MINUS term
-   33 bool_expr: expression LE expression .
-
-    PLUS   schiebe und gehe zu Zustand 85 über
-    MINUS  schiebe und gehe zu Zustand 86 über
-
-    $default  reduziere mit Regel 33 (bool_expr)
-
-
-Zustand 99
-
-   20 expression: expression . PLUS term
-   21           | expression . MINUS term
-   34 bool_expr: expression GT expression .
-
-    PLUS   schiebe und gehe zu Zustand 85 über
-    MINUS  schiebe und gehe zu Zustand 86 über
-
-    $default  reduziere mit Regel 34 (bool_expr)
-
-
-Zustand 100
-
-   20 expression: expression . PLUS term
-   21           | expression . MINUS term
-   35 bool_expr: expression GE expression .
-
-    PLUS   schiebe und gehe zu Zustand 85 über
-    MINUS  schiebe und gehe zu Zustand 86 über
-
-    $default  reduziere mit Regel 35 (bool_expr)
-
-
-Zustand 101
-
-   20 expression: expression PLUS term .
-   23 term: term . STAR factor_expr
-   24     | term . SLASH factor_expr
-
-    STAR   schiebe und gehe zu Zustand 87 über
-    SLASH  schiebe und gehe zu Zustand 88 über
-
-    $default  reduziere mit Regel 20 (expression)
-
-
-Zustand 102
-
-   21 expression: expression MINUS term .
-   23 term: term . STAR factor_expr
-   24     | term . SLASH factor_expr
-
-    STAR   schiebe und gehe zu Zustand 87 über
-    SLASH  schiebe und gehe zu Zustand 88 über
-
-    $default  reduziere mit Regel 21 (expression)
-
-
-Zustand 103
-
-   23 term: term STAR factor_expr .
-
-    $default  reduziere mit Regel 23 (term)
-
-
-Zustand 104
-
-   24 term: term SLASH factor_expr .
-
-    $default  reduziere mit Regel 24 (term)
-
-
-Zustand 105
-
-   42 statement: IF LPAREN bool_expr RPAREN statement .
-   43          | IF LPAREN bool_expr RPAREN statement . ELSE statement
-
-    ELSE  schiebe und gehe zu Zustand 108 über
-
-    ELSE      [reduziere mit Regel 42 (statement)]
-    $default  reduziere mit Regel 42 (statement)
-
-
-Zustand 106
-
-   44 statement: WHILE LPAREN bool_expr RPAREN statement .
-
-    $default  reduziere mit Regel 44 (statement)
-
-
-Zustand 107
-
-   37 add_expression: expression COMMA add_expression .
-
-    $default  reduziere mit Regel 37 (add_expression)
-
-
-Zustand 108
-
-   43 statement: IF LPAREN bool_expr RPAREN statement ELSE . statement
+   45 statement: WHILE LPAREN opt_expressions RPAREN . statement
 
     IF     schiebe und gehe zu Zustand 40 über
     WHILE  schiebe und gehe zu Zustand 41 über
@@ -1272,8 +1170,371 @@ Zustand 108
     statement  gehe zu Zustand 109 über
 
 
+Zustand 92
+
+   47 statement: IDENT LPAREN opt_expressions RPAREN . SEMIC
+
+    SEMIC  schiebe und gehe zu Zustand 110 über
+
+
+Zustand 93
+
+   16 variable: variable LBRACK expression RBRACK .
+
+    $default  reduziere mit Regel 16 (variable)
+
+
+Zustand 94
+
+   42 statement: variable ASGN expression SEMIC .
+
+    $default  reduziere mit Regel 42 (statement)
+
+
+Zustand 95
+
+   30 factor_expr: LPAREN expression RPAREN .
+
+    $default  reduziere mit Regel 30 (factor_expr)
+
+
+Zustand 96
+
+   20 expression: expression . PLUS term
+   21           | expression . MINUS term
+   31 bool_expr: expression . EQ expression
+   31          | expression EQ expression .
+   32          | expression . NE expression
+   33          | expression . LT expression
+   34          | expression . LE expression
+   35          | expression . GT expression
+   36          | expression . GE expression
+
+    EQ     schiebe und gehe zu Zustand 79 über
+    NE     schiebe und gehe zu Zustand 80 über
+    LT     schiebe und gehe zu Zustand 81 über
+    LE     schiebe und gehe zu Zustand 82 über
+    GT     schiebe und gehe zu Zustand 83 über
+    GE     schiebe und gehe zu Zustand 84 über
+    PLUS   schiebe und gehe zu Zustand 86 über
+    MINUS  schiebe und gehe zu Zustand 87 über
+
+    EQ        [reduziere mit Regel 31 (bool_expr)]
+    NE        [reduziere mit Regel 31 (bool_expr)]
+    LT        [reduziere mit Regel 31 (bool_expr)]
+    LE        [reduziere mit Regel 31 (bool_expr)]
+    GT        [reduziere mit Regel 31 (bool_expr)]
+    GE        [reduziere mit Regel 31 (bool_expr)]
+    PLUS      [reduziere mit Regel 31 (bool_expr)]
+    MINUS     [reduziere mit Regel 31 (bool_expr)]
+    $default  reduziere mit Regel 31 (bool_expr)
+
+
+Zustand 97
+
+   20 expression: expression . PLUS term
+   21           | expression . MINUS term
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   32          | expression NE expression .
+   33          | expression . LT expression
+   34          | expression . LE expression
+   35          | expression . GT expression
+   36          | expression . GE expression
+
+    EQ     schiebe und gehe zu Zustand 79 über
+    NE     schiebe und gehe zu Zustand 80 über
+    LT     schiebe und gehe zu Zustand 81 über
+    LE     schiebe und gehe zu Zustand 82 über
+    GT     schiebe und gehe zu Zustand 83 über
+    GE     schiebe und gehe zu Zustand 84 über
+    PLUS   schiebe und gehe zu Zustand 86 über
+    MINUS  schiebe und gehe zu Zustand 87 über
+
+    EQ        [reduziere mit Regel 32 (bool_expr)]
+    NE        [reduziere mit Regel 32 (bool_expr)]
+    LT        [reduziere mit Regel 32 (bool_expr)]
+    LE        [reduziere mit Regel 32 (bool_expr)]
+    GT        [reduziere mit Regel 32 (bool_expr)]
+    GE        [reduziere mit Regel 32 (bool_expr)]
+    PLUS      [reduziere mit Regel 32 (bool_expr)]
+    MINUS     [reduziere mit Regel 32 (bool_expr)]
+    $default  reduziere mit Regel 32 (bool_expr)
+
+
+Zustand 98
+
+   20 expression: expression . PLUS term
+   21           | expression . MINUS term
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   33          | expression . LT expression
+   33          | expression LT expression .
+   34          | expression . LE expression
+   35          | expression . GT expression
+   36          | expression . GE expression
+
+    EQ     schiebe und gehe zu Zustand 79 über
+    NE     schiebe und gehe zu Zustand 80 über
+    LT     schiebe und gehe zu Zustand 81 über
+    LE     schiebe und gehe zu Zustand 82 über
+    GT     schiebe und gehe zu Zustand 83 über
+    GE     schiebe und gehe zu Zustand 84 über
+    PLUS   schiebe und gehe zu Zustand 86 über
+    MINUS  schiebe und gehe zu Zustand 87 über
+
+    EQ        [reduziere mit Regel 33 (bool_expr)]
+    NE        [reduziere mit Regel 33 (bool_expr)]
+    LT        [reduziere mit Regel 33 (bool_expr)]
+    LE        [reduziere mit Regel 33 (bool_expr)]
+    GT        [reduziere mit Regel 33 (bool_expr)]
+    GE        [reduziere mit Regel 33 (bool_expr)]
+    PLUS      [reduziere mit Regel 33 (bool_expr)]
+    MINUS     [reduziere mit Regel 33 (bool_expr)]
+    $default  reduziere mit Regel 33 (bool_expr)
+
+
+Zustand 99
+
+   20 expression: expression . PLUS term
+   21           | expression . MINUS term
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   33          | expression . LT expression
+   34          | expression . LE expression
+   34          | expression LE expression .
+   35          | expression . GT expression
+   36          | expression . GE expression
+
+    EQ     schiebe und gehe zu Zustand 79 über
+    NE     schiebe und gehe zu Zustand 80 über
+    LT     schiebe und gehe zu Zustand 81 über
+    LE     schiebe und gehe zu Zustand 82 über
+    GT     schiebe und gehe zu Zustand 83 über
+    GE     schiebe und gehe zu Zustand 84 über
+    PLUS   schiebe und gehe zu Zustand 86 über
+    MINUS  schiebe und gehe zu Zustand 87 über
+
+    EQ        [reduziere mit Regel 34 (bool_expr)]
+    NE        [reduziere mit Regel 34 (bool_expr)]
+    LT        [reduziere mit Regel 34 (bool_expr)]
+    LE        [reduziere mit Regel 34 (bool_expr)]
+    GT        [reduziere mit Regel 34 (bool_expr)]
+    GE        [reduziere mit Regel 34 (bool_expr)]
+    PLUS      [reduziere mit Regel 34 (bool_expr)]
+    MINUS     [reduziere mit Regel 34 (bool_expr)]
+    $default  reduziere mit Regel 34 (bool_expr)
+
+
+Zustand 100
+
+   20 expression: expression . PLUS term
+   21           | expression . MINUS term
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   33          | expression . LT expression
+   34          | expression . LE expression
+   35          | expression . GT expression
+   35          | expression GT expression .
+   36          | expression . GE expression
+
+    EQ     schiebe und gehe zu Zustand 79 über
+    NE     schiebe und gehe zu Zustand 80 über
+    LT     schiebe und gehe zu Zustand 81 über
+    LE     schiebe und gehe zu Zustand 82 über
+    GT     schiebe und gehe zu Zustand 83 über
+    GE     schiebe und gehe zu Zustand 84 über
+    PLUS   schiebe und gehe zu Zustand 86 über
+    MINUS  schiebe und gehe zu Zustand 87 über
+
+    EQ        [reduziere mit Regel 35 (bool_expr)]
+    NE        [reduziere mit Regel 35 (bool_expr)]
+    LT        [reduziere mit Regel 35 (bool_expr)]
+    LE        [reduziere mit Regel 35 (bool_expr)]
+    GT        [reduziere mit Regel 35 (bool_expr)]
+    GE        [reduziere mit Regel 35 (bool_expr)]
+    PLUS      [reduziere mit Regel 35 (bool_expr)]
+    MINUS     [reduziere mit Regel 35 (bool_expr)]
+    $default  reduziere mit Regel 35 (bool_expr)
+
+
+Zustand 101
+
+   20 expression: expression . PLUS term
+   21           | expression . MINUS term
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   33          | expression . LT expression
+   34          | expression . LE expression
+   35          | expression . GT expression
+   36          | expression . GE expression
+   36          | expression GE expression .
+
+    EQ     schiebe und gehe zu Zustand 79 über
+    NE     schiebe und gehe zu Zustand 80 über
+    LT     schiebe und gehe zu Zustand 81 über
+    LE     schiebe und gehe zu Zustand 82 über
+    GT     schiebe und gehe zu Zustand 83 über
+    GE     schiebe und gehe zu Zustand 84 über
+    PLUS   schiebe und gehe zu Zustand 86 über
+    MINUS  schiebe und gehe zu Zustand 87 über
+
+    EQ        [reduziere mit Regel 36 (bool_expr)]
+    NE        [reduziere mit Regel 36 (bool_expr)]
+    LT        [reduziere mit Regel 36 (bool_expr)]
+    LE        [reduziere mit Regel 36 (bool_expr)]
+    GT        [reduziere mit Regel 36 (bool_expr)]
+    GE        [reduziere mit Regel 36 (bool_expr)]
+    PLUS      [reduziere mit Regel 36 (bool_expr)]
+    MINUS     [reduziere mit Regel 36 (bool_expr)]
+    $default  reduziere mit Regel 36 (bool_expr)
+
+
+Zustand 102
+
+   38 add_expression: expression COMMA add_expression .
+
+    $default  reduziere mit Regel 38 (add_expression)
+
+
+Zustand 103
+
+   20 expression: expression . PLUS term
+   21           | expression . MINUS term
+   31 bool_expr: expression . EQ expression
+   32          | expression . NE expression
+   33          | expression . LT expression
+   34          | expression . LE expression
+   35          | expression . GT expression
+   36          | expression . GE expression
+
+    EQ     schiebe und gehe zu Zustand 79 über
+    NE     schiebe und gehe zu Zustand 80 über
+    LT     schiebe und gehe zu Zustand 81 über
+    LE     schiebe und gehe zu Zustand 82 über
+    GT     schiebe und gehe zu Zustand 83 über
+    GE     schiebe und gehe zu Zustand 84 über
+    PLUS   schiebe und gehe zu Zustand 86 über
+    MINUS  schiebe und gehe zu Zustand 87 über
+
+
+Zustand 104
+
+   20 expression: expression PLUS term .
+   22           | term .
+   23 term: term . STAR factor_expr
+   24     | term . SLASH factor_expr
+
+    STAR   schiebe und gehe zu Zustand 88 über
+    SLASH  schiebe und gehe zu Zustand 89 über
+
+    EQ        reduziere mit Regel 20 (expression)
+    EQ        [reduziere mit Regel 22 (expression)]
+    NE        reduziere mit Regel 20 (expression)
+    NE        [reduziere mit Regel 22 (expression)]
+    LT        reduziere mit Regel 20 (expression)
+    LT        [reduziere mit Regel 22 (expression)]
+    LE        reduziere mit Regel 20 (expression)
+    LE        [reduziere mit Regel 22 (expression)]
+    GT        reduziere mit Regel 20 (expression)
+    GT        [reduziere mit Regel 22 (expression)]
+    GE        reduziere mit Regel 20 (expression)
+    GE        [reduziere mit Regel 22 (expression)]
+    PLUS      reduziere mit Regel 20 (expression)
+    PLUS      [reduziere mit Regel 22 (expression)]
+    MINUS     reduziere mit Regel 20 (expression)
+    MINUS     [reduziere mit Regel 22 (expression)]
+    STAR      [reduziere mit Regel 20 (expression)]
+    SLASH     [reduziere mit Regel 20 (expression)]
+    $default  reduziere mit Regel 20 (expression)
+
+
+Zustand 105
+
+   21 expression: expression MINUS term .
+   22           | term .
+   23 term: term . STAR factor_expr
+   24     | term . SLASH factor_expr
+
+    STAR   schiebe und gehe zu Zustand 88 über
+    SLASH  schiebe und gehe zu Zustand 89 über
+
+    EQ        reduziere mit Regel 21 (expression)
+    EQ        [reduziere mit Regel 22 (expression)]
+    NE        reduziere mit Regel 21 (expression)
+    NE        [reduziere mit Regel 22 (expression)]
+    LT        reduziere mit Regel 21 (expression)
+    LT        [reduziere mit Regel 22 (expression)]
+    LE        reduziere mit Regel 21 (expression)
+    LE        [reduziere mit Regel 22 (expression)]
+    GT        reduziere mit Regel 21 (expression)
+    GT        [reduziere mit Regel 22 (expression)]
+    GE        reduziere mit Regel 21 (expression)
+    GE        [reduziere mit Regel 22 (expression)]
+    PLUS      reduziere mit Regel 21 (expression)
+    PLUS      [reduziere mit Regel 22 (expression)]
+    MINUS     reduziere mit Regel 21 (expression)
+    MINUS     [reduziere mit Regel 22 (expression)]
+    STAR      [reduziere mit Regel 21 (expression)]
+    SLASH     [reduziere mit Regel 21 (expression)]
+    $default  reduziere mit Regel 21 (expression)
+
+
+Zustand 106
+
+   23 term: term STAR factor_expr .
+
+    $default  reduziere mit Regel 23 (term)
+
+
+Zustand 107
+
+   24 term: term SLASH factor_expr .
+
+    $default  reduziere mit Regel 24 (term)
+
+
+Zustand 108
+
+   43 statement: IF LPAREN opt_expressions RPAREN statement .
+   44          | IF LPAREN opt_expressions RPAREN statement . ELSE statement
+
+    ELSE  schiebe und gehe zu Zustand 111 über
+
+    ELSE      [reduziere mit Regel 43 (statement)]
+    $default  reduziere mit Regel 43 (statement)
+
+
 Zustand 109
 
-   43 statement: IF LPAREN bool_expr RPAREN statement ELSE statement .
+   45 statement: WHILE LPAREN opt_expressions RPAREN statement .
 
-    $default  reduziere mit Regel 43 (statement)
+    $default  reduziere mit Regel 45 (statement)
+
+
+Zustand 110
+
+   47 statement: IDENT LPAREN opt_expressions RPAREN SEMIC .
+
+    $default  reduziere mit Regel 47 (statement)
+
+
+Zustand 111
+
+   44 statement: IF LPAREN opt_expressions RPAREN statement ELSE . statement
+
+    IF     schiebe und gehe zu Zustand 40 über
+    WHILE  schiebe und gehe zu Zustand 41 über
+    LCURL  schiebe und gehe zu Zustand 42 über
+    SEMIC  schiebe und gehe zu Zustand 43 über
+    IDENT  schiebe und gehe zu Zustand 44 über
+
+    variable   gehe zu Zustand 45 über
+    statement  gehe zu Zustand 112 über
+
+
+Zustand 112
+
+   44 statement: IF LPAREN opt_expressions RPAREN statement ELSE statement .
+
+    $default  reduziere mit Regel 44 (statement)

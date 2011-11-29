@@ -3,7 +3,6 @@
 *.swp
 .project
 core
-slpl
 spl
 
 lex.yy.c

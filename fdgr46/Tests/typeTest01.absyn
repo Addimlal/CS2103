@@ -1,0 +1,14 @@
+DecList(
+  TypeDec(
+    t,
+    NameTy(int)),
+  TypeDec(
+    t1,
+    NameTy(t)),
+  TypeDec(
+    t2,
+    ArrayTy(
+      20,
+      ArrayTy(
+        2,
+        NameTy(t)))))
