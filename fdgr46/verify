@@ -1,7 +1,15 @@
 #!/bin/bash
+#
+# AST Verifier for SPL compiler
+#
+# See: https://github.com/X4/CS2103-Tools
+# Author: Fernandos
+
 REF="parser_referenz.txt"
 TEST="parser_test.txt"
 OUTPUT="parser_unterschiede.txt"
+
+echo -e "\n\033[1;33m$(cat parser.output | head -1)\033[0m"
 
 rm -f $REF $TEST $OUTPUT
 shopt -s nullglob; f=(Tests/*.absyn);
@@ -13,14 +21,16 @@ echo -e '\n\E[34mErstelle einmalig Referenz Syntaxbäume in Tests/*.absyn für s
 fi
 
 echo -e "\n\033[1;31mVermutlich Fehler in:\033[0m"
-for file in Tests/*.spl
+for file in Tests/*.spl ;
     do
     echo "-- Compiling $file --" >> $REF
     ./splRef --absyn $file t >> $REF
     echo "-- Compiling $file --" >> $TEST
     ./spl --absyn $file >> $TEST
-    ./spl --absyn $file | cmp -s /dev/stdin "${file%.spl}.absyn" || echo -e "\033[1;31mE:\033[0m \033[1;34m$file\033[0m"
+    ./spl --absyn $file | cmp -s /dev/stdin "${file%.spl}.absyn" || echo -e "$((++not_passed))] \033[1;31mE:\033[0m \033[1;34m$file\033[0m"
 done
+echo -e "\033[0;31m $not_passed Programme bedürfen Ihrer Aufmerksamkeit.\033[0m"
+echo -e "\n\033[0;32m $((${#f[@]} - $not_passed)) Programme laufen ohne Fehler.\033[0m"
 
 diff -s --suppress-common-lines $REF $TEST > $OUTPUT
 
