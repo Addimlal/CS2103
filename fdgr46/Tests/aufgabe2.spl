@@ -1,0 +1,20 @@
+//Zusammenarbeit O und A
+//Prog 2 Summieren in Prozedur
+
+
+proc main(){
+	var summand1: int;
+	var summand2: int;
+	var ergebniss: int;
+	summand1 := 10;
+	summand2 := 20;
+	ergebniss := 0;
+	summieren(summand1,summand2,ergebniss);
+	printi(ergebniss);
+	printc(0x0a);
+}
+
+proc summieren(summand1: int,summand2: int,ref ergebniss: int){
+	ergebniss := summand1 + summand2;
+}
+	
