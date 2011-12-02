@@ -1,17 +1,20 @@
-*.d
-*.o
-*.swp
-.project
-core
-spl
+# Temp files
+*.[oad]
 *.absyn
+*.swp
+*~
 
-lex.yy.c
-parser.output
-parser.tab.c
-parser.tab.h
-parser_referenz.txt
-parser_test.txt
-parser_unterschiede.txt
+# Binaries
+spl
+*.tar.gz
+
+# IDE/Maintainance files
+.project
 ChangeLog
-/fdgr46.tar.gz
+lex.yy.c
+
+# Debugging
+parser.output
+parser.tab.*
+parser_*.txt
+core
