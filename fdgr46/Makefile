@@ -17,7 +17,7 @@ SRCS = main.c utils.c parser.tab.c lex.yy.c absyn.c sym.c
 OBJS = $(patsubst %.c,%.o,$(SRCS))
 BIN = spl
 
-.PHONY:		all ast run fast verify scanner scannerRef tests depend clean dist-clean
+.PHONY:		all ast run fast verify scannerTest scannerTest2 scannerRef parserTest parserTest2 parserRef astTest astTest2 astRef tests depend clean dist-clean
 
 all:		$(BIN)
 
