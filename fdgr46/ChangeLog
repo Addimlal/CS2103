@@ -1,6 +1,14 @@
+2011-12-02 03:55:37 +0100 Fernandos 
+
+	* who knows if the tests target for the makefile is neccessary or not, re-adding it (HEAD, origin/fdgr46, fdgr46)
+
+2011-12-02 03:52:11 +0100 Fernandos 
+
+	* fix when an intial 'make verify' didn't count successfull programs
+
 2011-12-02 00:08:08 +0100 Fernandos 
 
-	* readd old testfiles (HEAD, v4.3, origin/fdgr46, fdgr46)
+	* readd old testfiles (v4.3)
 
 2011-12-02 00:07:43 +0100 Fernandos 
 
