@@ -10,9 +10,12 @@
 #include "common.h"
 #include "utils.h"
 #include "sym.h"
+#include "types.h"
 #include "absyn.h"
 #include "scanner.h"
 #include "parser.h"
+#include "table.h"
+#include "semant.h"
 
 
 #define VERSION		"1.1"
@@ -27,10 +30,11 @@ static void help(char *myself) {
   /* show some help how to use the program */
   printf("Usage: %s [options] <input file>\n", myself);
   printf("Options:\n");
-  printf("  --tokens	 show stream of tokens\n");
-  printf("  --absyn	  show abstract syntax\n");
-  printf("  --version	show compiler version\n");
-  printf("  --help	   show this help\n");
+  printf("  --tokens         show stream of tokens\n");
+  printf("  --absyn          show abstract syntax\n");
+  printf("  --tables         show symbol tables\n");
+  printf("  --version        show compiler version\n");
+  printf("  --help           show this help\n");
 }
 
 
@@ -39,36 +43,42 @@ int main(int argc, char *argv[]) {
   char *inFileName;
   boolean optionTokens;
   boolean optionAbsyn;
+  boolean optionTables;
   int token;
+  Table *globalTable;
 
   /* analyze command line */
   inFileName = NULL;
   optionTokens = FALSE;
   optionAbsyn = FALSE;
+  optionTables = FALSE;
   for (i = 1; i < argc; i++) {
     if (argv[i][0] == '-') {
       /* option */
       if (strcmp(argv[i], "--tokens") == 0) {
-	optionTokens = TRUE;
+        optionTokens = TRUE;
       } else
       if (strcmp(argv[i], "--absyn") == 0) {
-	optionAbsyn = TRUE;
+        optionAbsyn = TRUE;
+      } else
+      if (strcmp(argv[i], "--tables") == 0) {
+        optionTables = TRUE;
       } else
       if (strcmp(argv[i], "--version") == 0) {
-	version(argv[0]);
-	exit(0);
+        version(argv[0]);
+        exit(0);
       } else
       if (strcmp(argv[i], "--help") == 0) {
-	help(argv[0]);
-	exit(0);
+        help(argv[0]);
+        exit(0);
       } else {
-	error("unrecognized option '%s'; try '%s --help'",
-	      argv[i], argv[0]);
+        error("unrecognized option '%s'; try '%s --help'",
+              argv[i], argv[0]);
       }
     } else {
       /* file */
       if (inFileName != NULL) {
-	error("more than one input file");
+        error("more than one input file");
       }
       inFileName = argv[i];
     }
@@ -94,5 +104,6 @@ int main(int argc, char *argv[]) {
     showAbsyn(progTree);
     exit(0);
   }
+  globalTable = check(progTree, optionTables);
   return 0;
 }
