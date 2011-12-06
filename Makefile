@@ -28,7 +28,7 @@ $(BIN):		$(OBJS)
 		$(CC) $(CFLAGS) -o $@ -c $<
 
 parser.tab.c:	parser.y
-		bison -v -d -t --warnings=all parser.y
+		bison -d -v -t -g parser.y
 
 lex.yy.c:	scanner.l
 		flex scanner.l
@@ -43,10 +43,16 @@ tests:		all
 -include depend.mak
 
 fast:
-		@make CC="tcc" CFLAGS="-Wall -Wimplicit-function-declaration -c -g" LDLIBS="-L/usr/lib/x86_64-linux-gnu/"| sed -e '/Entering\|Leaving/d' -e '/Betrete\|Verlasse/d'
+		@$(MAKE) CC="tcc" CFLAGS="-Wall -Werror -Wunusupported -c -g" LDLIBS="-L/usr/lib/x86_64-linux-gnu/"| sed -e '/Entering\|Leaving/d' -e '/Betrete\|Verlasse/d'
 
 -include depend.mak
 
+graph:
+		@$(MAKE) all | sed '/make/d'
+		@echo $(FILE_COLOR)Erstelle vektorbasierten Parser-Graph ... $(NO_COLOR)
+		@echo $(OK_COLOR)Ausgabe: parser.svg $(NO_COLOR)
+		@dot -Tsvg  parser.dot -o parser.svg
+		@echo
 
 run:		all
 		@for i in Tests/*.spl ; \
@@ -108,6 +114,7 @@ clean:
 		rm -f Tests/*~
 		rm -f Tests/*.absyn
 		rm -f parser_*.txt
+		rm -f parser.dot
 
 dist-clean:	clean
-		rm -f $(BIN) parser.tab.c parser.tab.h parser.output lex.yy.c depend.mak
+		rm -f $(BIN) parser.tab.c parser.tab.h parser.output parser.svg lex.yy.c depend.mak
