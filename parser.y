@@ -10,10 +10,13 @@
 
 #include "common.h"
 #include "utils.h"
-#include "scanner.h"
 #include "sym.h"
+#include "types.h"
 #include "absyn.h"
+#include "scanner.h"
 #include "parser.h"
+#include "table.h"
+#include "semant.h"
 
 #define YYDEBUG 1
 
