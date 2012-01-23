@@ -1,0 +1,7 @@
+//nichtassoziativitaet. nur stichprobenartig
+
+proc main () {
+	while (1<2);
+	while ((1>2)#(3<5)); //illegal: nonassociative. parens don't help
+	while (1>2);
+}

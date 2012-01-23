@@ -7,6 +7,8 @@
 
 Table *check(Absyn * program, boolean tables);
 
+void enterBibProcs(Entry *entry, Table * symTab);
+
 Type *checkNode(Absyn * node, Table * symTab);
 Type *checkNameTy(Absyn * node, Table * symTab);
 Type *checkArrayTy(Absyn * node, Table * symTab);

@@ -1,0 +1,47 @@
+//
+// Test3
+//
+
+type A6 = array [6] of int;
+
+proc main(){
+	var zahlen: A6;
+	var i : int;
+	i:= 0;
+
+	while(i<6)
+	{
+		readi(zahlen[i]);
+		i:=i+1;
+	}
+
+	sortieren(zahlen);
+	
+	i:=0;
+	while(i<6){
+		printi(zahlen[i]);
+		i:=i+1;
+	}
+
+}
+
+proc sortieren(ref zahlen : A6){
+	var i : int;
+	var j : int;
+	var temp : int;
+	i:= 1;
+
+	while(i<6){
+		temp := zahlen[i];
+		j := i ;
+		while((j>0)){
+			if(zahlen[i-1]>temp){
+				zahlen[j]:=zahlen[j-1];
+				j:=j-1;
+			}
+		}
+		zahlen[j] := temp;
+		i:=i+1;
+	}
+	
+}

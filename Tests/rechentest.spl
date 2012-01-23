@@ -1,0 +1,141 @@
+//
+// rechentest
+//
+
+type A6 = array [6] of int;
+type A56 = array [5] of A6;
+type A456 = array [4] of A56;
+
+proc main(){
+	var zahl1: int;
+	
+	zahl1:= 1;
+
+	summieren();
+
+}
+
+proc summieren(){
+	var zahl1: int;
+	zahl1:= 1+1;
+	zahl1:= 1-1;
+	zahl1:= 1*1;
+	zahl1:= 1/1;
+
+}
+
+proc arraytester(){
+	var zahlen: A6;
+
+	zahlen[1337] := 999;
+
+}
+
+proc arraytester2(){
+	var zahlen: A56;
+
+	zahlen[1337][1338] := 999;
+
+}
+
+
+proc arraytester3(){
+	var zahlen: A456;
+
+	zahlen[1337][1338][1339] := 999;
+
+}
+
+proc whiletester(){
+	while(1>2){
+	;
+	}
+
+	while(1<2){
+	;
+	}
+
+while(1=2){
+	;
+	}
+
+while(1#2){
+	;
+	}
+
+while(1>=2){
+	;
+	}
+
+while(1<=2){
+	;
+	}
+}
+
+proc whiletester2(){
+	var zahl1: int;
+	while(1>2){
+	zahl1:= 1;
+	}
+}
+
+proc iftester(){
+	if(1<2){
+	;
+	}
+
+	if(1<2){
+	;
+	}else;
+}
+proc iftester2(){
+	if(1<2){
+	;
+	}else{
+
+	}
+
+}
+
+proc iftester3(){
+	var zahl1: int;
+	if(1>2){
+	zahl1:= 1;
+	}else
+	zahl1:= 2;
+}
+
+proc callTester(c:int, b:int){
+
+}
+
+proc callTester2(){
+	var c: int;
+	var a456 : int;
+	if(1<2){
+	;
+	}else{
+
+	}
+	callTester(c, a456);
+}
+
+proc callTester12(c:int, b:int){
+	c:=b;
+}
+
+proc callTester3(ref c:int, ref b:A456, a:int){
+	b[1][2][3] := c;
+}
+
+proc callTester4(){
+	var c: int;
+	var a456 : A456;
+	a456[1][2][3] := 3;
+	if(1<2){
+	;
+	}else{
+
+	}
+	callTester3(c, a456, a456[1][2][3]+3);
+}

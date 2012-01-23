@@ -65,6 +65,13 @@ run:		all
 		done
 		@echo
 
+runRef:		all
+		@for i in Tests/*.spl ; \
+		do echo -e $(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./splRef $$i /dev/null; \
+		done
+		@echo
+
+
 ast:		all
 		@for i in Tests/??_test_*.spl ; \
 		do echo -e$(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./$(BIN) --absyn $$i; \

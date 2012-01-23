@@ -18,6 +18,7 @@
 static Type *intType;
 static Type *booleanType;
 static boolean showSymbolTable;
+static boolean semanticPhase;
 
 /** (root) Initiating semantic analysis phase
  * @param Absyn *program
@@ -39,7 +40,15 @@ Table *check(Absyn * program, boolean tables)
 	/* setup global symbol table */
 	globalTable = newTable(NULL);
 
+	/* enter types and procedures into symboltable*/
+	entry = newTypeEntry(intType);
+	enterBibProcs(entry, globalTable);
+
 	/* do semantic checks */
+	semanticPhase = FALSE;
+	checkNode(program, globalTable);
+
+	semanticPhase = TRUE;
 	checkNode(program, globalTable);
 
 	/* check if "main()" is present */
@@ -64,6 +73,65 @@ Table *check(Absyn * program, boolean tables)
 
 	return globalTable;
 }
+
+
+void enterBibProcs(Entry * entry, Table * symTab)
+{
+	enter(symTab, newSym("int"), entry);
+	enter(symTab, newSym("printi"),
+	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()),
+			   symTab));
+	enter(symTab, newSym("printc"),
+	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()),
+			   symTab));
+	enter(symTab, newSym("readi"),
+	      newProcEntry(newParamTypes(intType, TRUE, emptyParamTypes()),
+			   symTab));
+	enter(symTab, newSym("readc"),
+	      newProcEntry(newParamTypes(intType, TRUE, emptyParamTypes()),
+			   symTab));
+	enter(symTab, newSym("exit"),
+	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()),
+			   symTab));
+	enter(symTab, newSym("time"),
+	      newProcEntry(newParamTypes(intType, TRUE, emptyParamTypes()),
+			   symTab));
+	enter(symTab, newSym("clearAll"),
+	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()),
+			   symTab));
+	enter(symTab, newSym("setPixel"),
+	      newProcEntry(newParamTypes
+	      (intType, FALSE,
+	       newParamTypes(intType, FALSE,
+			     newParamTypes(intType, FALSE,
+					   emptyParamTypes()))),
+			   symTab));
+	enter(symTab, newSym("drawLine"),
+	      newProcEntry(newParamTypes
+	      (intType, FALSE,
+	       newParamTypes(intType, FALSE,
+			     newParamTypes(intType, FALSE,
+					   newParamTypes(intType,
+							 FALSE,
+		      newParamTypes
+		      (intType,
+		       FALSE,
+	 emptyParamTypes
+	 ()))))),
+			   symTab));
+	enter(symTab, newSym("drawCircle"),
+	      newProcEntry(newParamTypes
+	      (intType, FALSE,
+	       newParamTypes(intType, FALSE,
+			     newParamTypes(intType, FALSE,
+					   newParamTypes(intType,
+							 FALSE,
+		      emptyParamTypes
+		      ())))),
+			   symTab));
+
+}
+
 
 /** (0) Do recursive node-traversal to check for semantic errors
  * @param Absyn *node
@@ -112,6 +180,7 @@ Type *checkNameTy(Absyn * node, Table * symTab)
 		error("undefined type '%s' in line %i",
 		      symToString(node->u.nameTy.name), node->line);
 	}
+
 	if (nameEntry->kind != ENTRY_KIND_TYPE) {
 		error("'%s' is not a type in line %i",
 		      symToString(node->u.nameTy.name), node->line);
@@ -142,13 +211,14 @@ Type *checkArrayTy(Absyn * node, Table * symTab)
 Type *checkTypeDec(Absyn * node, Table * symTab) {
 	Type *type;
 	Entry *typeEntry;
+	if (!semanticPhase) {
+		type = checkNode(node->u.typeDec.ty, symTab);
+		typeEntry = newTypeEntry(type);
 
-	type = checkNode(node->u.typeDec.ty, symTab);
-	typeEntry = newTypeEntry(type);
-
-	if (enter(symTab, node->u.typeDec.name, typeEntry)  == NULL) {
-		error("redeclaration of %s as type in line %i",
-		      symToString(node->u.typeDec.name), node->line);
+		if (enter(symTab, node->u.typeDec.name, typeEntry)  == NULL) {
+			error("redeclaration of %s as type in line %i",
+			      symToString(node->u.typeDec.name), node->line);
+		}
 	}
 
 	return NULL;
@@ -163,23 +233,34 @@ Type *checkTypeDec(Absyn * node, Table * symTab) {
 Type *checkProcDec(Absyn * node, Table * symTab) {
 	ParamTypes *parTypes;
 	Entry *procEntry;
-	Table *localTable;
+	Table *localSymTable;
 
-	localTable = newTable(NULL);
+	if (!semanticPhase) {
+		localSymTable = newTable(NULL);
 
-	parTypes = checkParamTypes(node->u.procDec.params, localTable);
-	procEntry = newProcEntry(parTypes, localTable);
+		parTypes = checkParamTypes(node->u.procDec.params, symTab);
+		localSymTable = newTable(symTab);
+		procEntry = newProcEntry(parTypes, localSymTable);
 
-	if (enter(symTab, node->u.procDec.name, procEntry)  == NULL) {
-		error("redeclaration of %s as procedure in line %i",
-		      symToString(node->u.procDec.name), node->line);
-	}
+		if (enter(symTab, node->u.procDec.name, procEntry)  == NULL) {
+			error("redeclaration of %s as procedure in line %i",
+			      symToString(node->u.procDec.name), node->line);
+		}
 
-	checkNode(node->u.procDec.decls, localTable);
-	checkNode(node->u.procDec.body, localTable);
+	} else {
+		procEntry = lookup(symTab, node->u.procDec.name);
+		localSymTable = procEntry->u.procEntry.localTable;
 
-	if (showSymbolTable) {
-		showTable(localTable);
+		checkNode(node->u.procDec.params, localSymTable);
+		checkNode(node->u.procDec.decls, localSymTable);
+		checkNode(node->u.procDec.body, localSymTable);
+
+		if (showSymbolTable) {
+		  printf("\nsymbol table at end of procedure '%s':\n",
+			     symToString(node->u.procDec.name));
+
+		      showTable(localSymTable);
+		}
 	}
 
 	return NULL;
@@ -572,24 +653,24 @@ Type *checkExpList(Absyn * node, Table * symTab)
 
 ParamTypes *checkParamTypes(Absyn * params, Table * symTab)
 {
-  Type *parType;
-  Entry *parEntry;
+      Type *parType;
+      Entry *parEntry;
 
-  if(params->u.decList.isEmpty){
-	  return emptyParamTypes();
-  }
+      if(params->u.decList.isEmpty){
+	      return emptyParamTypes();
+      }
 
-  parType = checkNode(params->u.decList.head->u.parDec.ty, symTab);
+      parType = checkNode(params->u.decList.head->u.parDec.ty, symTab);
 
-  if (parType->kind == TYPE_KIND_ARRAY && !params->u.decList.head->u.parDec.isRef) {
-	  error("parameter %s must be a reference parameter in line %i",
-		symToString(params->u.decList.head->u.parDec.name), params->line);
-  }
+      if (parType->kind == TYPE_KIND_ARRAY && !params->u.decList.head->u.parDec.isRef) {
+	      error("parameter %s must be a reference parameter in line %i",
+		    symToString(params->u.decList.head->u.parDec.name), params->line);
+      }
 
-  parEntry = newVarEntry(parType, params->u.decList.head->u.parDec.isRef);
+      parEntry = newVarEntry(parType, params->u.decList.head->u.parDec.isRef);
 
-  enter(symTab, params->u.decList.head->u.parDec.name, parEntry);
+      enter(symTab, params->u.decList.head->u.parDec.name, parEntry);
 
-  return newParamTypes(parType, params->u.decList.head->u.parDec.isRef,
-		       checkParamTypes(params->u.decList.tail, symTab));
+      return newParamTypes(parType, params->u.decList.head->u.parDec.isRef,
+			   checkParamTypes(params->u.decList.tail, symTab));
 }

@@ -1,0 +1,42 @@
+//
+// Test4
+//
+//***
+  type myInt = int;
+  type vector = array [5] of int;
+  type matrix = array [3] of vector;
+  type mat3 = array [10] of array [20] of vector;
+
+proc main(){
+	var zahl1: int;
+	var fak1: int;
+	var fak2: int;
+	fak1 := 1;
+	fak2 := 1;
+
+	readi(zahl1);
+
+	fakrek(zahl1, fak1);
+	fakiter(zahl1, fak2);
+	{ zahl1 := 3242 +3243;}
+	{}
+	//printi(fak1);
+	//printi(fak2);
+	//3vv23v2v4((b1weqwe ;;;
+
+	//fak1 = fak2 = fak3;;;@@@@
+}
+
+proc fakrek(zahl1 : int, ref fak1: int){
+	if(zahl1 >1){
+		fak1 := fak1 * zahl1;
+		fakrek(zahl1-1, fak1);
+	}
+}
+
+proc fakiter(zahl1 : int, ref fak2: int){
+	while(zahl1 > 1){
+		fak2:= fak2 *zahl1;
+		zahl1 := zahl1 - 1;
+	}
+}

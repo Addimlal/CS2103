@@ -1,0 +1,14 @@
+type A8 = array [8] of int;
+
+proc main(){
+	var a: int;
+	var b: array [8] of int;
+	a:= 6;
+
+	testRef(b, a);
+}
+
+proc testRef(ref a:int, ref b: A8){
+
+}
+

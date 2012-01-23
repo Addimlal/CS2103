@@ -1,0 +1,55 @@
+//
+// Test: Maenchen selfmade
+//
+
+type dC = array [4] of int;
+type dL = array [5] of int;
+
+
+proc main(){
+	var head : dC;
+	var leftarm: dL;
+	var rightarm: dL;
+	var body:dL;
+	var leftleg: dL;
+	var rightleg: dL;
+	
+
+	getCircle(head);
+	getLine(body);
+	getLine(leftarm);
+	getLine(rightarm);
+	getLine(leftleg);
+	getLine(rightleg);
+
+
+	drawCircle(head[0], head[1], head[2], head[3]);
+	drawLine(body[0], body[1], body[2], body[3], body[4]);
+	drawLine(leftarm[0], leftarm[1], leftarm[2], leftarm[3], leftarm[4]);
+	drawLine(rightarm[0], rightarm[1], rightarm[2], rightarm[3], rightarm[4]);
+	drawLine(leftleg[0], leftleg[1], leftleg[2], leftleg[3], leftleg[4]);
+	drawLine(rightleg[0], rightleg[1], rightleg[2], rightleg[3], rightleg[4]);
+}
+
+proc getCircle(ref circle : dC){
+	var x : int;
+
+	x := 0;
+
+	while(x<=3){
+		readi(circle[x]);
+		x := x+1;
+	}
+}
+
+proc getLine(ref line: dL){
+	var x : int;
+
+	x := 0;
+
+	while(x<=4){
+		readi(line[x]);
+		x := x+1;
+	}
+}
+
