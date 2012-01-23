@@ -41,8 +41,7 @@ Table *check(Absyn * program, boolean tables)
 	globalTable = newTable(NULL);
 
 	/* enter types and procedures into symboltable*/
-	entry = newTypeEntry(intType);
-	enterBibProcs(entry, globalTable);
+	enterBibProcs(globalTable);
 
 	/* do semantic checks */
 	semanticPhase = FALSE;
@@ -75,69 +74,72 @@ Table *check(Absyn * program, boolean tables)
 }
 
 
-void enterBibProcs(Entry * entry, Table * symTab)
+/**
+ * @brief Enter symbols of library procedures into global symbol table
+ *
+ * @param symTab symbol table
+ *
+ * @return void
+ **/
+void enterBibProcs(Table * symTab)
 {
-	enter(symTab, newSym("int"), entry);
+	enter(symTab, newSym("int"), newTypeEntry(intType));
+
 	enter(symTab, newSym("printi"),
-	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()),
-			   symTab));
+	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()), symTab));
+
 	enter(symTab, newSym("printc"),
-	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()),
-			   symTab));
+	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()), symTab));
+
 	enter(symTab, newSym("readi"),
-	      newProcEntry(newParamTypes(intType, TRUE, emptyParamTypes()),
-			   symTab));
+	      newProcEntry(newParamTypes(intType, TRUE, emptyParamTypes()), symTab));
+
 	enter(symTab, newSym("readc"),
-	      newProcEntry(newParamTypes(intType, TRUE, emptyParamTypes()),
-			   symTab));
+	      newProcEntry(newParamTypes(intType, TRUE, emptyParamTypes()), symTab));
+
 	enter(symTab, newSym("exit"),
-	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()),
-			   symTab));
+	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()), symTab));
+
 	enter(symTab, newSym("time"),
-	      newProcEntry(newParamTypes(intType, TRUE, emptyParamTypes()),
-			   symTab));
+	      newProcEntry(newParamTypes(intType, TRUE, emptyParamTypes()), symTab));
+
 	enter(symTab, newSym("clearAll"),
-	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()),
-			   symTab));
+	      newProcEntry(newParamTypes(intType, FALSE, emptyParamTypes()), symTab));
+
 	enter(symTab, newSym("setPixel"),
-	      newProcEntry(newParamTypes
-	      (intType, FALSE,
-	       newParamTypes(intType, FALSE,
-			     newParamTypes(intType, FALSE,
-					   emptyParamTypes()))),
-			   symTab));
+	      newProcEntry(
+			newParamTypes(intType, FALSE,
+			newParamTypes(intType, FALSE,
+			newParamTypes(intType, FALSE, emptyParamTypes()))), symTab));
+
 	enter(symTab, newSym("drawLine"),
-	      newProcEntry(newParamTypes
-	      (intType, FALSE,
-	       newParamTypes(intType, FALSE,
-			     newParamTypes(intType, FALSE,
-					   newParamTypes(intType,
-							 FALSE,
-		      newParamTypes
-		      (intType,
-		       FALSE,
-	 emptyParamTypes
-	 ()))))),
-			   symTab));
+	      newProcEntry(
+			newParamTypes(intType, FALSE,
+			newParamTypes(intType, FALSE,
+			newParamTypes(intType, FALSE,
+			newParamTypes(intType, FALSE,
+			newParamTypes(intType, FALSE, emptyParamTypes()))))), symTab
+		)
+	);
+
 	enter(symTab, newSym("drawCircle"),
-	      newProcEntry(newParamTypes
-	      (intType, FALSE,
-	       newParamTypes(intType, FALSE,
-			     newParamTypes(intType, FALSE,
-					   newParamTypes(intType,
-							 FALSE,
-		      emptyParamTypes
-		      ())))),
-			   symTab));
+	      newProcEntry(
+			newParamTypes(intType, FALSE,
+			newParamTypes(intType, FALSE,
+			newParamTypes(intType, FALSE,
+			newParamTypes(intType, FALSE, emptyParamTypes())))), symTab
+		)
+	);
 
 }
 
-
-/** (0) Do recursive node-traversal to check for semantic errors
- * @param Absyn *node
- * @param Table *symTab
- * @return nodeType or NULL
- * */
+/**
+ * @brief (0) Do recursive node-traversal to check for semantic errors
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typegraph of detected abstract type
+ **/
 Type *checkNode(Absyn * node, Table * symTab)
 {
 	switch (node->type) {
@@ -147,7 +149,7 @@ Type *checkNode(Absyn * node, Table * symTab)
 	case ABSYN_PROCDEC:		return checkProcDec(node, symTab);
 	case ABSYN_PARDEC:		return checkParDec(node, symTab);
 	case ABSYN_VARDEC:		return checkVarDec(node, symTab);
-	case ABSYN_EMPTYSTM:		return checkEmptyStm(node, symTab);
+	case ABSYN_EMPTYSTM:		return checkEmptyStm();
 	case ABSYN_COMPSTM:		return checkCompStm(node, symTab);
 	case ABSYN_ASSIGNSTM:		return checkAssignStm(node, symTab);
 	case ABSYN_IFSTM:		return checkIfStm(node, symTab);
@@ -165,11 +167,13 @@ Type *checkNode(Absyn * node, Table * symTab)
 	return NULL;
 }
 
-/** (1) Checking named types for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return entry->u.typeEntry.type - Typegraph of named type
- * */
+/**
+ * @brief (1) Checking named types for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typegraph of named type
+ **/
 Type *checkNameTy(Absyn * node, Table * symTab)
 {
 	Entry *nameEntry;
@@ -189,11 +193,13 @@ Type *checkNameTy(Absyn * node, Table * symTab)
 	return nameEntry->u.typeEntry.type;
 }
 
-/** (2) Create typegraph for arrayType
- * @param Absyn *node
- * @param Table *symTab
- * @return type - Typegraph of array type
- * */
+/**
+ * @brief (2) Create typegraph for arrayType
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typegraph of array type
+ **/
 Type *checkArrayTy(Absyn * node, Table * symTab)
 {
 	Type *arrayType;
@@ -203,11 +209,13 @@ Type *checkArrayTy(Absyn * node, Table * symTab)
 	return newArrayType(node->u.arrayTy.size, arrayType);
 }
 
-/** (3) Checking type declarations for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of statements always return NULL
- * */
+/**
+ * @brief (3) Checking type declarations for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typechecks of statements always return NULL
+ **/
 Type *checkTypeDec(Absyn * node, Table * symTab) {
 	Type *type;
 	Entry *typeEntry;
@@ -224,12 +232,13 @@ Type *checkTypeDec(Absyn * node, Table * symTab) {
 	return NULL;
 }
 
-
-/** (4) Checking type declarations for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of statements always return NULL
- * */
+/**
+ * @brief (4) Checking type declarations for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typechecks of statements always return NULL
+ **/
 Type *checkProcDec(Absyn * node, Table * symTab) {
 	ParamTypes *parTypes;
 	Entry *procEntry;
@@ -266,11 +275,13 @@ Type *checkProcDec(Absyn * node, Table * symTab) {
 	return NULL;
 }
 
-/** (5) Checking type declarations for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of statements always return NULL
- * */
+/**
+ * @brief (5) Checking type declarations for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typechecks of statements always return NULL
+ **/
 Type *checkParDec(Absyn * node, Table * symTab) {
 	Type *paramType;
 	Entry *paramEntry;
@@ -286,11 +297,13 @@ Type *checkParDec(Absyn * node, Table * symTab) {
 	return NULL;
 }
 
-/** (6) Checking variable declarations for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of variable return NULL
- * */
+/**
+ * @brief (6) Checking variable declarations for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typechecks of variable return NULL
+ **/
 Type *checkVarDec(Absyn * node, Table * symTab) {
 	Type *varType;
 	Entry *varEntry;
@@ -306,20 +319,22 @@ Type *checkVarDec(Absyn * node, Table * symTab) {
 	return NULL;
 }
 
-/** (7) Checking empty statemens for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of empty-statements always return NULL
- * */
-Type *checkEmptyStm(Absyn * node, Table * symTab) {
+/**
+ * @brief (7) Checking empty statemens for conformity
+
+ * @return Type* - Typechecks of empty-statements always return NULL
+ **/
+Type *checkEmptyStm() {
 	return NULL;
 }
 
-/** (8) Checking compound-statemens for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of compound-statements always return NULL
- * */
+/**
+ * @brief (8) Checking compound-statemens for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typechecks of compound-statements always return NULL
+ **/
 Type *checkCompStm(Absyn * node, Table * symTab) {
 
 	checkNode(node->u.compStm.stms, symTab);
@@ -327,11 +342,13 @@ Type *checkCompStm(Absyn * node, Table * symTab) {
 	return NULL;
 }
 
-/** (9) Checking assign statemens for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of assign-statements always return NULL
- * */
+/**
+ * @brief (9) Checking assign statemens for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typechecks of assign-statements always return NULL
+ **/
 Type *checkAssignStm(Absyn * node, Table * symTab) {
 	Type 	*leftType,
 		*rightType;
@@ -350,11 +367,13 @@ Type *checkAssignStm(Absyn * node, Table * symTab) {
 	return NULL;
 }
 
-/** (10) Checking if statemens for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of if-statements always return NULL
- * */
+/**
+ * @brief (10) Checking if statemens for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typechecks of if-statements always return NULL
+ **/
 Type *checkIfStm(Absyn * node, Table * symTab) {
 	Type *ifType;
 
@@ -370,11 +389,13 @@ Type *checkIfStm(Absyn * node, Table * symTab) {
 	return NULL;
 }
 
-/** (11) Checking while statemens for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of while-statements always return NULL
- * */
+/**
+ * @brief (11) Checking while statemens for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typechecks of while-statements always return NULL
+ **/
 Type *checkWhileStm(Absyn * node, Table * symTab) {
 	Type *whileType;
 
@@ -389,11 +410,13 @@ Type *checkWhileStm(Absyn * node, Table * symTab) {
 	return NULL;
 }
 
-/** (12) Checking procedure declarations for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Typechecks of statements always return NULL
- * */
+/**
+ * @brief  (12) Checking procedure declarations for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typechecks of statements always return NULL
+ **/
 Type *checkCallStm(Absyn * node, Table * symTab) {
 	int argNr = 1;
 	Absyn *callArgs;
@@ -416,14 +439,14 @@ Type *checkCallStm(Absyn * node, Table * symTab) {
 	paramTypes = entryParam->u.procEntry.paramTypes;
 	callArgs = node->u.callStm.args;
 
-	while(!(paramTypes->isEmpty) && !(callArgs->u.expList.isEmpty)) {
+	while (!(paramTypes->isEmpty) && !(callArgs->u.expList.isEmpty)) {
 		callType = checkNode(callArgs->u.expList.head, symTab);
-		if(paramTypes->type != callType) {
+		if (paramTypes->type != callType) {
 		      error("procedure %s argument %i type mismatch in line %i",
 			    symToString(node->u.callStm.name), argNr, node->line);
 		}
 
-		if(paramTypes->isRef && callArgs->u.expList.head->type != ABSYN_VAREXP) {
+		if (paramTypes->isRef && callArgs->u.expList.head->type != ABSYN_VAREXP) {
 		      error("procedure %s argument %i must be a variable in line %i",
 			    symToString(node->u.callStm.name), argNr, node->line);
 		}
@@ -433,12 +456,12 @@ Type *checkCallStm(Absyn * node, Table * symTab) {
 		argNr++;
 	}
 
-	if(!paramTypes->isEmpty) {
+	if (!paramTypes->isEmpty) {
 		error("procedure %s called with too few arguments in line %i",
 		      symToString(node->u.callStm.name), node->line);
 	}
 
-	if(!callArgs->u.expList.isEmpty) {
+	if (!callArgs->u.expList.isEmpty) {
 		error("procedure %s called with too many arguments in line %i",
 		      symToString(node->u.callStm.name), node->line);
 	}
@@ -446,11 +469,13 @@ Type *checkCallStm(Absyn * node, Table * symTab) {
 	return NULL;
 }
 
-/** (13) Checking assignments and operator expressions for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return type - Typegraph of operator assigment
- * */
+/**
+ * @brief (13) Checking assignments and operator expressions for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typegraph of operator assigment
+ **/
 Type *checkOpExp(Absyn * node, Table * symTab)
 {
 	Type 	*leftType,
@@ -530,11 +555,13 @@ Type *checkOpExp(Absyn * node, Table * symTab)
 	return type;
 }
 
-/** (14) Do recursive node-traversal of variable expressions
- * @param Absyn *node
- * @param Table *symTab
- * @return type - Returns true type by recursing with checkNode
- * */
+/**
+ * @brief (14) Do recursive node-traversal of variable expressions
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Returns true type by recursing with checkNode
+ **/
 Type *checkVarExp(Absyn * node, Table * symTab)
 {
 	Type *varType;
@@ -543,12 +570,13 @@ Type *checkVarExp(Absyn * node, Table * symTab)
 	return varType;
 }
 
-/** (15) Set primitive integer type
- * @param Absyn *node
- * @param Table *symTab
- * @return intType
- * */
-
+/**
+ * @brief (15) Set primitive integer type
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typegraph of int Type
+ **/
 Type *checkIntExp(Absyn * node, Table * symTab)
 {
 	Type *type;
@@ -557,11 +585,13 @@ Type *checkIntExp(Absyn * node, Table * symTab)
 	return type;
 }
 
-/** (16) Checking simple variable types for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return entry->u.varEntry.type - Typegraph of simple variable type
- * */
+/**
+ * @brief (16) Checking simple variable types for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typegraph of simple variable type
+ **/
 Type *checkSimpleVar(Absyn * node, Table * symTab)
 {
 	Entry *simpleEntry;
@@ -581,11 +611,13 @@ Type *checkSimpleVar(Absyn * node, Table * symTab)
 	return simpleEntry->u.varEntry.type;
 }
 
-/** (17) Checking array variable types for conformity
- * @param Absyn *node
- * @param Table *symTab
- * @return arrEntry->u.varEntry.type - Typegraph of array variable type
- * */
+/**
+ * @brief (17) Checking array variable types for conformity
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Typegraph of array variable type
+ **/
 Type *checkArrayVar(Absyn * node, Table * symTab)
 {
 	Type *indexType,
@@ -606,11 +638,13 @@ Type *checkArrayVar(Absyn * node, Table * symTab)
 	return arrayType->u.arrayType.baseType;
 }
 
-/** (18) Do recursive node-traversal of declaration lists
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Resolve to typegraph of declaration lists
- * */
+/**
+ * @brief (18) Do recursive node-traversal of declaration lists
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Resolve to typegraph of declaration lists
+ **/
 Type *checkDecList(Absyn * node, Table * symTab)
 {
 	if (node->u.decList.isEmpty == FALSE) {
@@ -621,11 +655,13 @@ Type *checkDecList(Absyn * node, Table * symTab)
 	return NULL;
 }
 
-/** (19) Do recursive node-traversal of statement lists
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Resolve to typegraph of statement lists
- * */
+/**
+ * @brief (19) Do recursive node-traversal of statement lists
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Resolve to typegraph of statement lists
+ **/
 Type *checkStmList(Absyn * node, Table * symTab)
 {
 	if (node->u.stmList.isEmpty == FALSE) {
@@ -635,11 +671,13 @@ Type *checkStmList(Absyn * node, Table * symTab)
 	return NULL;
 }
 
-/** (20) Do recursive node-traversal of expression lists
- * @param Absyn *node
- * @param Table *symTab
- * @return NULL - Resolve to typegraph of expression lists
- * */
+/**
+ * @brief (20) Do recursive node-traversal of expression lists
+ *
+ * @param node abstract syntax
+ * @param symTab symbol table
+ * @return Type* - Resolve to typegraph of expression lists
+ **/
 Type *checkExpList(Absyn * node, Table * symTab)
 {
 	if (node->u.expList.isEmpty == FALSE) {
@@ -651,12 +689,19 @@ Type *checkExpList(Absyn * node, Table * symTab)
 }
 
 
+/**
+ * @brief Check semantic validity of parameters types
+ *
+ * @param params procedure parameters
+ * @param symTab symbol table of procedure header
+ * @return ParamTypes*
+ **/
 ParamTypes *checkParamTypes(Absyn * params, Table * symTab)
 {
       Type *parType;
       Entry *parEntry;
 
-      if(params->u.decList.isEmpty){
+      if (params->u.decList.isEmpty){
 	      return emptyParamTypes();
       }
 

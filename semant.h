@@ -7,7 +7,7 @@
 
 Table *check(Absyn * program, boolean tables);
 
-void enterBibProcs(Entry *entry, Table * symTab);
+void enterBibProcs(Table * symTab);
 
 Type *checkNode(Absyn * node, Table * symTab);
 Type *checkNameTy(Absyn * node, Table * symTab);
@@ -16,7 +16,7 @@ Type *checkTypeDec(Absyn * node, Table * symTab);
 Type *checkProcDec(Absyn * node, Table * symTab);
 Type *checkParDec(Absyn * node, Table * symTab);
 Type *checkVarDec(Absyn * node, Table * symTab);
-Type *checkEmptyStm(Absyn * node, Table * symTab);
+Type *checkEmptyStm();
 Type *checkCompStm(Absyn * node, Table * symTab);
 Type *checkAssignStm(Absyn * node, Table * symTab);
 Type *checkIfStm(Absyn * node, Table * symTab);
