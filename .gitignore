@@ -14,7 +14,7 @@ spl
 # IDE/Maintainance files
 .project
 ChangeLog
-*.kdev4
+*.kdev4*
 
 # Debugging
 lex.yy.c
