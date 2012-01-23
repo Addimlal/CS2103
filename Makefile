@@ -8,7 +8,7 @@ NO_COLOR="\033[0m"
 OK_COLOR="\033[30;1m"
 FILE_COLOR="\033[32;1m"
 
-CC = gcc
+CC = /usr/bin/gcc
 CFLAGS = -Wall -Wno-unused -g
 LDLIBS = -lm
 
@@ -47,28 +47,37 @@ fast:
 
 -include depend.mak
 
+fast64:
+		@$(MAKE) CC="tcc" CFLAGS="-Wall -Werror -Wunusupported -c -g" LDLIBS="-L/usr/lib64/gcc/x86_64-slackware-linux/"| sed -e '/Entering\|Leaving/d' -e '/Betrete\|Verlasse/d'
+
+-include depend.mak
+
 graph:
 		@$(MAKE) all | sed '/make/d'
-		@echo $(FILE_COLOR)Erstelle vektorbasierten Parser-Graph ... $(NO_COLOR)
-		@echo $(OK_COLOR)Ausgabe: parser.svg $(NO_COLOR)
+		@echo -e $(FILE_COLOR)Erstelle vektorbasierten Parser-Graph ... $(NO_COLOR)
+		@echo -e $(OK_COLOR)Ausgabe: parser.svg $(NO_COLOR)
 		@dot -Tsvg  parser.dot -o parser.svg
 		@echo
 
 run:		all
 		@for i in Tests/*.spl ; \
-		do echo $(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./$(BIN) $$i; \
-		done | column -c 80
+		do echo -e $(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./$(BIN) $$i; \
+		done
 		@echo
 
 ast:		all
 		@for i in Tests/??_test_*.spl ; \
-		do echo $(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./$(BIN) --absyn $$i; \
-		done | column -c 80
+		do echo -e$(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./$(BIN) --absyn $$i; \
+		done
 		@echo
 
 
 verify:		all
 		@./verify
+		@echo
+
+saturn:		all
+		@./verifyRemote
 		@echo
 
 -include depend.mak
@@ -91,45 +100,45 @@ dist-clean:	clean
 %splRef :
 
 scannerTest:	all
-		@echo $(FILE_COLOR)TESTE SCANNER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)TESTE SCANNER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./spl --tokens /dev/stdin
 scannerTest2:	all
-		@echo $(FILE_COLOR)TESTE SCANNER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)TESTE SCANNER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./spl --tokens /dev/stdin /dev/null
 scannerRef:	splRef
-		@echo $(FILE_COLOR)TESTE REFERENZ SCANNER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)TESTE REFERENZ SCANNER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./splRef --tokens /dev/stdin /dev/null
 
 
 parserTest:	all
-		@echo $(FILE_COLOR)INTERAKTIVER PARSER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)INTERAKTIVER PARSER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./spl /dev/stdin
 parserTest2:	all
-		@echo $(FILE_COLOR)INTERAKTIVER PARSER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)INTERAKTIVER PARSER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./spl /dev/stdin /dev/null
 parserRef:	splRef
-		@echo $(FILE_COLOR)INTERAKTIVER REFERENZ PARSER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)INTERAKTIVER REFERENZ PARSER'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./splRef /dev/stdin /dev/null
 
 
 astTest:	all
-		@echo $(FILE_COLOR)ABSTRAKTER SYNTAXBAUM'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)ABSTRAKTER SYNTAXBAUM'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./spl --absyn /dev/stdin
 astTest2:	all
-		@echo $(FILE_COLOR)ABSTRAKTER SYNTAXBAUM'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)ABSTRAKTER SYNTAXBAUM'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./spl --absyn /dev/stdin /dev/null
 astRef:		splRef
-		@echo $(FILE_COLOR)ABSTRAKTER SYNTAXBAUM DER REFERENZ'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)ABSTRAKTER SYNTAXBAUM DER REFERENZ'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./splRef --absyn  /dev/stdin /dev/null
 
 
 tableTest:	all
-		@echo $(FILE_COLOR)SYMBOLTABELLEN'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)SYMBOLTABELLEN'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./spl --tables /dev/stdin
 tableTest2:	all
-		@echo $(FILE_COLOR)SYMBOLTABELLEN'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)SYMBOLTABELLEN'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./spl --tables /dev/stdin /dev/null
 tableRef:	splRef
-		@echo $(FILE_COLOR)SYMBOLTABELLEN DER REFERENZ'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
+		@echo -e $(FILE_COLOR)SYMBOLTABELLEN DER REFERENZ'\n'$(OK_COLOR)CTRL + D signalisiert -- EOF --'\n'$(NO_COLOR)
 		@./splRef --tables  /dev/stdin /dev/null
 

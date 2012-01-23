@@ -3,17 +3,21 @@
 *.absyn
 *.swp
 *~
+.directory
 
 # Binaries
 spl
 *.tar.gz
+*.tar.bz2
+*.rar
 
 # IDE/Maintainance files
 .project
 ChangeLog
-lex.yy.c
+*.kdev4
 
 # Debugging
+lex.yy.c
 parser.output
 parser.dot
 parser.svg

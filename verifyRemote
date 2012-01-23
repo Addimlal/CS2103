@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# AST Verifier for SPL compiler
+#
+# See: https://github.com/X4/CS2103-Tools
+# Author: Fernandos
+#set -e
+
+rsync -htrpX . saturn:CS2103
+if [ $HOSTNAME != "saturn.mni.fh-giessen.de" ]; then
+	ssh Saturn 'bash -c "cd CS2103 && make clean && make verify"'
+else
+	cd $HOME/CS2103 && make clean && make verify
+fi
