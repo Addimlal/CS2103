@@ -32,8 +32,8 @@ Table *check(Absyn * program, boolean tables)
 	showSymbolTable = tables;
 
 	/* generate built-in types */
-	intType = newPrimitiveType("int");
-	booleanType = newPrimitiveType("boolean");
+	intType = newPrimitiveType("int", INT_BYTE_SIZE);
+	booleanType = newPrimitiveType("boolean", BOOL_BYTE_SIZE);
 
 	/* setup global symbol table */
 	globalTable = newTable(NULL);
