@@ -21,7 +21,8 @@ Absyn *progTree;
 
 %}
 
-%union {
+%union
+{
 	NoVal noVal;
 	IntVal intVal;
 	StringVal stringVal;
@@ -225,6 +226,7 @@ opt_statements	:	/*empty*/
 %%
 
 
-void yyerror(char *msg) {
+void yyerror(char *msg)
+{
 	error("%s in line %d", msg, yylval.noVal.line);
 }
