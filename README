@@ -68,22 +68,23 @@ Aufgaben
        REF_BYTE_SIZE
    als Konstante in "varalloc.h" zur Verfuegung.
 
-2. Sehen Sie eine Speichermoeglichkeit fuer Offsets bei Argumenten,
-   Parametern und lokalen Variablen vor.
-   Vorschlag: Erweitern Sie die Strukturen "ParamTypes" und "varEntry"
-   um jeweils eine Komponente.
+   calcCallOffset
+x 2. Sehen Sie eine Speichermoeglichkeit fuer Offsets bei Argumenten,
+x   Parametern und lokalen Variablen vor.
+x   Vorschlag: Erweitern Sie die Strukturen "ParamTypes" und "varEntry"
+x   um jeweils eine Komponente.
 
-3. Programmieren Sie einen Durchgang durch die Prozedurdeklarationen,
-   um die Offsets einzutragen.
+x3. Programmieren Sie einen Durchgang durch die Prozedurdeklarationen,
+x   um die Offsets einzutragen.
 
-4. Sehen Sie Speicherplaetze vor fuer die Groessen der drei Bereiche
-   - eingehende Argumente
-   - lokale Variable
-   - ausgehende Argumente.
-   Vorschlag: Erweitern der Struktur "procEntry" um drei Komponenten.
+x 4. Sehen Sie Speicherplaetze vor fuer die Groessen der drei Bereiche
+x   - eingehende Argumente
+x   - lokale Variable
+x   - ausgehende Argumente.
+x   Vorschlag: Erweitern der Struktur "procEntry" um drei Komponenten.
 
-5. Ergaenzen Sie das Programm aus 3. um das Eintragen der ersten
-   beiden Bereichsgroessen (eingehende Argumente, lokale Variable).
+x5. Ergaenzen Sie das Programm aus 3. um das Eintragen der ersten
+x   beiden Bereichsgroessen (eingehende Argumente, lokale Variable).
 
 6. Programmieren Sie einen zweiten Durchlauf durch die Prozedur-
    deklarationen, um auch die dritte Bereichsgroesse (ausgehende

@@ -18,9 +18,13 @@ typedef struct {
 		struct {
 			Type *type;
 			boolean isRef;
+			int offset;
 		} varEntry;
 		struct {
 			ParamTypes *paramTypes;
+			int paramSize; 		/* eingehende Argumente */
+			int argSize;		/* ausgehende Argumente */
+			int localVarSize;	/* lokale Variable */
 			struct table *localTable;
 		} procEntry;
 	} u;

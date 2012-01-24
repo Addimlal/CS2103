@@ -10,6 +10,6 @@
 #define REF_BYTE_SIZE	4	/* size of an address in bytes */
 
 void showProcVars(Absyn * program, Table * globalTable, boolean showVarAlloc);
-void setProcOffsets(char *procs, Table * symTab, boolean * builtin);
+int setProcOffsets(ParamTypes * params);
 
 #endif				/* _VARALLOC_H_ */
