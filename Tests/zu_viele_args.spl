@@ -1,0 +1,11 @@
+proc main(){
+	var a: int;
+	a:= 6;
+
+	testRef(a, 6);
+}
+
+proc testRef(ref a:int){
+
+}
+

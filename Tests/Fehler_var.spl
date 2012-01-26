@@ -1,4 +1,3 @@
-//erstellt von Andreas Schnell
 //Schlüsselworttest var
 proc main(){
 	var var : int;

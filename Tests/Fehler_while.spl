@@ -1,4 +1,3 @@
-//erstellt von Andreas Schnell
 //Schlüsselworttest while
 proc main(){
 	var while : int;

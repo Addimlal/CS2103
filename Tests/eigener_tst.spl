@@ -1,0 +1,24 @@
+proc sum(i: int, j: int) {
+	printi(i + j);
+	printc('\n');
+}
+
+proc main() {
+	var a:array[5] of int;
+
+	array[-1] := 1234567890;
+
+	printc('\n');
+
+	var i: int;
+	var j: int;
+
+	readi(i);
+	readi(j);
+	j := ' ';
+	i := 'f';
+	sum(i, j);
+
+	printi(a[1][3][2]);
+}
+type c1 = array[1234369]of array [ 22 ] of int;

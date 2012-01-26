@@ -10,6 +10,7 @@ spl
 
 # IDE/Maintainance files
 .project
+.directory
 ChangeLog
 lex.yy.c
 

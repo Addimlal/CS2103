@@ -1,0 +1,19 @@
+type a = int;
+type b = a;
+type c = b;
+type d = c;
+type e = d;
+type f = e;
+type g = f;
+type h = g;
+type i = h;
+type j = i;
+type k = j;
+type l = k;
+type m = l;
+
+type n = array[2] of m;
+proc main(){
+	var maxreg : n;
+	maxreg[2] := 1;
+}

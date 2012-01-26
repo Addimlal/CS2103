@@ -1,0 +1,16 @@
+//
+// Test1
+//
+
+proc main(){
+	var zahl1: int;
+	var zahl2: int;
+	var summe: int;
+
+	readi(zahl1);
+	readi(zahl2);
+	
+	summe:= zahl1+zahl2;
+	printi(summe);
+
+}

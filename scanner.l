@@ -25,7 +25,7 @@ static int lineNumber = 1;
 IDENT		([a-zA-Z_][a-zA-Z0-9_]*)
 NUM		([0-9]+)
 HEXLIT		(0x[0-9a-fA-F]+)
-ASCII_NO		(\'.\')
+ASCII_NO	(\'.\')
 ASCII_LF	(\'\\n\')
 COMMENT		(\/\/.*)
 LF		(\n)
@@ -35,34 +35,34 @@ WHITESPACE	([ \t]+)
 %%
 
 array				{ yylval.noVal.line = lineNumber; return ARRAY;	}
-else 				{ yylval.noVal.line = lineNumber; return ELSE; }
-if 				{ yylval.noVal.line = lineNumber; return IF; }
-of  				{ yylval.noVal.line = lineNumber; return OF; }
-proc  				{ yylval.noVal.line = lineNumber; return PROC; }
-ref 				{ yylval.noVal.line = lineNumber; return REF; }
-type  				{ yylval.noVal.line = lineNumber; return TYPE; }
-var  				{ yylval.noVal.line = lineNumber; return VAR; }
-while  				{ yylval.noVal.line = lineNumber; return WHILE; }
+else 				{ yylval.noVal.line = lineNumber; return ELSE;	}
+if 				{ yylval.noVal.line = lineNumber; return IF;	}
+of  				{ yylval.noVal.line = lineNumber; return OF;	}
+proc  				{ yylval.noVal.line = lineNumber; return PROC;	}
+ref 				{ yylval.noVal.line = lineNumber; return REF;	}
+type  				{ yylval.noVal.line = lineNumber; return TYPE;	}
+var  				{ yylval.noVal.line = lineNumber; return VAR;	}
+while  				{ yylval.noVal.line = lineNumber; return WHILE;	}
 \(	  			{ yylval.noVal.line = lineNumber; return LPAREN; }
 \)  				{ yylval.noVal.line = lineNumber; return RPAREN; }
 \[  				{ yylval.noVal.line = lineNumber; return LBRACK; }
 \] 	 			{ yylval.noVal.line = lineNumber; return RBRACK; }
-\{  				{ yylval.noVal.line = lineNumber; return LCURL; }
-\}  				{ yylval.noVal.line = lineNumber; return RCURL; }
-\=  				{ yylval.noVal.line = lineNumber; return EQ; }
-\#  				{ yylval.noVal.line = lineNumber; return NE; }
-\<  				{ yylval.noVal.line = lineNumber; return LT; }
-\<=  				{ yylval.noVal.line = lineNumber; return LE; }
-\>  				{ yylval.noVal.line = lineNumber; return GT; }
-\>=  				{ yylval.noVal.line = lineNumber; return GE; }
-\:=  				{ yylval.noVal.line = lineNumber; return ASGN; }
-\:  				{ yylval.noVal.line = lineNumber; return COLON; }
-\,  				{ yylval.noVal.line = lineNumber; return COMMA; }
-\;  				{ yylval.noVal.line = lineNumber; return SEMIC; }
-\+  				{ yylval.noVal.line = lineNumber; return PLUS; }
-\-  				{ yylval.noVal.line = lineNumber; return MINUS; }
-\*  				{ yylval.noVal.line = lineNumber; return STAR; }
-\/  				{ yylval.noVal.line = lineNumber; return SLASH; }
+\{  				{ yylval.noVal.line = lineNumber; return LCURL;	}
+\}  				{ yylval.noVal.line = lineNumber; return RCURL;	}
+\=  				{ yylval.noVal.line = lineNumber; return EQ;	}
+\#  				{ yylval.noVal.line = lineNumber; return NE;	}
+\<  				{ yylval.noVal.line = lineNumber; return LT;	}
+\<=  				{ yylval.noVal.line = lineNumber; return LE;	}
+\>  				{ yylval.noVal.line = lineNumber; return GT;	}
+\>=  				{ yylval.noVal.line = lineNumber; return GE;	}
+\:=  				{ yylval.noVal.line = lineNumber; return ASGN;	}
+\:  				{ yylval.noVal.line = lineNumber; return COLON;	}
+\,  				{ yylval.noVal.line = lineNumber; return COMMA;	}
+\;  				{ yylval.noVal.line = lineNumber; return SEMIC;	}
+\+  				{ yylval.noVal.line = lineNumber; return PLUS;	}
+\-  				{ yylval.noVal.line = lineNumber; return MINUS;	}
+\*  				{ yylval.noVal.line = lineNumber; return STAR;	}
+\/  				{ yylval.noVal.line = lineNumber; return SLASH;	}
 
 {IDENT}  			{
 				yylval.stringVal.line = lineNumber;
@@ -109,12 +109,14 @@ while  				{ yylval.noVal.line = lineNumber; return WHILE; }
 
 
 /* Hilfsfunktionen die für gematchte token gilt */
-int yywrap(void) {
+int yywrap(void)
+{
   return 1;
 }
 
 
-void showToken(int token) {
+void showToken(int token)
+{
 	switch(token) {
 	case 0:
 		printf("TOKEN = - - EOF --\n");
@@ -207,10 +209,12 @@ void showToken(int token) {
 		printf("TOKEN = %s in line %i\n", "SLASH", lineNumber);
 		break;
 	case IDENT:
-		printf("TOKEN = %s in line %i, value=\"%s\"\n", "IDENT", yylval.stringVal.line, yylval.stringVal.val);
+		printf("TOKEN = %s in line %i, value=\"%s\"\n",
+			"IDENT", yylval.stringVal.line, yylval.stringVal.val);
 		break;
 	case INTLIT:
-		printf("TOKEN = %s in line %i, value=\"%i\"\n", "INTLIT", yylval.intVal.line, yylval.intVal.val);
+		printf("TOKEN = %s in line %i, value=\"%i\"\n",
+			"INTLIT", yylval.intVal.line, yylval.intVal.val);
 		break;
 	default:
 		error("No match found - undefined Token.");

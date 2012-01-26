@@ -1,0 +1,19 @@
+//
+// Test2
+//
+
+proc main(){
+	var zahl1: int;
+	var zahl2: int;
+	var summe: int;
+
+	readi(zahl1);
+	readi(zahl2);
+	summieren(zahl1, zahl2, summe);
+	printi(summe);
+
+}
+
+proc summieren(zahl1: int, zahl2: int, ref summe: int){
+	summe:=zahl1+zahl2;
+}

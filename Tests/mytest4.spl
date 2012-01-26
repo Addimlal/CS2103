@@ -1,0 +1,34 @@
+//
+// Test4
+//
+
+proc main(){
+	var zahl1: int;
+	var fak1: int;
+	var fak2: int;
+	fak1 := 1;
+	fak2 := 1;
+
+	readi(zahl1);
+
+	fakrek(zahl1, fak1);
+	fakiter(zahl1, fak2);
+
+	printi(fak1);
+	printi(fak2);
+
+}
+
+proc fakrek(zahl1 : int, ref fak1: int){
+	if(zahl1 >1){
+		fak1 := fak1 * zahl1;
+		fakrek(zahl1-1, fak1);
+	}
+}
+
+proc fakiter(zahl1 : int, ref fak2: int){
+	while(zahl1 > 1){
+		fak2:= fak2 *zahl1;
+		zahl1 := zahl1 - 1;
+	}
+}

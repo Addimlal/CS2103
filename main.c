@@ -17,7 +17,6 @@
 #include "table.h"
 #include "semant.h"
 #include "varalloc.h"
-#include "codegen.h"
 
 
 #define VERSION		"1.1"
@@ -30,7 +29,7 @@ static void version(char *myself) {
 
 static void help(char *myself) {
   /* show some help how to use the program */
-  printf("Usage: %s [options] <input file> <output file>\n", myself);
+  printf("Usage: %s [options] <input file>\n", myself);
   printf("Options:\n");
   printf("  --tokens         show stream of tokens\n");
   printf("  --absyn          show abstract syntax\n");
@@ -44,18 +43,15 @@ static void help(char *myself) {
 int main(int argc, char *argv[]) {
   int i;
   char *inFileName;
-  char *outFileName;
   boolean optionTokens;
   boolean optionAbsyn;
   boolean optionTables;
   boolean optionVars;
   int token;
   Table *globalTable;
-  FILE *outFile;
 
   /* analyze command line */
   inFileName = NULL;
-  outFileName = NULL;
   optionTokens = FALSE;
   optionAbsyn = FALSE;
   optionTables = FALSE;
@@ -88,21 +84,14 @@ int main(int argc, char *argv[]) {
       }
     } else {
       /* file */
-      if (outFileName != NULL) {
-        error("more than two file names not allowed");
-      }
       if (inFileName != NULL) {
-        outFileName = argv[i];
-      } else {
-        inFileName = argv[i];
+        error("more than one input file");
       }
+      inFileName = argv[i];
     }
   }
   if (inFileName == NULL) {
     error("no input file");
-  }
-  if (outFileName == NULL) {
-    error("no output file");
   }
   yyin = fopen(inFileName, "r");
   if (yyin == NULL) {
@@ -124,11 +113,5 @@ int main(int argc, char *argv[]) {
   }
   globalTable = check(progTree, optionTables);
   allocVars(progTree, globalTable, optionVars);
-  outFile = fopen(outFileName, "w");
-  if (outFile == NULL) {
-    error("cannot open output file '%s'", outFileName);
-  }
-  genCode(progTree, globalTable, outFile);
-  fclose(outFile);
   return 0;
 }
