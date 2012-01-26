@@ -65,7 +65,7 @@ run:		all
 		done
 		@echo
 
-runRef:		all
+runRef:		
 		@for i in Tests/*.spl ; \
 		do echo -e $(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./splRef $$i /dev/null; \
 		done
