@@ -10,11 +10,12 @@
 #define REF_BYTE_SIZE	4	/* size of an address in bytes */
 
 void allocVars(Absyn * program, Table * globalTable, boolean showVarAlloc);
-void checkOffsets(Absyn * node, Table * symTab);
-int sendParamOffsets(ParamTypes * params);
-int sendVarOffsets(Absyn * node, Table * symTab);
-int countCallArgs(Absyn * node, Table * symTab);
-void setCallOffsets(Absyn * node, Table * symTab);
-void showAllocs(Absyn * node, Table * symTab);
+int setParamOffsets(ParamTypes * params, boolean builtinProcs);
+int setVarOffsets(Absyn * node, Table * symTab, Entry * entry);
+void setArgOffsets(Absyn * procParams, Table * localTable, Entry * procEntry);
 
-#endif /* _VARALLOC_H_ */
+int setOutArea(Absyn * stm, Table * globalTable);
+int checkSingleStm(Absyn * stm, Table * globalTable);
+void showVars(Absyn * program, Table * globalTable);
+
+#endif				/* _VARALLOC_H_ */

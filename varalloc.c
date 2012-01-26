@@ -16,14 +16,16 @@
 
 void allocVars(Absyn * program, Table * globalTable, boolean showVarAlloc)
 {
-	Absyn *prog_copy;
+
+	Absyn *node;
 	Entry *entry;
 	unsigned int i;
+	int outArg;
 
 	/* compute access information for arguments of predefined procs */
 	char *builtinProcs[] = {
 		"clearAll"	,	"drawCircle"	,
-		"drawLine"	,	"exit"		,
+		"drawLine"	, 	"exit" 		,
 		"printc"	,	"printc"	,
 		"printi"	,	"readc"		,
 		"setPixel"	,	"time"
@@ -33,235 +35,238 @@ void allocVars(Absyn * program, Table * globalTable, boolean showVarAlloc)
 	while (i-- > 0) {
 		entry = lookup(globalTable, newSym(builtinProcs[i]));
 		entry->u.procEntry.paramSize =
-		    sendParamOffsets(entry->u.procEntry.paramTypes);
+		    setParamOffsets(entry->u.procEntry.paramTypes, TRUE);
 	}
 
 	/* compute access information for arguments, parameters and local vars */
-	prog_copy = program;
-	while (!prog_copy->u.decList.isEmpty) {
-		if (prog_copy->u.decList.head->type == ABSYN_PROCDEC) {
-			checkOffsets(prog_copy, globalTable);
+	node = program;
+	while (!node->u.decList.isEmpty) {
+		if (node->u.decList.head->type == ABSYN_PROCDEC) {
+			entry = lookup(globalTable, node->u.decList.head->u.procDec.name);
+
+			/* set incoming arguments offsets */
+			entry->u.procEntry.paramSize =
+			    setParamOffsets(entry->u.procEntry.paramTypes, FALSE);
+
+			    /* set outgoing arguments offsets */
+			setArgOffsets(node->u.decList.head->u.procDec.params,
+				     entry->u.procEntry.localTable, entry);
+
+			/* set local variable offsets */
+			entry->u.procEntry.localVarSize=
+				setVarOffsets(node->u.decList.head->u.procDec.decls,
+				     entry->u.procEntry.localTable, entry);
 		}
 
-		prog_copy = prog_copy->u.decList.tail;
+		node = node->u.decList.tail;
 	}
 
-	/* show original variable allocation if requested */
+	/* compute outgoing area sizes */
+	node = program;
+	while (!node->u.decList.isEmpty) {
+		if (node->u.decList.head->type == ABSYN_PROCDEC) {
+			entry =
+			    lookup(globalTable, node->u.decList.head->u.procDec.name);
+
+			outArg =
+			    setOutArea(node->u.decList.head->u.procDec.body, globalTable);
+
+			entry->u.procEntry.argSize = outArg;
+		}
+
+		node = node->u.decList.tail;
+	}
+
+	/* show variable allocation if requeintsted */
 	if (showVarAlloc) {
-		showAllocs(program, globalTable);
+		showVars(program, globalTable);
 	}
 }
 
-void checkOffsets(Absyn * node, Table * symTab)
+
+int setParamOffsets(ParamTypes * params, boolean builtinProcs)
 {
-	Entry *entry;
-	ParamTypes *params;
-	switch (node->type) {
-	case ABSYN_PROCDEC:
-		entry = lookup(symTab, node->u.procDec.name);
-		params = entry->u.procEntry.paramTypes;
-
-		entry->u.procEntry.paramSize = sendParamOffsets(params);
-		entry->u.procEntry.localVarSize = sendVarOffsets(node->u.procDec.decls, symTab);
-		setCallOffsets(node->u.procDec.body, symTab);
-		break;
-	case ABSYN_PARDEC:
-		entry = lookup(symTab, node->u.procDec.name);
-		params = entry->u.procEntry.paramTypes;
-		entry->u.procEntry.paramSize = sendParamOffsets(params);
-		break;
-	case ABSYN_VARDEC:
-		entry = lookup(symTab, node->u.varDec.name);
-		sendVarOffsets(entry->u.varEntry.type, symTab);
-		return;
-	case ABSYN_DECLIST:
-		if (!node->u.decList.isEmpty) {
-			checkOffsets(node->u.decList.head, symTab);
-			checkOffsets(node->u.decList.tail, symTab);
-		}
-
-		return;
-	}
-}
-
-int sendParamOffsets(ParamTypes * params)
-{
-
-	int offset = 0;
+	int paramOffset = 0;
 
 	while (!params->isEmpty) {
-		params->offset = offset;
-		if (params->isRef) {
-			offset = offset + REF_BYTE_SIZE;
+		params->offset = paramOffset;
+		if (params->isRef && !builtinProcs) {
+			paramOffset += REF_BYTE_SIZE;
 		} else {
-			offset = offset + params->type->byte_size;
+			paramOffset += params->type->byte_size;
 		}
 		params = params->next;
 	}
 
-	return offset;
+	return paramOffset;
 }
 
-int sendVarOffsets(Absyn * decList, Table * symTab)
-{
-	int offset = 0;
-	Entry *varEntry;
 
-	while (!decList->u.decList.isEmpty) {
-		if (decList->type == ABSYN_VARDEC) {
-			varEntry = lookup(symTab, decList->u.varDec.name);
-			offset = offset + varEntry->u.varEntry.type->byte_size;
-			varEntry->u.varEntry.offset = -offset;
+int setVarOffsets(Absyn * node, Table * symTab, Entry * entry)
+{
+	int varOffset = 0;
+
+	/* set variable offsets */
+	while (!node->u.decList.isEmpty) {
+		if (node->u.decList.head->type == ABSYN_VARDEC) {
+			entry = lookup(symTab, node->u.decList.head->u.varDec.name);
+			varOffset += entry->u.varEntry.type->byte_size;
+			entry->u.varEntry.offset = -(varOffset);
 		}
 
-		decList = decList->u.decList.tail;
+		node = node->u.decList.tail;
 	}
 
-	return varEntry->u.varEntry.offset;
+	return varOffset;
 }
 
-int countCallArgs(Absyn * node, Table * symTab)
+void setArgOffsets(Absyn * node, Table * symTab, Entry * entry)
 {
-	Entry *entry;
-	ParamTypes *params;
-	int argCounter = 0;
+	Absyn *procDec = node;
+	int argOffset = 0;
 
-	entry = lookup(symTab, node->u.callStm.name);
-	params = entry->u.procEntry.paramTypes;
-
-	if (params->isEmpty) {
-		return 0;
+	while (!procDec->u.decList.isEmpty) {
+		if (procDec->u.decList.head->type == ABSYN_PARDEC) {
+			entry =
+			    lookup(symTab,
+				   procDec->u.decList.head->u.parDec.name);
+			entry->u.varEntry.offset = argOffset;
+			if (entry->u.varEntry.isRef) {
+				argOffset += REF_BYTE_SIZE;
+			} else {
+				argOffset += entry->u.varEntry.type->byte_size;
+			}
+		}
+		procDec = procDec->u.decList.tail;
 	}
 
-	while (!params->isEmpty) {
-
-		argCounter = +4;
-
-		params = params->next;
-	}
-
-	return argCounter;
+	entry->u.procEntry.paramSize = argOffset;
 }
 
-Entry *entry = NULL;
-
-void setCallOffsets(Absyn * node, Table * symTab)
+int setOutArea(Absyn * stm, Table * globalTable)
 {
+	Entry *callEntry;
+	int area = -1;
+	int newarea, ifarea, elsearea;
 
-	int max;
+	while (!stm->u.stmList.isEmpty) {
+		newarea = -1;
+		switch (stm->u.stmList.head->type) {
+		case ABSYN_CALLSTM:
+			callEntry =
+			    lookup(globalTable,
+				   stm->u.stmList.head->u.callStm.name);
+			newarea = callEntry->u.procEntry.paramSize;
+			break;
+		case ABSYN_COMPSTM:
+			newarea =
+			    setOutArea(stm->u.stmList.head->u.compStm.stms,
+				       globalTable);
+			break;
+		case ABSYN_IFSTM:
+			ifarea =
+			    checkSingleStm(stm->u.stmList.head->u.ifStm.
+					   thenPart, globalTable);
+			elsearea =
+			    checkSingleStm(stm->u.stmList.head->u.ifStm.
+					   elsePart, globalTable);
+			if (ifarea > elsearea)
+				newarea = ifarea;
+			else
+				newarea = elsearea;
+			break;
+		case ABSYN_WHILESTM:
+			newarea =
+			    checkSingleStm(stm->u.stmList.head->u.whileStm.body,
+					   globalTable);
+			break;
+		}
+		if (newarea > area) {
+			area = newarea;
+		}
+		stm = stm->u.stmList.tail;
+	}
+	return area;
+}
 
-	switch (node->type) {
-	case ABSYN_PROCDEC:
-		entry = lookup(symTab, node->u.procDec.name);
-		entry->u.procEntry.argSize = -1;
-		setCallOffsets(node->u.procDec.body, symTab);
-		return;
+int checkSingleStm(Absyn * stm, Table * globalTable)
+{
+	Entry *callEntry;
+	int ifarea, elsearea;
 
+	switch (stm->type) {
 	case ABSYN_CALLSTM:
-		if (entry != NULL) {
-
-			max = countCallArgs(node, symTab);
-
-			if (max > entry->u.procEntry.argSize)
-				entry->u.procEntry.argSize = max;
-		}
-		return;
-
-	case ABSYN_DECLIST:
-		if (!node->u.decList.isEmpty) {
-			setCallOffsets(node->u.decList.head, symTab);
-			setCallOffsets(node->u.decList.tail, symTab);
-		}
-
-	case ABSYN_STMLIST:
-		if (!node->u.decList.isEmpty) {
-			setCallOffsets(node->u.stmList.head, symTab);
-			setCallOffsets(node->u.stmList.tail, symTab);
-		}
-		return;
-
-	case ABSYN_IFSTM:
-		setCallOffsets(node->u.ifStm.thenPart, symTab);
-		setCallOffsets(node->u.ifStm.elsePart, symTab);
-		return;
-
-	case ABSYN_WHILESTM:
-		setCallOffsets(node->u.whileStm.body, symTab);
-		return;
-
+		callEntry = lookup(globalTable, stm->u.callStm.name);
+		showEntry(callEntry);
+		return callEntry->u.procEntry.paramSize;
 	case ABSYN_COMPSTM:
-		setCallOffsets(node->u.compStm.stms, symTab);
-		return;
-
+		return setOutArea(stm->u.compStm.stms, globalTable);
+	case ABSYN_IFSTM:
+		ifarea = checkSingleStm(stm->u.ifStm.thenPart, globalTable);
+		elsearea = checkSingleStm(stm->u.ifStm.elsePart, globalTable);
+		if (ifarea > elsearea)
+			return ifarea;
+		else
+			return elsearea;
+	case ABSYN_WHILESTM:
+		return checkSingleStm(stm->u.whileStm.body, globalTable);
 	}
+	return -1;
 }
 
-void showAllocs(Absyn * node, Table * symTab)
+void showVars(Absyn * program, Table * globalTable)
 {
-	Entry *entry;
+	Absyn *node, *vars;
+	Entry *entry, *varsEntry;
 	ParamTypes *params;
-	int i = 0;
+	int arg;
 
-	switch (node->type) {
-
-	case ABSYN_PROCDEC:
-
-		printf("\nVariable allocation for procedure '%s'\n",
-		       symToString(node->u.procDec.name));
-
-		entry = lookup(symTab, node->u.procDec.name);
-
-		params = entry->u.procEntry.paramTypes;
-
-		if (params->isEmpty) {
-
-		} else {
-
+	node = program;
+	while (!node->u.decList.isEmpty) {
+		if (node->u.decList.head->type == ABSYN_PROCDEC) {
+			entry =
+			    lookup(globalTable,
+				   node->u.decList.head->u.procDec.name);
+			printf("\nVariable allocation for procedure '%s'\n",
+			       symToString(node->u.decList.head->u.procDec.
+					   name));
+			arg = 1;
+			params = entry->u.procEntry.paramTypes;
 			while (!params->isEmpty) {
-				i++;
-
-				printf("arg %d: sp + %d\n", i, params->offset);
-
+				printf("arg %d: sp + %d\n", arg,
+				       params->offset);
+				arg++;
 				params = params->next;
 			}
-
+			printf("size of argument area = %d\n",
+			       entry->u.procEntry.paramSize);
+			vars = node->u.decList.head->u.procDec.params;
+			while (!vars->u.decList.isEmpty) {
+				varsEntry =
+				    lookup(entry->u.procEntry.localTable,
+					   vars->u.decList.head->u.parDec.name);
+				printf("param '%s': fp + %d\n",
+				       symToString(vars->u.decList.head->u.
+						   parDec.name),
+				       varsEntry->u.varEntry.offset);
+				vars = vars->u.decList.tail;
+			}
+			vars = node->u.decList.head->u.procDec.decls;
+			while (!vars->u.decList.isEmpty) {
+				varsEntry =
+				    lookup(entry->u.procEntry.localTable,
+					   vars->u.decList.head->u.varDec.name);
+				printf("var '%s': fp - %d\n",
+				       symToString(vars->u.decList.head->u.
+						   varDec.name),
+				       (varsEntry->u.varEntry.offset) * (-1));
+				vars = vars->u.decList.tail;
+			}
+			printf("size of localvar area = %d\n",
+			       entry->u.procEntry.localVarSize);
+			printf("size of outgoing area = %d\n",
+			       entry->u.procEntry.argSize);
 		}
-
-		printf("size of argument area = %d\n",
-		       entry->u.procEntry.paramSize);
-
-		showAllocs(node->u.procDec.params,
-			   entry->u.procEntry.localTable);
-		showAllocs(node->u.procDec.decls,
-			   entry->u.procEntry.localTable);
-
-		printf("size of localvar area = %d\n",
-		       entry->u.procEntry.localVarSize);
-		printf("size of outgoing area = %d\n",
-		       entry->u.procEntry.argSize);
-
-		break;
-	case ABSYN_PARDEC:
-		entry = lookup(symTab, node->u.parDec.name);
-
-		printf("param '%s': fp + %d\n",
-		       symToString(node->u.parDec.name),
-		       entry->u.varEntry.offset);
-
-		break;
-	case ABSYN_VARDEC:
-		entry = lookup(symTab, node->u.varDec.name);
-		printf("var '%s': fp - %d\n", symToString(node->u.varDec.name),
-		       entry->u.varEntry.offset);
-
-		return;
-	case ABSYN_DECLIST:
-		if (!node->u.decList.isEmpty) {
-			showAllocs(node->u.decList.head, symTab);
-			showAllocs(node->u.decList.tail, symTab);
-		}
-
-		return;
-
+		node = node->u.decList.tail;
 	}
 }
