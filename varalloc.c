@@ -69,7 +69,7 @@ void allocVars(Absyn * program, Table * globalTable, boolean showVarAlloc)
 			    lookup(globalTable, node->u.decList.head->u.procDec.name);
 
 			outArg =
-			    setOutArea(node->u.decList.head->u.procDec.body, globalTable);
+			    checkLocalOffsets(node->u.decList.head->u.procDec.body, globalTable);
 
 			entry->u.procEntry.argSize = outArg;
 		}
@@ -141,32 +141,31 @@ void setArgOffsets(Absyn * node, Table * symTab, Entry * entry)
 	entry->u.procEntry.paramSize = argOffset;
 }
 
-int setOutArea(Absyn * stm, Table * globalTable)
+int setLocalAreaOffset(Absyn * node, Table * globalTable)
 {
 	Entry *callEntry;
-	int area = -1;
-	int newarea, ifarea, elsearea;
+	int area = -1,
+	    newarea,
+	    ifarea,
+	    elsearea;
 
-	while (!stm->u.stmList.isEmpty) {
+	while (!node->u.stmList.isEmpty) {
 		newarea = -1;
-		switch (stm->u.stmList.head->type) {
-		case ABSYN_CALLSTM:
-			callEntry =
-			    lookup(globalTable,
-				   stm->u.stmList.head->u.callStm.name);
-			newarea = callEntry->u.procEntry.paramSize;
-			break;
+		switch (node->u.stmList.head->type) {
 		case ABSYN_COMPSTM:
 			newarea =
-			    setOutArea(stm->u.stmList.head->u.compStm.stms,
+			    checkLocalOffsets(node->u.stmList.head->u.compStm.stms,
 				       globalTable);
 			break;
+		case ABSYN_CALLSTM:
+			callEntry =
+			lookup(globalTable, node->u.stmList.head->u.callStm.name);
+			newarea = callEntry->u.procEntry.paramSize;
+			break;
 		case ABSYN_IFSTM:
-			ifarea =
-			    checkSingleStm(stm->u.stmList.head->u.ifStm.
-					   thenPart, globalTable);
+			ifarea = checkStmOffsets(node->u.stmList.head->u.ifStm. thenPart, globalTable);
 			elsearea =
-			    checkSingleStm(stm->u.stmList.head->u.ifStm.
+				checkStmOffsets(node->u.stmList.head->u.ifStm.
 					   elsePart, globalTable);
 			if (ifarea > elsearea)
 				newarea = ifarea;
@@ -174,41 +173,62 @@ int setOutArea(Absyn * stm, Table * globalTable)
 				newarea = elsearea;
 			break;
 		case ABSYN_WHILESTM:
-			newarea =
-			    checkSingleStm(stm->u.stmList.head->u.whileStm.body,
-					   globalTable);
+			newarea = checkStmOffsets(node->u.stmList.head->u.whileStm.body, globalTable);
 			break;
 		}
 		if (newarea > area) {
 			area = newarea;
 		}
-		stm = stm->u.stmList.tail;
+		node = node->u.stmList.tail;
 	}
+
 	return area;
 }
 
-int checkSingleStm(Absyn * stm, Table * globalTable)
+int checkStms(Absyn * node, Table * globalTable)
 {
 	Entry *callEntry;
-	int ifarea, elsearea;
+	int ifArea,
+	    elseArea;
 
-	switch (stm->type) {
+	switch (node->type) {
 	case ABSYN_CALLSTM:
-		callEntry = lookup(globalTable, stm->u.callStm.name);
+		callEntry = lookup(globalTable, node->u.callStm.name);
 		showEntry(callEntry);
 		return callEntry->u.procEntry.paramSize;
 	case ABSYN_COMPSTM:
-		return setOutArea(stm->u.compStm.stms, globalTable);
+		return checkLocalOffsets(node->u.compStm.stms, globalTable);
 	case ABSYN_IFSTM:
-		ifarea = checkSingleStm(stm->u.ifStm.thenPart, globalTable);
-		elsearea = checkSingleStm(stm->u.ifStm.elsePart, globalTable);
-		if (ifarea > elsearea)
-			return ifarea;
-		else
-			return elsearea;
+		ifArea = checkStmOffsets(node->u.ifStm.thenPart, globalTable);
+		elseArea = checkStmOffsets(node->u.ifStm.elsePart, globalTable);
+		if (ifArea > elseArea){
+			return ifArea;
+		} else {
+			return elseArea;
+		}
 	case ABSYN_WHILESTM:
-		return checkSingleStm(stm->u.whileStm.body, globalTable);
+		return checkStmOffsets(node->u.whileStm.body, globalTable);
 	}
+	return -1;
+}
+
+int checkStmOffsets(Absyn * node, Table * symTab)
+{
+	Absyn *program = node;
+	if (!node->type < 0){
+		return checkStms(program, symTab);
+	}
+
+	return node->type;
+}
+
+int checkLocalOffsets(Absyn * node, Table * symTab)
+{
+	Absyn *program = node;
+	if (symTab == NULL){
+		return setLocalAreaOffset(program, symTab);
+	}
+
 	return -1;
 }
 

@@ -25,7 +25,6 @@ typedef struct {
 			int paramSize; 		/* eingehende Argumente */
 			int argSize;		/* ausgehende Argumente */
 			int localVarSize;	/* lokale Variable */
-			int subProcEntry;	/* sub prozess aufruf */
 			struct table *localTable;
 		} procEntry;
 	} u;

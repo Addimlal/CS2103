@@ -14,8 +14,10 @@ int setParamOffsets(ParamTypes * params, boolean builtinProcs);
 int setVarOffsets(Absyn * node, Table * symTab, Entry * entry);
 void setArgOffsets(Absyn * procParams, Table * localTable, Entry * procEntry);
 
-int setOutArea(Absyn * stm, Table * globalTable);
-int checkSingleStm(Absyn * stm, Table * globalTable);
+int setLocalAreaOffset(Absyn * node, Table * globalTable);
+int checkLocalOffsets(Absyn * node, Table * globalTable);
+int checkStmOffsets(Absyn * node, Table * symTab);
+int checkStms(Absyn * node, Table * globalTable);
 void showVars(Absyn * program, Table * globalTable);
 
 #endif				/* _VARALLOC_H_ */
