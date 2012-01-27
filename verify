@@ -27,8 +27,8 @@ for file in Tests/*.spl ;
     echo "-- Compiling $file --" >> $REF
     ./splRef --absyn $file t >> $REF
     echo "-- Compiling $file --" >> $TEST
-    ./spl --absyn $file >> $TEST
-    ./spl --absyn $file | cmp -s /dev/stdin "${file%.spl}.absyn" || echo -e "$((++not_passed))] \033[1;31mE:\033[0m \033[1;34m$file\033[0m"
+    ./spl --absyn $file /dev/null >> $TEST
+    ./spl --absyn $file /dev/null | cmp -s /dev/stdin "${file%.spl}.absyn" || echo -e "$((++not_passed))] \033[1;31mE:\033[0m \033[1;34m$file\033[0m"
 done
 diff -s --suppress-common-lines $REF $TEST > $OUTPUT
 

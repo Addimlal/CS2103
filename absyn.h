@@ -37,9 +37,12 @@
 #define ABSYN_OP_MUL		8
 #define ABSYN_OP_DIV		9
 
+#include "types.h"
+
 typedef struct absyn {
 	int type;
 	int line;
+	Type* typeGraph;
 	union {
 		struct {
 			Sym *name;

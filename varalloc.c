@@ -127,14 +127,12 @@ void setArgOffsets(Absyn * node, Table * symTab, Entry * entry)
 
 	while (!procDec->u.decList.isEmpty) {
 		if (procDec->u.decList.head->type == ABSYN_PARDEC) {
-			entry =
-			    lookup(symTab,
-				   procDec->u.decList.head->u.parDec.name);
+			entry = lookup(symTab, procDec->u.decList.head->u.parDec.name);
 			entry->u.varEntry.offset = argOffset;
 			if (entry->u.varEntry.isRef) {
 				argOffset += REF_BYTE_SIZE;
 			} else {
-				argOffset += entry->u.varEntry.type->byte_size;
+				argOffset += INT_BYTE_SIZE;
 			}
 		}
 		procDec = procDec->u.decList.tail;

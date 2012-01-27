@@ -9,5 +9,5 @@
 
 void genCode(Absyn *program, Table *globalTable, FILE *outFile);
 
-
+void TraverseAbsyn(Absyn* node,int target,Table *symTab,FILE *outFile);
 #endif /* _CODEGEN_H_ */

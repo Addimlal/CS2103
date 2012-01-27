@@ -20,9 +20,10 @@ static Type *booleanType;
 static boolean showSymbolTable;
 static boolean semanticPhase;
 
-/** (root) Initiating semantic analysis phase
- * @param Absyn *program
- * @param boolean *showSymbolTables
+/**
+ * @brief (root) Initiating semantic analysis phase
+ * @param Absyn symbol table
+ * @param boolean  show symbol table flag
  * @return globalTable - global table of parsed symbols
  * */
 Table *check(Absyn * program, boolean tables)
@@ -51,6 +52,11 @@ Table *check(Absyn * program, boolean tables)
 	checkNode(program, globalTable);
 
 	/* check if "main()" is present */
+	entry = newProcEntry(emptyParamTypes(), newTable(globalTable));
+	if (enter(globalTable, newSym("main"), entry) != NULL) {
+		error("procedure 'main' is missing");
+	}
+
 	entry = lookup(globalTable, newSym("main"));
 
 	if (entry == NULL) {
@@ -72,7 +78,6 @@ Table *check(Absyn * program, boolean tables)
 
 	return globalTable;
 }
-
 
 /**
  * @brief Enter symbols of library procedures into global symbol table
@@ -219,6 +224,7 @@ Type *checkArrayTy(Absyn * node, Table * symTab)
 Type *checkTypeDec(Absyn * node, Table * symTab) {
 	Type *type;
 	Entry *typeEntry;
+
 	if (!semanticPhase) {
 		type = checkNode(node->u.typeDec.ty, symTab);
 		typeEntry = newTypeEntry(type);
@@ -360,7 +366,7 @@ Type *checkAssignStm(Absyn * node, Table * symTab) {
 		error("assignment has different types in line %i", node->line);
 	}
 
-	if (leftType->kind == TYPE_KIND_ARRAY) {
+	if (leftType != intType /*==TYPE_KIND_ARRAY*/) {
 		error("assignment requires integer variable in line %i", node->line);
 	}
 
@@ -478,9 +484,9 @@ Type *checkCallStm(Absyn * node, Table * symTab) {
  **/
 Type *checkOpExp(Absyn * node, Table * symTab)
 {
-	Type 	*leftType,
-		*rightType,
-		*type;
+	Type *leftType,
+	     *rightType,
+	     *type;
 
 	leftType = checkNode(node->u.opExp.left, symTab);
 	rightType = checkNode(node->u.opExp.right, symTab);
@@ -552,6 +558,7 @@ Type *checkOpExp(Absyn * node, Table * symTab)
 		break;
 	}
 
+	node->typeGraph = type;
 	return type;
 }
 
@@ -564,10 +571,9 @@ Type *checkOpExp(Absyn * node, Table * symTab)
  **/
 Type *checkVarExp(Absyn * node, Table * symTab)
 {
-	Type *varType;
-	varType = checkNode(node->u.varExp.var, symTab);
+	node->typeGraph = checkNode(node->u.varExp.var, symTab);
 
-	return varType;
+	return node->typeGraph;
 }
 
 /**
@@ -579,10 +585,9 @@ Type *checkVarExp(Absyn * node, Table * symTab)
  **/
 Type *checkIntExp(Absyn * node, Table * symTab)
 {
-	Type *type;
-	type = intType;
+	node->typeGraph = intType;
 
-	return type;
+	return node->typeGraph;
 }
 
 /**
@@ -594,7 +599,8 @@ Type *checkIntExp(Absyn * node, Table * symTab)
  **/
 Type *checkSimpleVar(Absyn * node, Table * symTab)
 {
-	Entry *simpleEntry;
+	Entry *simpleEntry = NULL;
+	Type *simpleVarType;
 
 	simpleEntry = lookup(symTab, node->u.simpleVar.name);
 
@@ -607,8 +613,9 @@ Type *checkSimpleVar(Absyn * node, Table * symTab)
 		error("'%s' is not a variable in line %i",
 		      symToString(node->u.simpleVar.name), node->line);
 	}
-
-	return simpleEntry->u.varEntry.type;
+	node->typeGraph = simpleEntry->u.varEntry.type;
+	simpleVarType = node->typeGraph;
+	return simpleVarType;
 }
 
 /**
@@ -622,21 +629,29 @@ Type *checkArrayVar(Absyn * node, Table * symTab)
 {
 	Type *indexType,
 	     *arrayType;
+	Entry *arrayEntry = NULL;
 
-	indexType = checkNode(node->u.arrayVar.index, symTab);
+	if(node->u.arrayVar.var->type == ABSYN_SIMPLEVAR) {
+		arrayEntry = lookup(symTab,node->u.arrayVar.var->u.simpleVar.name);
+		if(arrayEntry != NULL &&
+		   arrayEntry->u.varEntry.type->kind != TYPE_KIND_ARRAY)
+		{
+			error("illegal indexing a non-array in line %d", node->line);
+		}
 
-	if (indexType != intType) {
-		error("illegal indexing a non-array in line %i", node->line);
 	}
 
 	arrayType = checkNode(node->u.arrayVar.var, symTab);
+	node->typeGraph = arrayType;
+	indexType = checkNode(node->u.arrayVar.index, symTab);
 
-	if (arrayType->kind != TYPE_KIND_ARRAY) {
-		error("illegal indexing with a non-integer in line %i", node->line);
+	if(indexType != intType) {
+		error("illegal indexing with a non-integer in line %d", node->line);
 	}
 
 	return arrayType->u.arrayType.baseType;
 }
+
 
 /**
  * @brief (18) Do recursive node-traversal of declaration lists

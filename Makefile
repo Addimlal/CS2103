@@ -13,11 +13,11 @@ CFLAGS = -Wall -Wno-unused -g
 LDLIBS = -lm
 
 LDFLAGS = -g
-SRCS = main.c utils.c parser.tab.c lex.yy.c absyn.c sym.c semant.c table.c types.c varalloc.c codengen.c
+SRCS = main.c utils.c parser.tab.c lex.yy.c absyn.c sym.c semant.c table.c types.c varalloc.c codegen.c
 OBJS = $(patsubst %.c,%.o,$(SRCS))
 BIN = spl
 
-.PHONY:		all ast run fast verify scannerTest scannerTest2 scannerRef parserTest parserTest2 parserRef astTest astTest2 astRef tests depend clean dist-clean
+.PHONY:		all codegen ast run fast verify scannerTest scannerTest2 scannerRef parserTest parserTest2 parserRef astTest astTest2 astRef tests depend clean dist-clean
 
 all:		$(BIN)
 
@@ -52,6 +52,10 @@ fast64:
 
 -include depend.mak
 
+
+codegen:	all
+		@./spl Tests/sort.spl a.out && ./splRef Tests/sort.spl b.out && diff a.out b.out | less
+
 graph:
 		@$(MAKE) all | sed '/make/d'
 		@echo -e $(FILE_COLOR)Erstelle vektorbasierten Parser-Graph ... $(NO_COLOR)
@@ -65,7 +69,7 @@ run:		all
 		done
 		@echo
 
-runRef:		
+runRef:
 		@for i in Tests/*.spl ; \
 		do echo -e $(OK_COLOR)File: $(FILE_COLOR)$$i $(NO_COLOR); ./splRef $$i /dev/null; \
 		done
