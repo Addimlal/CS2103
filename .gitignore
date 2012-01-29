@@ -19,3 +19,4 @@ parser.output
 parser.tab.*
 parser_*.txt
 core
+*.out

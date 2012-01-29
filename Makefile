@@ -54,7 +54,7 @@ fast64:
 
 
 codegen:	all
-		@./spl Tests/sort.spl a.out && ./splRef Tests/sort.spl b.out && diff a.out b.out | less
+		@./spl Tests/sort.spl a.out && ./splRef Tests/sort.spl ref.out && diff -s --suppress-common-lines -w a.out ref.out | less
 
 graph:
 		@$(MAKE) all | sed '/make/d'

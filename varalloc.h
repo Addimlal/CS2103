@@ -12,7 +12,7 @@
 void allocVars(Absyn * program, Table * globalTable, boolean showVarAlloc);
 int setParamOffsets(ParamTypes * params, boolean builtinProcs);
 int setVarOffsets(Absyn * node, Table * symTab, Entry * entry);
-void setArgOffsets(Absyn * procParams, Table * localTable, Entry * procEntry);
+int setArgOffsets(Absyn * procParams, Table * localTable, Entry * procEntry);
 
 int setLocalAreaOffset(Absyn * node, Table * globalTable);
 int checkLocalOffsets(Absyn * node, Table * globalTable);

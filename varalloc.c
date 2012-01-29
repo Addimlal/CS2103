@@ -20,7 +20,6 @@ void allocVars(Absyn * program, Table * globalTable, boolean showVarAlloc)
 	Absyn *node;
 	Entry *entry;
 	unsigned int i;
-	int outArg;
 
 	/* compute access information for arguments of predefined procs */
 	char *builtinProcs[] = {
@@ -46,16 +45,17 @@ void allocVars(Absyn * program, Table * globalTable, boolean showVarAlloc)
 
 			/* set incoming arguments offsets */
 			entry->u.procEntry.paramSize =
-			    setParamOffsets(entry->u.procEntry.paramTypes, FALSE);
+			setParamOffsets(entry->u.procEntry.paramTypes, FALSE);
 
-			    /* set outgoing arguments offsets */
+			/* set outgoing arguments offsets */
+			entry->u.procEntry.paramSize =
 			setArgOffsets(node->u.decList.head->u.procDec.params,
-				     entry->u.procEntry.localTable, entry);
+				      entry->u.procEntry.localTable, entry);
 
 			/* set local variable offsets */
 			entry->u.procEntry.localVarSize=
-				setVarOffsets(node->u.decList.head->u.procDec.decls,
-				     entry->u.procEntry.localTable, entry);
+			setVarOffsets(node->u.decList.head->u.procDec.decls,
+				      entry->u.procEntry.localTable, entry);
 		}
 
 		node = node->u.decList.tail;
@@ -66,12 +66,10 @@ void allocVars(Absyn * program, Table * globalTable, boolean showVarAlloc)
 	while (!node->u.decList.isEmpty) {
 		if (node->u.decList.head->type == ABSYN_PROCDEC) {
 			entry =
-			    lookup(globalTable, node->u.decList.head->u.procDec.name);
+			lookup(globalTable, node->u.decList.head->u.procDec.name);
 
-			outArg =
-			    checkLocalOffsets(node->u.decList.head->u.procDec.body, globalTable);
-
-			entry->u.procEntry.argSize = outArg;
+			entry->u.procEntry.argSize =
+			checkLocalOffsets(node->u.decList.head->u.procDec.body, globalTable);
 		}
 
 		node = node->u.decList.tail;
@@ -120,7 +118,7 @@ int setVarOffsets(Absyn * node, Table * symTab, Entry * entry)
 	return varOffset;
 }
 
-void setArgOffsets(Absyn * node, Table * symTab, Entry * entry)
+int setArgOffsets(Absyn * node, Table * symTab, Entry * entry)
 {
 	Absyn *procDec = node;
 	int argOffset = 0;
@@ -138,7 +136,7 @@ void setArgOffsets(Absyn * node, Table * symTab, Entry * entry)
 		procDec = procDec->u.decList.tail;
 	}
 
-	entry->u.procEntry.paramSize = argOffset;
+	return argOffset;
 }
 
 int setLocalAreaOffset(Absyn * node, Table * globalTable)
@@ -151,41 +149,58 @@ int setLocalAreaOffset(Absyn * node, Table * globalTable)
 
 	while (!node->u.stmList.isEmpty) {
 		newarea = -1;
+
 		switch (node->u.stmList.head->type) {
-		case ABSYN_COMPSTM:
-			newarea =
-			    checkLocalOffsets(node->u.stmList.head->u.compStm.stms,
-				       globalTable);
-			break;
 		case ABSYN_CALLSTM:
-			callEntry =
-			lookup(globalTable, node->u.stmList.head->u.callStm.name);
-			newarea = callEntry->u.procEntry.paramSize;
-			break;
+			{
+				callEntry =
+				lookup(globalTable, node->u.stmList.head->u.callStm.name);
+
+				newarea = callEntry->u.procEntry.paramSize;
+				break;
+			}
+		case ABSYN_COMPSTM:
+			{
+				newarea =
+				checkStmOffsets(node->u.stmList.head->u.compStm.stms, globalTable);
+				break;
+			}
 		case ABSYN_IFSTM:
-			ifarea = checkStmOffsets(node->u.stmList.head->u.ifStm. thenPart, globalTable);
-			elsearea =
-				checkStmOffsets(node->u.stmList.head->u.ifStm.
-					   elsePart, globalTable);
-			if (ifarea > elsearea)
-				newarea = ifarea;
-			else
-				newarea = elsearea;
-			break;
+			{
+				ifarea =
+				checkStmOffsets(node->u.stmList.head->u.ifStm.thenPart, globalTable);
+
+				elsearea =
+				checkStmOffsets(node->u.stmList.head->u.ifStm.elsePart, globalTable);
+
+				if (ifarea > elsearea) {
+					newarea = ifarea;
+				}
+				else {
+					newarea = elsearea;
+				}
+
+				break;
+			}
 		case ABSYN_WHILESTM:
-			newarea = checkStmOffsets(node->u.stmList.head->u.whileStm.body, globalTable);
-			break;
+			{
+				newarea =
+				checkStmOffsets(node->u.stmList.head->u.whileStm.body, globalTable);
+				break;
+			}
 		}
+
 		if (newarea > area) {
 			area = newarea;
 		}
+
 		node = node->u.stmList.tail;
 	}
 
 	return area;
 }
 
-int checkStms(Absyn * node, Table * globalTable)
+int checkStms(Absyn * node, Table * symTab)
 {
 	Entry *callEntry;
 	int ifArea,
@@ -193,49 +208,56 @@ int checkStms(Absyn * node, Table * globalTable)
 
 	switch (node->type) {
 	case ABSYN_CALLSTM:
-		callEntry = lookup(globalTable, node->u.callStm.name);
-		showEntry(callEntry);
-		return callEntry->u.procEntry.paramSize;
+		{
+			callEntry = lookup(symTab, node->u.callStm.name);
+			showEntry(callEntry);
+			return callEntry->u.procEntry.paramSize;
+		}
 	case ABSYN_COMPSTM:
-		return checkLocalOffsets(node->u.compStm.stms, globalTable);
+		{
+			return checkLocalOffsets(node->u.compStm.stms, symTab);
+		}
 	case ABSYN_IFSTM:
-		ifArea = checkStmOffsets(node->u.ifStm.thenPart, globalTable);
-		elseArea = checkStmOffsets(node->u.ifStm.elsePart, globalTable);
-		if (ifArea > elseArea){
-			return ifArea;
-		} else {
-			return elseArea;
+	{
+			ifArea = checkStmOffsets(node->u.ifStm.thenPart, symTab);
+			elseArea = checkStmOffsets(node->u.ifStm.elsePart, symTab);
+			if (ifArea > elseArea){
+				return ifArea;
+			} else {
+				return elseArea;
+			}
 		}
 	case ABSYN_WHILESTM:
-		return checkStmOffsets(node->u.whileStm.body, globalTable);
+		{
+			return checkStmOffsets(node->u.whileStm.body, symTab);
+		}
 	}
-	return -1;
+
+	return EXIT_FAILURE;
 }
 
 int checkStmOffsets(Absyn * node, Table * symTab)
 {
 	Absyn *program = node;
-	if (!node->type < 0){
-		return checkStms(program, symTab);
+	if (program->typeGraph){
 	}
+		return checkStms(program, symTab);
 
-	return node->type;
+	return program->type;
 }
 
 int checkLocalOffsets(Absyn * node, Table * symTab)
 {
 	Absyn *program = node;
-	if (symTab == NULL){
-		return setLocalAreaOffset(program, symTab);
-	}
+	return setLocalAreaOffset(program, symTab);
 
-	return -1;
+	return EXIT_FAILURE;
 }
 
 void showVars(Absyn * program, Table * globalTable)
 {
 	Absyn *node, *vars;
-	Entry *entry, *varsEntry;
+	Entry *entry, *varEntry;
 	ParamTypes *params;
 	int arg;
 
@@ -243,48 +265,56 @@ void showVars(Absyn * program, Table * globalTable)
 	while (!node->u.decList.isEmpty) {
 		if (node->u.decList.head->type == ABSYN_PROCDEC) {
 			entry =
-			    lookup(globalTable,
-				   node->u.decList.head->u.procDec.name);
+			lookup(globalTable, node->u.decList.head->u.procDec.name);
+
 			printf("\nVariable allocation for procedure '%s'\n",
-			       symToString(node->u.decList.head->u.procDec.
-					   name));
-			arg = 1;
+			       symToString(node->u.decList.head->u.procDec.name));
+
 			params = entry->u.procEntry.paramTypes;
+			arg = 1;
 			while (!params->isEmpty) {
-				printf("arg %d: sp + %d\n", arg,
-				       params->offset);
-				arg++;
+				printf("arg %i: sp + %i\n", arg, params->offset);
+
 				params = params->next;
+				arg++;
 			}
-			printf("size of argument area = %d\n",
+
+			printf("size of argument area = %i\n",
 			       entry->u.procEntry.paramSize);
+
 			vars = node->u.decList.head->u.procDec.params;
 			while (!vars->u.decList.isEmpty) {
-				varsEntry =
+				varEntry =
 				    lookup(entry->u.procEntry.localTable,
 					   vars->u.decList.head->u.parDec.name);
-				printf("param '%s': fp + %d\n",
-				       symToString(vars->u.decList.head->u.
-						   parDec.name),
-				       varsEntry->u.varEntry.offset);
+
+				printf("param '%s': fp + %i\n",
+				       symToString(vars->u.decList.head->u. parDec.name),
+				       varEntry->u.varEntry.offset);
+
 				vars = vars->u.decList.tail;
 			}
+
 			vars = node->u.decList.head->u.procDec.decls;
 			while (!vars->u.decList.isEmpty) {
-				varsEntry =
+				varEntry =
 				    lookup(entry->u.procEntry.localTable,
 					   vars->u.decList.head->u.varDec.name);
-				printf("var '%s': fp - %d\n",
-				       symToString(vars->u.decList.head->u.
-						   varDec.name),
-				       (varsEntry->u.varEntry.offset) * (-1));
+
+				printf("var '%s': fp - %i\n",
+				       symToString(vars->u.decList.head->u. varDec.name),
+				       -(varEntry->u.varEntry.offset));
+
 				vars = vars->u.decList.tail;
 			}
-			printf("size of localvar area = %d\n",
+
+			printf("size of localvar area = %i\n",
 			       entry->u.procEntry.localVarSize);
-			printf("size of outgoing area = %d\n",
+
+			printf("size of outgoing area = %i\n",
 			       entry->u.procEntry.argSize);
 		}
+
 		node = node->u.decList.tail;
 	}
 }

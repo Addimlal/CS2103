@@ -6,15 +6,13 @@
 #define _CODEGEN_H_
 
 typedef enum REGISTER {		/* Defines temporary variable integer registers */
-	    MIN_REGISTER = 8,	/* Minimum temporary variable register */
-	    MAX_REGISTER = 16	/* Maximum temporary variable register */
+	MIN_REGISTER = 8,	/* Minimum temporary variable register */
+	MAX_REGISTER = 16	/* Maximum temporary variable register */
 } reg_t;
 
 void genCode(Absyn * program, Table * globalTable, FILE * outFile);
+void fComment(FILE * outFile, char *comment);
 int getLabelNum(void);
-int genCodeOp(Absyn * node, Table * symTab, FILE * outFile, int dst);
-void genCodeCompare(Absyn * node, Table * symTab, int label, FILE * outFile, int dst);
-void genCodeOpExp(Absyn *node, int target,Table *symTab,FILE *outFile);
-void fComment(FILE * outFile, char * comment);
+void genCodeOpExp(Absyn * node, Table * symTab, FILE * outFile, int dst, int label, boolean arithmetic);
 void absynTreeWalker(Absyn * node, Table * symTab, FILE * outFile, int dst);
 #endif				/* _CODEGEN_H_ */
