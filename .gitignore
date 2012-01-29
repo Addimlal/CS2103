@@ -18,5 +18,6 @@ lex.yy.c
 parser.output
 parser.tab.*
 parser_*.txt
+parser.dot
 core
 *.out
