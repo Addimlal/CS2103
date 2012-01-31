@@ -6,9 +6,9 @@
 # Author: Fernandos
 #set -e
 
-rsync -htrpX . saturn:CS2103
+rsync -htrpX . _saturn:CS2103
 if [ $HOSTNAME != "saturn.mni.fh-giessen.de" ]; then
-	ssh Saturn 'bash -c "cd CS2103 && make clean && make verify"'
+	ssh _saturn 'bash -c "cd CS2103 && make clean && make verify"'
 else
-	cd $HOME/CS2103 && make clean && make verify
+	cd $HOME/CS2103 && make dist-clean && make verify
 fi

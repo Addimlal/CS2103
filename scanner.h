@@ -11,7 +11,7 @@ typedef struct {
 
 typedef struct {
 	int line;
-	int val;
+	long int val;
 } IntVal;
 
 typedef struct {

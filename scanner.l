@@ -213,8 +213,8 @@ void showToken(int token)
 			"IDENT", yylval.stringVal.line, yylval.stringVal.val);
 		break;
 	case INTLIT:
-		printf("TOKEN = %s in line %i, value=\"%i\"\n",
-			"INTLIT", yylval.intVal.line, yylval.intVal.val);
+		printf("TOKEN = %s in line %i, value=\"%lu\"\n",
+		       "INTLIT", yylval.intVal.line, yylval.intVal.val);
 		break;
 	default:
 		error("No match found - undefined Token.");

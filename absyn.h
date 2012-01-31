@@ -102,7 +102,7 @@ typedef struct absyn {
 			struct absyn *var;
 		} varExp;
 		struct {
-			int val;
+			long int val;
 		} intExp;
 		struct {
 			Sym *name;
@@ -152,7 +152,7 @@ Absyn *newCallStm(int line, Sym * name, Absyn * args);
 /* Expression constructors */
 Absyn *newOpExp(int line, int op, Absyn * left, Absyn * right);
 Absyn *newVarExp(int line, Absyn * var);
-Absyn *newIntExp(int line, int val);
+Absyn *newIntExp(int line, long int val);
 
 /* Variable constructors */
 Absyn *newSimpleVar(int line, Sym * name);

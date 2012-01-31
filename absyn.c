@@ -181,7 +181,7 @@ Absyn *newVarExp(int line, Absyn * var)
 	return node;
 }
 
-Absyn *newIntExp(int line, int val)
+Absyn *newIntExp(int line, long int val)
 {
 	Absyn *node;
 
@@ -303,9 +303,9 @@ static void say(char *s)
 	printf("%s", s);
 }
 
-static void sayInt(int i)
+static void sayInt(long int i)
 {
-	printf("%d", i);
+	printf("%lu", i);
 }
 
 static void sayBoolean(boolean b)
@@ -480,7 +480,7 @@ static void showVarExp(Absyn * node, int n)
 	say(")");
 }
 
-static void showIntExp(Absyn * node, int n)
+static void showIntExp(Absyn * node, long int n)
 {
 	indent(n);
 	say("IntExp(");
